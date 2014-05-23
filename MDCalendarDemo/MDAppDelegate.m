@@ -7,13 +7,17 @@
 //
 
 #import "MDAppDelegate.h"
+#import "MDCalendarViewController.h"
 
 @implementation MDAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
+    
+    MDCalendarViewController *calendarViewController = [[MDCalendarViewController alloc] init];
+    self.window.rootViewController = calendarViewController;
+    
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     return YES;
