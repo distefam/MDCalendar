@@ -37,6 +37,11 @@
     return MDCalendarDateFromComponents(components);
 }
 
+- (NSInteger)day {
+    NSDateComponents *components = MDCalendarDateComponentsFromDate(self);
+    return [components day];
+}
+
 - (NSInteger)month {
     NSDateComponents *components = MDCalendarDateComponentsFromDate(self);
     return [components month];

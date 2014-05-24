@@ -9,6 +9,36 @@
 #import "MDCalendarView.h"
 #import "NSDate+MDCalendar.h"
 
+@interface MDCalendarViewCell : UICollectionViewCell
+@property (nonatomic, strong) NSDate *date;
+@end
+
+@interface MDCalendarViewCell  ()
+@property (nonatomic, strong) UILabel *label;
+@end
+
+static NSString * const kMDCalendarViewCellIdentifier = @"kMDCalendarViewCellIdentifier";
+
+@implementation MDCalendarViewCell
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    self.contentView.backgroundColor = [UIColor whiteColor];
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:self.bounds];
+    label.text = MDCalendarDayStringFromDate(_date);
+    [self.contentView addSubview:label];
+    
+    self.label = label;
+}
+
+NSString * MDCalendarDayStringFromDate(NSDate *date) {
+    return [NSString stringWithFormat:@"%d", (int)[date day]];
+}
+
+@end
+
 @interface MDCalendarView () <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource>
 @property (nonatomic, strong) UICollectionView *collectionView;
 @end
@@ -26,11 +56,12 @@
         self.endDate = endDate;
         
         // TODO: make a custom layout
-        UICollectionViewLayout *layout = [[UICollectionViewLayout alloc] init];
+        UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];
         self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
         _collectionView.dataSource = self;
         _collectionView.delegate   = self;
         _collectionView.backgroundColor = [UIColor whiteColor];
+        [_collectionView registerClass:[MDCalendarViewCell class] forCellWithReuseIdentifier:kMDCalendarViewCellIdentifier];
         
         [self addSubview:_collectionView];
     }
@@ -83,21 +114,37 @@
     return [self.startDate month] + section;
 }
 
+- (NSDate *)dateForIndexPath:(NSIndexPath *)indexPath {
+    NSDateComponents *components = [NSDateComponents new];
+    [components setMonth:[self monthForSection:indexPath.section]];
+    [components setDay:indexPath.item];
+    NSInteger month = [self monthForSection:indexPath.section];
+    NSInteger day = indexPath.item + 1; // count starts at 0, months start at 1
+    NSLog(@"date for index path: %d/%d", (int)month, (int)day);
+    return [self.calendar dateFromComponents:components];
+}
+
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    NSLog(@"Number of sections in collection view: %d", (int)[self.startDate numberOfMonthsUntilEndDate:self.endDate]);
     return [self.startDate numberOfMonthsUntilEndDate:self.endDate];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     NSInteger month = [self monthForSection:section];
+    NSLog(@"Number of items in month %d: %d", (int)month, (int)[NSDate numberOfDaysInMonth:month]);
     return [NSDate numberOfDaysInMonth:month];
 }
 
 #pragma mark - UICollectionViewDelegate
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    return nil;
+    MDCalendarViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kMDCalendarViewCellIdentifier forIndexPath:indexPath];
+    cell.date = [self dateForIndexPath:indexPath];
+    NSLog(@"Cell bounds: %@", NSStringFromCGRect(cell.frame));
+    NSLog(@"Cell Date: %@", cell.label.text);
+    return cell;
 }
 
 @end

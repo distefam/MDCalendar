@@ -22,10 +22,8 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        self.view.backgroundColor = [UIColor blueColor];
-        
         MDCalendarView *calendarView = [[MDCalendarView alloc] init];
-        calendarView.backgroundColor = [UIColor blueColor];
+        calendarView.backgroundColor = [UIColor yellowColor];
         [self.view addSubview:calendarView];
         self.calendarView = calendarView;
     }
