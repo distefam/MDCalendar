@@ -17,6 +17,7 @@
 
 - (NSInteger)day;
 - (NSInteger)month;
+- (NSString *)shortMonthString;
 - (NSInteger)year;
 
 - (NSInteger)numberOfMonthsUntilEndDate:(NSDate *)endDate;

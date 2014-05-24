@@ -21,6 +21,22 @@
     return range.length;
 }
 
++ (NSArray *)shortMonthNames {
+    return @[@"Zero",
+             @"Jan",
+             @"Feb",
+             @"Mar",
+             @"Apr",
+             @"May",
+             @"Jun",
+             @"Jul",
+             @"Aug",
+             @"Sep",
+             @"Oct",
+             @"Nov",
+             @"Dec"];
+}
+
 - (NSDate *)firstDayOfMonth {
     NSDateComponents *components = MDCalendarDateComponentsFromDate(self);
     [components setDay:1];
@@ -45,6 +61,10 @@
 - (NSInteger)month {
     NSDateComponents *components = MDCalendarDateComponentsFromDate(self);
     return [components month];
+}
+
+- (NSString *)shortMonthString {
+    return [NSDate shortMonthNames][[self month]];
 }
 
 - (NSInteger)year {

@@ -22,6 +22,7 @@
 		0C50FBC9192FBD4A0043D2D5 /* MDCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C50FBC8192FBD4A0043D2D5 /* MDCalendarViewController.m */; };
 		0C50FBCC192FBEE40043D2D5 /* NSDate+MDCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C50FBCB192FBEE40043D2D5 /* NSDate+MDCalendar.m */; };
 		0C50FBD1192FC1920043D2D5 /* MDCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C50FBCF192FC1920043D2D5 /* MDCalendarView.m */; };
+		0C50FC1819311FC90043D2D5 /* MDCalendarViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C50FC1719311FC90043D2D5 /* MDCalendarViewLayout.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,8 @@
 		0C50FBCB192FBEE40043D2D5 /* NSDate+MDCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+MDCalendar.m"; sourceTree = "<group>"; };
 		0C50FBCE192FC1920043D2D5 /* MDCalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCalendarView.h; sourceTree = "<group>"; };
 		0C50FBCF192FC1920043D2D5 /* MDCalendarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCalendarView.m; sourceTree = "<group>"; };
+		0C50FC1619311FC90043D2D5 /* MDCalendarViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCalendarViewLayout.h; sourceTree = "<group>"; };
+		0C50FC1719311FC90043D2D5 /* MDCalendarViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCalendarViewLayout.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -179,6 +182,8 @@
 			children = (
 				0C50FBCE192FC1920043D2D5 /* MDCalendarView.h */,
 				0C50FBCF192FC1920043D2D5 /* MDCalendarView.m */,
+				0C50FC1619311FC90043D2D5 /* MDCalendarViewLayout.h */,
+				0C50FC1719311FC90043D2D5 /* MDCalendarViewLayout.m */,
 			);
 			name = MDCalendar;
 			path = ..;
@@ -281,6 +286,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0C50FBA3192FBCFC0043D2D5 /* main.m in Sources */,
+				0C50FC1819311FC90043D2D5 /* MDCalendarViewLayout.m in Sources */,
 				0C50FBA7192FBCFC0043D2D5 /* MDAppDelegate.m in Sources */,
 				0C50FBC9192FBD4A0043D2D5 /* MDCalendarViewController.m in Sources */,
 				0C50FBCC192FBEE40043D2D5 /* NSDate+MDCalendar.m in Sources */,

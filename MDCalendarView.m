@@ -27,7 +27,13 @@ static NSString * const kMDCalendarViewCellIdentifier = @"kMDCalendarViewCellIde
     self.contentView.backgroundColor = [UIColor whiteColor];
     
     UILabel *label = [[UILabel alloc] initWithFrame:self.bounds];
-    label.text = MDCalendarDayStringFromDate(_date);
+    NSString *dayString = MDCalendarDayStringFromDate(_date);
+
+//    if ([_date day] == 1) {
+//        dayString = [NSString stringWithFormat:@"%@\n%@", [_date shortMonthString], MDCalendarDayStringFromDate(_date)];
+//    }
+    
+    label.text = dayString;
     [self.contentView addSubview:label];
     
     self.label = label;
@@ -43,6 +49,9 @@ NSString * MDCalendarDayStringFromDate(NSDate *date) {
 @property (nonatomic, strong) UICollectionView *collectionView;
 @end
 
+static CGFloat const kMDCalendarViewItemSpacing = 2.f;
+static CGFloat const kMDCalendarViewLineSpacing = 2.f;
+
 @implementation MDCalendarView
 
 - (instancetype)init {
@@ -57,6 +66,9 @@ NSString * MDCalendarDayStringFromDate(NSDate *date) {
         
         // TODO: make a custom layout
         UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];
+        layout.minimumInteritemSpacing  = kMDCalendarViewItemSpacing;
+        layout.minimumLineSpacing       = kMDCalendarViewLineSpacing;
+        
         self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
         _collectionView.dataSource = self;
         _collectionView.delegate   = self;
@@ -136,6 +148,15 @@ NSString * MDCalendarDayStringFromDate(NSDate *date) {
     MDCalendarViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kMDCalendarViewCellIdentifier forIndexPath:indexPath];
     cell.date = [self dateForIndexPath:indexPath];
     return cell;
+}
+
+#pragma mark - UICollectionViewFlowLayoutDelegate
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat boundsWidth = collectionView.bounds.size.width;
+    CGFloat cellWidth = (boundsWidth / 7) - kMDCalendarViewItemSpacing;
+    CGFloat cellHeight = cellWidth;
+    return CGSizeMake(cellWidth, cellHeight);
 }
 
 @end
