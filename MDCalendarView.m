@@ -122,13 +122,11 @@ NSString * MDCalendarDayStringFromDate(NSDate *date) {
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    NSLog(@"Number of sections in collection view: %d", (int)[self.startDate numberOfMonthsUntilEndDate:self.endDate]);
     return [self.startDate numberOfMonthsUntilEndDate:self.endDate];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     NSInteger month = [self monthForSection:section];
-    NSLog(@"Number of items in month %d: %d", (int)month, (int)[NSDate numberOfDaysInMonth:month]);
     return [NSDate numberOfDaysInMonth:month];
 }
 
