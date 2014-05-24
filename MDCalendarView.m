@@ -116,7 +116,7 @@ NSString * MDCalendarDayStringFromDate(NSDate *date) {
 
 - (NSDate *)dateForIndexPath:(NSIndexPath *)indexPath {
     NSDate *firstDayOfMonth = [self.startDate firstDayOfMonth];
-    return [firstDayOfMonth dateFromAddingDays:indexPath.item];
+    return [firstDayOfMonth dateByAddingDays:indexPath.item];
 }
 
 #pragma mark - UICollectionViewDataSource

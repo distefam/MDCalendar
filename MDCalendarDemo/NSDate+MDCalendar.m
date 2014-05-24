@@ -76,7 +76,7 @@
     return endMonth - startMonth;
 }
 
-- (NSDate *)dateFromAddingDays:(NSInteger)days {
+- (NSDate *)dateByAddingDays:(NSInteger)days {
     NSDateComponents *components = MDCalendarDateComponentsFromDate(self);
     NSInteger currentDay = [components day];
     [components setDay:currentDay + days];
