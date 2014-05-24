@@ -21,6 +21,26 @@
     return range.length;
 }
 
++ (NSString *)monthNameForMonth:(NSInteger)month {
+    return [NSDate monthNames][month];
+}
+
++ (NSArray *)monthNames {
+    return @[@"Zero",
+             @"January",
+             @"February",
+             @"March",
+             @"April",
+             @"May",
+             @"June",
+             @"July",
+             @"August",
+             @"September",
+             @"October",
+             @"November",
+             @"December"];
+}
+
 + (NSArray *)shortMonthNames {
     return @[@"Zero",
              @"Jan",

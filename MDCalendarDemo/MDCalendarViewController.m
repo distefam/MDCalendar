@@ -34,6 +34,7 @@
     [super viewWillLayoutSubviews];
     
     _calendarView.frame = self.view.bounds;
+    _calendarView.contentInset = UIEdgeInsetsMake([self.topLayoutGuide length], 0, [self.bottomLayoutGuide length], 0);
 }
 
 @end

@@ -10,6 +10,8 @@
 
 @interface MDCalendarView : UIView
 
+@property (nonatomic, assign) UIEdgeInsets contentInset;
+
 @property (nonatomic, strong) NSLocale   *locale;   // default is [NSLocale currentLocale]
 @property (nonatomic, copy)   NSCalendar *calendar; // default is [NSCalendar currentCalendar];
 @property (nonatomic, strong) NSTimeZone *timeZone; // default is nil. use current time zone or time zone from calendar

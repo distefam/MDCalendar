@@ -11,6 +11,7 @@
 @interface NSDate (MDCalendar)
 
 + (NSInteger)numberOfDaysInMonth:(NSInteger)month;
++ (NSString *)monthNameForMonth:(NSInteger)month;
 
 - (NSDate *)firstDayOfMonth;
 - (NSDate *)lastDayOfMonth;

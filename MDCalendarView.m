@@ -45,6 +45,31 @@ NSString * MDCalendarDayStringFromDate(NSDate *date) {
 
 @end
 
+@interface MDCalendarHeaderView : UICollectionReusableView
+@property (nonatomic, assign) NSInteger month;
+@end
+
+@interface MDCalendarHeaderView ()
+@property (nonatomic, strong) UILabel *label;
+@end
+
+static NSString * const kMDCalendarHeaderViewIdentifier = @"kMDCalendarHeaderViewIdentifier";
+
+@implementation MDCalendarHeaderView
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    self.backgroundColor = [UIColor whiteColor];
+    
+    UILabel *label = [[UILabel alloc] initWithFrame:self.bounds];
+    label.text = [NSDate monthNameForMonth:_month];
+    [self addSubview:label];
+    self.label = label;
+}
+
+@end
+
 @interface MDCalendarView () <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource>
 @property (nonatomic, strong) UICollectionView *collectionView;
 @end
@@ -74,6 +99,7 @@ static CGFloat const kMDCalendarViewLineSpacing = 2.f;
         _collectionView.delegate   = self;
         _collectionView.backgroundColor = [UIColor whiteColor];
         [_collectionView registerClass:[MDCalendarViewCell class] forCellWithReuseIdentifier:kMDCalendarViewCellIdentifier];
+        [_collectionView registerClass:[MDCalendarHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kMDCalendarHeaderViewIdentifier];
         
         [self addSubview:_collectionView];
     }
@@ -90,6 +116,10 @@ static CGFloat const kMDCalendarViewLineSpacing = 2.f;
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
     _collectionView.backgroundColor = backgroundColor;
+}
+
+- (void)setContentInset:(UIEdgeInsets)contentInset {
+    _collectionView.contentInset = contentInset;
 }
 
 - (NSCalendar *)calendar {
@@ -150,6 +180,12 @@ static CGFloat const kMDCalendarViewLineSpacing = 2.f;
     return cell;
 }
 
+- (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
+    MDCalendarHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kMDCalendarHeaderViewIdentifier forIndexPath:indexPath];
+    headerView.month = [self monthForSection:indexPath.section];
+    return headerView;
+}
+
 #pragma mark - UICollectionViewFlowLayoutDelegate
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -157,6 +193,11 @@ static CGFloat const kMDCalendarViewLineSpacing = 2.f;
     CGFloat cellWidth = (boundsWidth / 7) - kMDCalendarViewItemSpacing;
     CGFloat cellHeight = cellWidth;
     return CGSizeMake(cellWidth, cellHeight);
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
+    CGFloat boundsWidth = collectionView.bounds.size.width;
+    return CGSizeMake(boundsWidth, 20);
 }
 
 @end
