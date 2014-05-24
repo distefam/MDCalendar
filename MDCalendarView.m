@@ -115,13 +115,8 @@ NSString * MDCalendarDayStringFromDate(NSDate *date) {
 }
 
 - (NSDate *)dateForIndexPath:(NSIndexPath *)indexPath {
-    NSDateComponents *components = [NSDateComponents new];
-    [components setMonth:[self monthForSection:indexPath.section]];
-    [components setDay:indexPath.item];
-    NSInteger month = [self monthForSection:indexPath.section];
-    NSInteger day = indexPath.item + 1; // count starts at 0, months start at 1
-    NSLog(@"date for index path: %d/%d", (int)month, (int)day);
-    return [self.calendar dateFromComponents:components];
+    NSDate *firstDayOfMonth = [self.startDate firstDayOfMonth];
+    return [firstDayOfMonth dateFromAddingDays:indexPath.item];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -142,8 +137,6 @@ NSString * MDCalendarDayStringFromDate(NSDate *date) {
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     MDCalendarViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kMDCalendarViewCellIdentifier forIndexPath:indexPath];
     cell.date = [self dateForIndexPath:indexPath];
-    NSLog(@"Cell bounds: %@", NSStringFromCGRect(cell.frame));
-    NSLog(@"Cell Date: %@", cell.label.text);
     return cell;
 }
 
