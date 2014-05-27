@@ -214,14 +214,15 @@ static NSInteger const kMDCalendarViewNumberOfItems = 35;
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     MDCalendarViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kMDCalendarViewCellIdentifier forIndexPath:indexPath];
     
-    NSDate *firstDayOfMonth = [self dateForFirstDayOfMonth:[self monthForSection:indexPath.section]];
-    NSInteger weekdayOfFirstDayOfMonth = [firstDayOfMonth weekday];
-    if (indexPath.item < weekdayOfFirstDayOfMonth) {
+    NSDate *date = [self dateForIndexPath:indexPath];
+    NSInteger sectionMonth = [self monthForSection:indexPath.section];
+    if ([date month] != sectionMonth) {
         cell.backgroundColor = [UIColor yellowColor];
     } else {
         cell.backgroundColor = [UIColor whiteColor];
     }
-    cell.date = [self dateForIndexPath:indexPath];
+    
+    cell.date = date;
     return cell;
 }
 
