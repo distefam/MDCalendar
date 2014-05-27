@@ -8,6 +8,8 @@
 
 #import "NSDate+MDCalendar.h"
 
+#define SECONDS_IN_DAY 86400
+
 @implementation NSDate (MDCalendar)
 
 + (NSInteger)numberOfDaysInMonth:(NSInteger)month {
@@ -130,8 +132,18 @@
 }
 
 - (NSDate *)dateByAddingDays:(NSInteger)days {
-    NSTimeInterval secondsInDay = 60 * 60 * 24;
-    return [self dateByAddingTimeInterval:days * secondsInDay];
+    return [self dateByAddingTimeInterval:days * SECONDS_IN_DAY];
+}
+
+- (NSDate *)dateByAddingMonths:(NSInteger)months {
+    NSInteger yearsToAdd = floor(([self month] + months) / 12);
+    NSInteger monthsToAdd = months % 12;
+    
+    NSDateComponents *components = MDCalendarDateComponentsFromDate(self);
+    components.month = [self month] + monthsToAdd;
+    components.year = [self year] + yearsToAdd;
+    
+    return MDCalendarDateFromComponents(components);
 }
 
 #pragma mark - Helpers

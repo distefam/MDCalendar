@@ -26,5 +26,6 @@
 
 - (NSInteger)numberOfMonthsUntilEndDate:(NSDate *)endDate;
 - (NSDate *)dateByAddingDays:(NSInteger)days;
+- (NSDate *)dateByAddingMonths:(NSInteger)months;
 
 @end

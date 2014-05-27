@@ -175,7 +175,9 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 #pragma mark - Private Methods & Helper Functions
 
 - (NSInteger)monthForSection:(NSInteger)section {
-    return [self.startDate month] + section;
+    NSDate *firstDayOfSection = [self.startDate dateByAddingMonths:section];
+    
+    return [firstDayOfSection month];
 }
 
 - (NSDate *)dateForFirstDayOfMonth:(NSInteger)month {
@@ -258,7 +260,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat boundsWidth = collectionView.bounds.size.width;
-    CGFloat cellWidth = (boundsWidth / 7) - kMDCalendarViewItemSpacing;
+    CGFloat cellWidth = (boundsWidth / DAYS_IN_WEEK) - kMDCalendarViewItemSpacing;
     CGFloat cellHeight = cellWidth;
     return CGSizeMake(cellWidth, cellHeight);
 }
