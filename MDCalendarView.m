@@ -26,10 +26,6 @@ static NSString * const kMDCalendarViewCellIdentifier = @"kMDCalendarViewCellIde
     if (self) {
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
         
-//    if ([_date day] == 1) {
-//        dayString = [NSString stringWithFormat:@"%@\n%@", [_date shortMonthString], MDCalendarDayStringFromDate(_date)];
-//    }
-        
         [self.contentView addSubview:label];
         
         self.label = label;
@@ -45,6 +41,12 @@ static NSString * const kMDCalendarViewCellIdentifier = @"kMDCalendarViewCellIde
     [super layoutSubviews];
     
     self.label.frame = self.bounds;
+}
+
+- (void)prepareForReuse {
+    [super prepareForReuse];
+    self.contentView.backgroundColor = nil;
+    self.label.text = @"";
 }
 
 NSString * MDCalendarDayStringFromDate(NSDate *date) {
@@ -175,7 +177,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 #pragma mark - Private Methods & Helper Functions
 
 - (NSInteger)monthForSection:(NSInteger)section {
-    NSDate *firstDayOfSection = [self.startDate dateByAddingMonths:section];
+    NSDate *firstDayOfSection = [[self.startDate firstDayOfMonth] dateByAddingMonths:section];
     
     return [firstDayOfSection month];
 }
@@ -202,7 +204,9 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     NSDate *date = [NSDate dateFromComponents:components];
     
     NSInteger offset = [self offsetForMonth:[self monthForSection:indexPath.section]];
-    date = [date dateByAddingDays:-offset];
+    if (offset) {
+        date = [date dateByAddingDays:-offset];
+    }
     
     return date;
 }
