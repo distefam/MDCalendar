@@ -93,6 +93,8 @@ static NSString * const kMDCalendarHeaderViewIdentifier = @"kMDCalendarHeaderVie
 @property (nonatomic, strong) UICollectionView *collectionView;
 @end
 
+#define DAYS_IN_WEEK 7
+
 static CGFloat const kMDCalendarViewItemSpacing    = 2.f;
 static CGFloat const kMDCalendarViewLineSpacing    = 2.f;
 static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
@@ -211,7 +213,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 - (NSInteger)remainderForMonth:(NSInteger)month {
     NSDate *lastDayOfMonth = [self dateForLastDayOfMonth:month];
     NSInteger weekday = [lastDayOfMonth weekday];
-    return 7 - weekday;
+    return DAYS_IN_WEEK - weekday;
 }
 
 #pragma mark - UICollectionViewDataSource
