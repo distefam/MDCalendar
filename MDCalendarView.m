@@ -185,13 +185,20 @@ static NSInteger const kMDCalendarViewNumberOfItems = 35;
     return [NSDate dateFromComponents:components];
 }
 
+- (NSDate *)dateForLastDayOfMonth:(NSInteger)month {
+    NSDateComponents *components = [self.startDate components];
+    components.month = month;
+    NSDate *date = [NSDate dateFromComponents:components];
+    date = [date lastDayOfMonth];
+    return date;
+}
+
 - (NSDate *)dateForIndexPath:(NSIndexPath *)indexPath {
     NSDateComponents *components = [[self.startDate firstDayOfMonth] components];
     components.month = [self monthForSection:indexPath.section];
     components.day = indexPath.item + 1;
     NSDate *date = [NSDate dateFromComponents:components];
     
-    // Calculate the offset
     NSInteger offset = [self offsetForMonth:[self monthForSection:indexPath.section]];
     date = [date dateByAddingDays:-offset];
     
@@ -203,6 +210,12 @@ static NSInteger const kMDCalendarViewNumberOfItems = 35;
     return [firstDayOfMonth weekday] - 1;
 }
 
+- (NSInteger)remainderForMonth:(NSInteger)month {
+    NSDate *lastDayOfMonth = [self dateForLastDayOfMonth:month];
+    NSInteger weekday = [lastDayOfMonth weekday];
+    return 7 - weekday;
+}
+
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
@@ -211,9 +224,7 @@ static NSInteger const kMDCalendarViewNumberOfItems = 35;
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     NSInteger month = [self monthForSection:section];
-    NSInteger numberOfDays = [NSDate numberOfDaysInMonth:month] + [self offsetForMonth:month];
-    
-    return MAX(numberOfDays, kMDCalendarViewNumberOfItems);
+    return [NSDate numberOfDaysInMonth:month] + [self offsetForMonth:month] + [self remainderForMonth:month];
 }
 
 #pragma mark - UICollectionViewDelegate
