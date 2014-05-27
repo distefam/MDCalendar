@@ -97,8 +97,6 @@ static CGFloat const kMDCalendarViewItemSpacing    = 2.f;
 static CGFloat const kMDCalendarViewLineSpacing    = 2.f;
 static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 
-static NSInteger const kMDCalendarViewNumberOfItems = 35;
-
 @implementation MDCalendarView
 
 - (instancetype)init {
