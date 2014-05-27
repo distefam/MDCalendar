@@ -24,8 +24,6 @@ static NSString * const kMDCalendarViewCellIdentifier = @"kMDCalendarViewCellIde
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.contentView.backgroundColor = [UIColor whiteColor];
-        
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
         
 //    if ([_date day] == 1) {
@@ -98,6 +96,8 @@ static NSString * const kMDCalendarHeaderViewIdentifier = @"kMDCalendarHeaderVie
 static CGFloat const kMDCalendarViewItemSpacing    = 2.f;
 static CGFloat const kMDCalendarViewLineSpacing    = 2.f;
 static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
+
+static NSInteger const kMDCalendarViewNumberOfItems = 35;
 
 @implementation MDCalendarView
 
@@ -178,6 +178,13 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     return [self.startDate month] + section;
 }
 
+- (NSDate *)dateForFirstDayOfMonth:(NSInteger)month {
+    NSDateComponents *components = [[self.startDate firstDayOfMonth] components];
+    components.month = month;
+    components.day = 1;
+    return [NSDate dateFromComponents:components];
+}
+
 - (NSDate *)dateForIndexPath:(NSIndexPath *)indexPath {
     NSDateComponents *components = [[self.startDate firstDayOfMonth] components];
     components.month = [self monthForSection:indexPath.section];
@@ -192,14 +199,21 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    NSInteger month = [self monthForSection:section];
-    return [NSDate numberOfDaysInMonth:month];
+    return kMDCalendarViewNumberOfItems;
 }
 
 #pragma mark - UICollectionViewDelegate
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     MDCalendarViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kMDCalendarViewCellIdentifier forIndexPath:indexPath];
+    
+    NSDate *firstDayOfMonth = [self dateForFirstDayOfMonth:[self monthForSection:indexPath.section]];
+    NSInteger weekdayOfFirstDayOfMonth = [firstDayOfMonth weekday];
+    if (indexPath.item < weekdayOfFirstDayOfMonth) {
+        cell.backgroundColor = [UIColor yellowColor];
+    } else {
+        cell.backgroundColor = [UIColor whiteColor];
+    }
     cell.date = [self dateForIndexPath:indexPath];
     return cell;
 }

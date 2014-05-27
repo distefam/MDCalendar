@@ -82,6 +82,11 @@
     return [components day];
 }
 
+- (NSInteger)weekday {
+    NSDateComponents *components = MDCalendarDateComponentsFromDate(self);
+    return [components weekday];
+}
+
 - (NSInteger)month {
     NSDateComponents *components = MDCalendarDateComponentsFromDate(self);
     return [components month];

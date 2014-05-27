@@ -18,6 +18,7 @@
 - (NSDate *)lastDayOfMonth;
 
 - (NSInteger)day;
+- (NSInteger)weekday;
 - (NSInteger)month;
 - (NSString *)shortMonthString;
 - (NSInteger)year;
