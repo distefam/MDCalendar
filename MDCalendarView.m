@@ -10,7 +10,7 @@
 #import "NSDate+MDCalendar.h"
 
 @interface MDCalendarViewCell : UICollectionViewCell
-@property (nonatomic, strong) NSDate *date;
+@property (nonatomic, assign) NSDate *date;
 @end
 
 @interface MDCalendarViewCell  ()
@@ -21,22 +21,32 @@ static NSString * const kMDCalendarViewCellIdentifier = @"kMDCalendarViewCellIde
 
 @implementation MDCalendarViewCell
 
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    
-    self.contentView.backgroundColor = [UIColor whiteColor];
-    
-    UILabel *label = [[UILabel alloc] initWithFrame:self.bounds];
-    NSString *dayString = MDCalendarDayStringFromDate(_date);
-
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.contentView.backgroundColor = [UIColor whiteColor];
+        
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
+        
 //    if ([_date day] == 1) {
 //        dayString = [NSString stringWithFormat:@"%@\n%@", [_date shortMonthString], MDCalendarDayStringFromDate(_date)];
 //    }
+        
+        [self.contentView addSubview:label];
+        
+        self.label = label;
+    }
+    return self;
+}
+
+- (void)setDate:(NSDate *)date {
+    self.label.text = MDCalendarDayStringFromDate(date);
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
     
-    label.text = dayString;
-    [self.contentView addSubview:label];
-    
-    self.label = label;
+    self.label.frame = self.bounds;
 }
 
 NSString * MDCalendarDayStringFromDate(NSDate *date) {
@@ -57,15 +67,26 @@ static NSString * const kMDCalendarHeaderViewIdentifier = @"kMDCalendarHeaderVie
 
 @implementation MDCalendarHeaderView
 
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.backgroundColor = [UIColor whiteColor];
+        
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
+        [self addSubview:label];
+        self.label = label;
+    }
+    return self;
+}
+
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    self.backgroundColor = [UIColor whiteColor];
-    
-    UILabel *label = [[UILabel alloc] initWithFrame:self.bounds];
-    label.text = [NSDate monthNameForMonth:_month];
-    [self addSubview:label];
-    self.label = label;
+    self.label.frame = self.bounds;
+}
+
+- (void)setMonth:(NSInteger)month {
+    self.label.text = [NSDate monthNameForMonth:month];
 }
 
 @end
