@@ -28,7 +28,7 @@
         
         NSDate *startDate = [NSDate date];
         startDate = [startDate dateByAddingDays:-90];
-        NSDate *endDate = [startDate dateByAddingDays:90];
+        NSDate *endDate = [startDate dateByAddingDays:365];
         
         calendarView.startDate = startDate;
         calendarView.endDate = endDate;

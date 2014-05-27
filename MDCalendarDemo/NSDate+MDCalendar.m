@@ -118,21 +118,22 @@
 }
 
 - (NSInteger)numberOfMonthsUntilEndDate:(NSDate *)endDate {
-    NSDateComponents *components = MDCalendarDateComponentsFromDate(self);
-    NSInteger startMonth = [components month];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
     
-    components = MDCalendarDateComponentsFromDate(endDate);
-    NSInteger endMonth = [components month];
-    
-    if (endMonth == startMonth) {
-        return 1;   // always at least one month
-    }
-    
-    return endMonth - startMonth;
+    NSDateComponents *components = [calendar components:NSCalendarUnitMonth fromDate:self toDate:endDate options:0];
+    return [components month];
 }
 
 - (NSDate *)dateByAddingDays:(NSInteger)days {
-    return [self dateByAddingTimeInterval:days * SECONDS_IN_DAY];
+    
+    NSInteger monthsToAdd = floor(([self day] + days) / [self numberOfDaysInMonth]);
+    NSInteger daysToAdd = days % [self numberOfDaysInMonth];
+    
+    NSDateComponents *components = MDCalendarDateComponentsFromDate(self);
+    components.day = [self day] + daysToAdd;
+    NSDate *date = MDCalendarDateFromComponents(components);
+    
+    return [date dateByAddingMonths:monthsToAdd];
 }
 
 - (NSDate *)dateByAddingMonths:(NSInteger)months {
