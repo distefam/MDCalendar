@@ -74,8 +74,9 @@ static NSString * const kMDCalendarHeaderViewIdentifier = @"kMDCalendarHeaderVie
 @property (nonatomic, strong) UICollectionView *collectionView;
 @end
 
-static CGFloat const kMDCalendarViewItemSpacing = 2.f;
-static CGFloat const kMDCalendarViewLineSpacing = 2.f;
+static CGFloat const kMDCalendarViewItemSpacing    = 2.f;
+static CGFloat const kMDCalendarViewLineSpacing    = 2.f;
+static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 
 @implementation MDCalendarView
 
@@ -198,6 +199,10 @@ static CGFloat const kMDCalendarViewLineSpacing = 2.f;
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
     CGFloat boundsWidth = collectionView.bounds.size.width;
     return CGSizeMake(boundsWidth, 20);
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
+    return CGSizeMake(CGRectGetWidth(self.bounds), kMDCalendarViewSectionSpacing);
 }
 
 @end

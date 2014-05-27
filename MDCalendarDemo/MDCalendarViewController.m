@@ -8,6 +8,7 @@
 
 #import "MDCalendarViewController.h"
 #import "MDCalendarView.h"
+#import "NSDate+MDCalendar.h"
 
 @interface MDCalendarViewController ()
 @property (nonatomic, strong) NSDate *startDate;
@@ -23,7 +24,14 @@
     self = [super init];
     if (self) {
         MDCalendarView *calendarView = [[MDCalendarView alloc] init];
-        calendarView.backgroundColor = [UIColor yellowColor];
+        calendarView.backgroundColor = [UIColor lightGrayColor];
+        
+        NSDate *startDate = [NSDate date];
+        NSDate *endDate = [startDate dateByAddingDays:90];
+        
+        calendarView.startDate = startDate;
+        calendarView.endDate = endDate;
+        
         [self.view addSubview:calendarView];
         self.calendarView = calendarView;
     }
