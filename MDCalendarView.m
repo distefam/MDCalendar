@@ -193,7 +193,7 @@ static NSInteger const kMDCalendarViewNumberOfItems = 35;
     
     // Calculate the offset
     NSDate *firstDayOfMonth = [self dateForFirstDayOfMonth:[self monthForSection:indexPath.section]];
-    NSInteger offset = [firstDayOfMonth weekday];
+    NSInteger offset = [firstDayOfMonth weekday] - 1;
     date = [date dateByAddingDays:-offset];
     
     return date;
