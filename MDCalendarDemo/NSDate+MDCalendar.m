@@ -117,10 +117,8 @@
 }
 
 - (NSDate *)dateByAddingDays:(NSInteger)days {
-    NSDateComponents *components = MDCalendarDateComponentsFromDate(self);
-    NSInteger currentDay = [components day];
-    [components setDay:currentDay + days];
-    return MDCalendarDateFromComponents(components);
+    NSTimeInterval secondsInDay = 60 * 60 * 24;
+    return [self dateByAddingTimeInterval:days * secondsInDay];
 }
 
 #pragma mark - Helpers
