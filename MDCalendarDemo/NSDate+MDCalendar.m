@@ -21,6 +21,10 @@
     return range.length;
 }
 
++ (NSDate *)dateFromComponents:(NSDateComponents *)components {
+    return MDCalendarDateFromComponents(components);
+}
+
 + (NSString *)monthNameForMonth:(NSInteger)month {
     return [NSDate monthNames][month];
 }
@@ -90,6 +94,10 @@
 - (NSInteger)year {
     NSDateComponents *components = MDCalendarDateComponentsFromDate(self);
     return [components year];
+}
+
+- (NSDateComponents *)components {
+    return MDCalendarDateComponentsFromDate(self);
 }
 
 - (NSInteger)numberOfDaysInMonth {

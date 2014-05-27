@@ -158,8 +158,10 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 }
 
 - (NSDate *)dateForIndexPath:(NSIndexPath *)indexPath {
-    NSDate *firstDayOfMonth = [self.startDate firstDayOfMonth];
-    return [firstDayOfMonth dateByAddingDays:indexPath.item];
+    NSDateComponents *components = [[self.startDate firstDayOfMonth] components];
+    components.month = [self monthForSection:indexPath.section];
+    components.day = indexPath.item + 1;
+    return [NSDate dateFromComponents:components];
 }
 
 #pragma mark - UICollectionViewDataSource
