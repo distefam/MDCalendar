@@ -10,7 +10,7 @@
 #import "MDCalendarView.h"
 #import "NSDate+MDCalendar.h"
 
-@interface MDCalendarViewController ()
+@interface MDCalendarViewController () <MDCalendarViewDelegate>
 @property (nonatomic, strong) NSDate *startDate;
 @property (nonatomic, strong) NSDate *endDate;
 
@@ -31,6 +31,7 @@
         
         calendarView.startDate = startDate;
         calendarView.endDate = endDate;
+        calendarView.delegate = self;
         
         [self.view addSubview:calendarView];
         self.calendarView = calendarView;
@@ -43,6 +44,12 @@
     
     _calendarView.frame = self.view.bounds;
     _calendarView.contentInset = UIEdgeInsetsMake([self.topLayoutGuide length], 0, [self.bottomLayoutGuide length], 0);
+}
+
+#pragma mark - MDCalendarViewDelegate
+
+- (void)calendarView:(MDCalendarView *)calendarView didSelectDate:(NSDate *)date {
+    NSLog(@"Selected Date: %@", date);
 }
 
 @end

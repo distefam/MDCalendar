@@ -187,6 +187,10 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     return headerView;
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    [_delegate calendarView:self didSelectDate:[self dateForIndexPath:indexPath]];
+}
+
 #pragma mark - UICollectionViewFlowLayoutDelegate
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
