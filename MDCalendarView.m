@@ -189,7 +189,14 @@ static NSInteger const kMDCalendarViewNumberOfItems = 35;
     NSDateComponents *components = [[self.startDate firstDayOfMonth] components];
     components.month = [self monthForSection:indexPath.section];
     components.day = indexPath.item + 1;
-    return [NSDate dateFromComponents:components];
+    NSDate *date = [NSDate dateFromComponents:components];
+    
+    // Calculate the offset
+    NSDate *firstDayOfMonth = [self dateForFirstDayOfMonth:[self monthForSection:indexPath.section]];
+    NSInteger offset = [firstDayOfMonth weekday];
+    date = [date dateByAddingDays:-offset];
+    
+    return date;
 }
 
 #pragma mark - UICollectionViewDataSource
