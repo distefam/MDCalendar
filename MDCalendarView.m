@@ -195,6 +195,17 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     return [[self.startDate lastDayOfMonth] dateByAddingMonths:monthOffset];
 }
 
+- (NSInteger)offsetForMonth:(NSInteger)month {
+    NSDate *firstDayOfMonth = [self dateForFirstDayOfMonth:month];
+    return [firstDayOfMonth weekday] - 1;
+}
+
+- (NSInteger)remainderForMonth:(NSInteger)month {
+    NSDate *lastDayOfMonth = [self dateForLastDayOfMonth:month];
+    NSInteger weekday = [lastDayOfMonth weekday];
+    return DAYS_IN_WEEK - weekday;
+}
+
 - (NSDate *)dateForIndexPath:(NSIndexPath *)indexPath {
     NSDate *date = [self.startDate dateByAddingMonths:indexPath.section];
     NSDateComponents *components = [date components];
@@ -207,17 +218,6 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     }
     
     return date;
-}
-
-- (NSInteger)offsetForMonth:(NSInteger)month {
-    NSDate *firstDayOfMonth = [self dateForFirstDayOfMonth:month];
-    return [firstDayOfMonth weekday] - 1;
-}
-
-- (NSInteger)remainderForMonth:(NSInteger)month {
-    NSDate *lastDayOfMonth = [self dateForLastDayOfMonth:month];
-    NSInteger weekday = [lastDayOfMonth weekday];
-    return DAYS_IN_WEEK - weekday;
 }
 
 #pragma mark - UICollectionViewDataSource
