@@ -96,6 +96,7 @@ static NSString * const kMDCalendarHeaderViewIdentifier = @"kMDCalendarHeaderVie
 @end
 
 #define DAYS_IN_WEEK 7
+#define MONTHS_IN_YEAR 12
 
 static CGFloat const kMDCalendarViewItemSpacing    = 2.f;
 static CGFloat const kMDCalendarViewLineSpacing    = 2.f;
@@ -180,14 +181,14 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 
 - (NSDate *)dateForFirstDayOfMonth:(NSInteger)month {
     NSInteger monthForFirstSection = [self.startDate month];
-    NSInteger monthOffset = (month - monthForFirstSection) % 12;
+    NSInteger monthOffset = (month - monthForFirstSection) % MONTHS_IN_YEAR;
     
     return [[self.startDate firstDayOfMonth] dateByAddingMonths:monthOffset];
 }
 
 - (NSDate *)dateForLastDayOfMonth:(NSInteger)month {
     NSInteger monthForFirstSection = [self.startDate month];
-    NSInteger monthOffset = (month - monthForFirstSection) % 12;
+    NSInteger monthOffset = (month - monthForFirstSection) % MONTHS_IN_YEAR;
     
     return [[self.startDate lastDayOfMonth] dateByAddingMonths:monthOffset];
 }
