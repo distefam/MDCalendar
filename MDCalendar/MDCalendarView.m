@@ -7,7 +7,6 @@
 //
 
 #import "MDCalendarView.h"
-#import "NSDate+MDCalendar.h"
 
 @interface MDCalendarViewCell : UICollectionViewCell
 @property (nonatomic, assign) NSDate *date;
