@@ -191,10 +191,11 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 }
 
 - (NSDate *)dateForLastDayOfMonth:(NSInteger)month {
-    NSDateComponents *components = [self.startDate components];
-    components.month = month;
-    NSDate *date = [NSDate dateFromComponents:components];
-    date = [date lastDayOfMonth];
+    NSInteger monthForFirstSection = [self.startDate month];
+    NSInteger monthOffset = (month - monthForFirstSection) % 12;
+    
+    NSDate *date = [[self.startDate lastDayOfMonth] dateByAddingMonths:monthOffset];
+    
     return date;
 }
 
