@@ -177,9 +177,8 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 #pragma mark - Private Methods & Helper Functions
 
 - (NSInteger)monthForSection:(NSInteger)section {
-    NSDate *firstDayOfSection = [[self.startDate firstDayOfMonth] dateByAddingMonths:section];
-    
-    return [firstDayOfSection month];
+    NSDate *firstDayOfMonth = [[self.startDate firstDayOfMonth] dateByAddingMonths:section];
+    return [firstDayOfMonth month];
 }
 
 - (NSDate *)dateForFirstDayOfMonth:(NSInteger)month {
@@ -198,10 +197,10 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 }
 
 - (NSDate *)dateForIndexPath:(NSIndexPath *)indexPath {
-    NSDateComponents *components = [[self.startDate firstDayOfMonth] components];
-    components.month = [self monthForSection:indexPath.section];
+    NSDate *date = [self.startDate dateByAddingMonths:indexPath.section];
+    NSDateComponents *components = [date components];
     components.day = indexPath.item + 1;
-    NSDate *date = [NSDate dateFromComponents:components];
+    date = [NSDate dateFromComponents:components];
     
     NSInteger offset = [self offsetForMonth:[self monthForSection:indexPath.section]];
     if (offset) {

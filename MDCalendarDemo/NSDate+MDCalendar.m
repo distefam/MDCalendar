@@ -8,8 +8,6 @@
 
 #import "NSDate+MDCalendar.h"
 
-#define SECONDS_IN_DAY 86400
-
 @implementation NSDate (MDCalendar)
 
 + (NSInteger)numberOfDaysInMonth:(NSInteger)month {
@@ -126,25 +124,19 @@
 
 - (NSDate *)dateByAddingDays:(NSInteger)days {
     
-    NSInteger monthsToAdd = floor(([self day] + days) / [self numberOfDaysInMonth]);
-    NSInteger daysToAdd = days % [self numberOfDaysInMonth];
+    NSDateComponents *components = [NSDateComponents new];
+    components.day = days;
     
-    NSDateComponents *components = MDCalendarDateComponentsFromDate(self);
-    components.day = [self day] + daysToAdd;
-    NSDate *date = MDCalendarDateFromComponents(components);
-    
-    return [date dateByAddingMonths:monthsToAdd];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    return [calendar dateByAddingComponents:components toDate:self options:0];
 }
 
 - (NSDate *)dateByAddingMonths:(NSInteger)months {
-    NSInteger yearsToAdd = floor(([self month] + months) / 12);
-    NSInteger monthsToAdd = months % 12;
+    NSDateComponents *components = [NSDateComponents new];
+    components.month = months;
     
-    NSDateComponents *components = MDCalendarDateComponentsFromDate(self);
-    components.month = [self month] + monthsToAdd;
-    components.year = [self year] + yearsToAdd;
-    
-    return MDCalendarDateFromComponents(components);
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    return [calendar dateByAddingComponents:components toDate:self options:0];
 }
 
 #pragma mark - Helpers
