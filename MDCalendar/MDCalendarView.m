@@ -179,27 +179,22 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     return [firstDayOfMonth month];
 }
 
-- (NSDate *)dateForFirstDayOfMonth:(NSInteger)month {
-    NSInteger monthForFirstSection = [self.startDate month];
-    NSInteger monthOffset = (month - monthForFirstSection) % MONTHS_IN_YEAR;
-    
-    return [[self.startDate firstDayOfMonth] dateByAddingMonths:monthOffset];
+- (NSDate *)dateForFirstDayOfSection:(NSInteger)section {
+    return [[self.startDate firstDayOfMonth] dateByAddingMonths:section];
 }
 
-- (NSDate *)dateForLastDayOfMonth:(NSInteger)month {
-    NSInteger monthForFirstSection = [self.startDate month];
-    NSInteger monthOffset = (month - monthForFirstSection) % MONTHS_IN_YEAR;
-    
-    return [[self.startDate lastDayOfMonth] dateByAddingMonths:monthOffset];
+- (NSDate *)dateForLastDayOfSection:(NSInteger)section {
+    NSDate *firstDayOfMonth = [self dateForFirstDayOfSection:section];
+    return [firstDayOfMonth lastDayOfMonth];
 }
 
-- (NSInteger)offsetForMonth:(NSInteger)month {
-    NSDate *firstDayOfMonth = [self dateForFirstDayOfMonth:month];
+- (NSInteger)offsetForSection:(NSInteger)section {
+    NSDate *firstDayOfMonth = [self dateForFirstDayOfSection:section];
     return [firstDayOfMonth weekday] - 1;
 }
 
-- (NSInteger)remainderForMonth:(NSInteger)month {
-    NSDate *lastDayOfMonth = [self dateForLastDayOfMonth:month];
+- (NSInteger)remainderForSection:(NSInteger)section {
+    NSDate *lastDayOfMonth = [self dateForLastDayOfSection:section];
     NSInteger weekday = [lastDayOfMonth weekday];
     return DAYS_IN_WEEK - weekday;
 }
@@ -210,7 +205,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     components.day = indexPath.item + 1;
     date = [NSDate dateFromComponents:components];
     
-    NSInteger offset = [self offsetForMonth:[self monthForSection:indexPath.section]];
+    NSInteger offset = [self offsetForSection:indexPath.section];
     if (offset) {
         date = [date dateByAddingDays:-offset];
     }
@@ -226,7 +221,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     NSInteger month = [self monthForSection:section];
-    return [NSDate numberOfDaysInMonth:month] + [self offsetForMonth:month] + [self remainderForMonth:month];
+    return [NSDate numberOfDaysInMonth:month] + [self offsetForSection:section] + [self remainderForSection:section];
 }
 
 #pragma mark - UICollectionViewDelegate
