@@ -164,11 +164,19 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     return pStartDate;
 }
 
+- (void)setStartDate:(NSDate *)startDate {
+    pStartDate = startDate;
+}
+
 - (NSDate *)endDate {
     if (!pEndDate) {
         pEndDate = [self.startDate lastDayOfMonth];
     }
     return pEndDate;
+}
+
+- (void)setEndDate:(NSDate *)endDate {
+    pEndDate = endDate;
 }
 
 #pragma mark - Private Methods & Helper Functions
