@@ -1,1 +1,12 @@
-MDCalendarDemo.xcodeproj/xcuserdata/
+build
+*.pbxuser
+*.mode1v3
+*.xcworkspace
+xcuserdata
+!xcshareddata
+.DS_Store
+/target
+appledoc/Output
+Podfile.lock
+Pods
+.idea/*
