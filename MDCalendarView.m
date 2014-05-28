@@ -103,7 +103,6 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 
 @implementation MDCalendarView
 
-@synthesize calendar = pCalendar;
 @synthesize currentDate = pCurrentDate;
 @synthesize startDate = pStartDate;
 @synthesize endDate = pEndDate;
@@ -149,13 +148,6 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 
 - (void)setContentInset:(UIEdgeInsets)contentInset {
     _collectionView.contentInset = contentInset;
-}
-
-- (NSCalendar *)calendar {
-    if (!pCalendar) {
-        pCalendar = [[NSCalendar currentCalendar] copy];
-    }
-    return pCalendar;
 }
 
 - (NSDate *)currentDate {
