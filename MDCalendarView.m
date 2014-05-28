@@ -34,19 +34,19 @@ static NSString * const kMDCalendarViewCellIdentifier = @"kMDCalendarViewCellIde
 }
 
 - (void)setDate:(NSDate *)date {
-    self.label.text = MDCalendarDayStringFromDate(date);
+    _label.text = MDCalendarDayStringFromDate(date);
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    self.label.frame = self.bounds;
+    _label.frame = self.bounds;
 }
 
 - (void)prepareForReuse {
     [super prepareForReuse];
     self.contentView.backgroundColor = nil;
-    self.label.text = @"";
+    _label.text = @"";
 }
 
 NSString * MDCalendarDayStringFromDate(NSDate *date) {
@@ -82,11 +82,11 @@ static NSString * const kMDCalendarHeaderViewIdentifier = @"kMDCalendarHeaderVie
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    self.label.frame = self.bounds;
+    _label.frame = self.bounds;
 }
 
 - (void)setMonth:(NSInteger)month {
-    self.label.text = [NSDate monthNameForMonth:month];
+    _label.text = [NSDate monthNameForMonth:month];
 }
 
 @end
@@ -102,6 +102,11 @@ static CGFloat const kMDCalendarViewLineSpacing    = 2.f;
 static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 
 @implementation MDCalendarView
+
+@synthesize calendar = pCalendar;
+@synthesize currentDate = pCurrentDate;
+@synthesize startDate = pStartDate;
+@synthesize endDate = pEndDate;
 
 - (instancetype)init {
     return [self initWithStartDate:self.startDate endDate:self.endDate];
@@ -147,31 +152,31 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 }
 
 - (NSCalendar *)calendar {
-    if (!_calendar) {
-        _calendar = [[NSCalendar currentCalendar] copy];
+    if (!pCalendar) {
+        pCalendar = [[NSCalendar currentCalendar] copy];
     }
-    return _calendar;
+    return pCalendar;
 }
 
 - (NSDate *)currentDate {
-    if (!_currentDate) {
-        _currentDate = [NSDate date];
+    if (!pCurrentDate) {
+        pCurrentDate = [NSDate date];
     }
-    return _currentDate;
+    return pCurrentDate;
 }
 
 - (NSDate *)startDate {
-    if (!_startDate) {
-        _startDate = self.currentDate;
+    if (!pStartDate) {
+        pStartDate = self.currentDate;
     }
-    return _startDate;
+    return pStartDate;
 }
 
 - (NSDate *)endDate {
-    if (!_endDate) {
-        _endDate = [self.startDate lastDayOfMonth];
+    if (!pEndDate) {
+        pEndDate = [self.startDate lastDayOfMonth];
     }
-    return _endDate;
+    return pEndDate;
 }
 
 #pragma mark - Private Methods & Helper Functions
