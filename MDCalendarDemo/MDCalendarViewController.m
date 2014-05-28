@@ -7,15 +7,15 @@
 //
 
 #import "MDCalendarViewController.h"
-#import "MDCalendarView.h"
+#import "MDCalendar.h"
 #import "NSDate+MDCalendar.h"
 
-@interface MDCalendarViewController () <MDCalendarViewDelegate>
+@interface MDCalendarViewController () <MDCalendarDelegate>
 @property (nonatomic, strong) NSDate *startDate;
 @property (nonatomic, strong) NSDate *endDate;
 
 @property (nonatomic, assign) NSDate *firstDayOfStartMonth;
-@property (nonatomic, strong) MDCalendarView *calendarView;
+@property (nonatomic, strong) MDCalendar *calendarView;
 @end
 
 @implementation MDCalendarViewController
@@ -23,7 +23,7 @@
 - (instancetype)init {
     self = [super init];
     if (self) {
-        MDCalendarView *calendarView = [[MDCalendarView alloc] init];
+        MDCalendar *calendarView = [[MDCalendar alloc] init];
         calendarView.backgroundColor = [UIColor lightGrayColor];
         
         NSDate *startDate = [NSDate date];
@@ -48,7 +48,7 @@
 
 #pragma mark - MDCalendarViewDelegate
 
-- (void)calendarView:(MDCalendarView *)calendarView didSelectDate:(NSDate *)date {
+- (void)calendarView:(MDCalendar *)calendarView didSelectDate:(NSDate *)date {
     NSLog(@"Selected Date: %@", date);
 }
 

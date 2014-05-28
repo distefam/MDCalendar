@@ -7,8 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0B7EA05219364EB6009D95CC /* MDCalendarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B7EA04D19364EB6009D95CC /* MDCalendarView.m */; };
-		0B7EA05319364EB6009D95CC /* MDCalendarViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B7EA04F19364EB6009D95CC /* MDCalendarViewLayout.m */; };
+		0B7EA05219364EB6009D95CC /* MDCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B7EA04D19364EB6009D95CC /* MDCalendar.m */; };
 		0B7EA05419364EB6009D95CC /* NSDate+MDCalendar.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B7EA05119364EB6009D95CC /* NSDate+MDCalendar.m */; };
 		0C50FB97192FBCFC0043D2D5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C50FB96192FBCFC0043D2D5 /* Foundation.framework */; };
 		0C50FB99192FBCFC0043D2D5 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C50FB98192FBCFC0043D2D5 /* CoreGraphics.framework */; };
@@ -36,10 +35,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0B7EA04C19364EB6009D95CC /* MDCalendarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCalendarView.h; sourceTree = "<group>"; };
-		0B7EA04D19364EB6009D95CC /* MDCalendarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCalendarView.m; sourceTree = "<group>"; };
-		0B7EA04E19364EB6009D95CC /* MDCalendarViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCalendarViewLayout.h; sourceTree = "<group>"; };
-		0B7EA04F19364EB6009D95CC /* MDCalendarViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCalendarViewLayout.m; sourceTree = "<group>"; };
+		0B7EA04C19364EB6009D95CC /* MDCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCalendar.h; sourceTree = "<group>"; };
+		0B7EA04D19364EB6009D95CC /* MDCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCalendar.m; sourceTree = "<group>"; };
 		0B7EA05019364EB6009D95CC /* NSDate+MDCalendar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+MDCalendar.h"; sourceTree = "<group>"; };
 		0B7EA05119364EB6009D95CC /* NSDate+MDCalendar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+MDCalendar.m"; sourceTree = "<group>"; };
 		0C50FB93192FBCFC0043D2D5 /* MDCalendarDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MDCalendarDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -89,10 +86,8 @@
 		0B7EA04B19364EB6009D95CC /* MDCalendar */ = {
 			isa = PBXGroup;
 			children = (
-				0B7EA04C19364EB6009D95CC /* MDCalendarView.h */,
-				0B7EA04D19364EB6009D95CC /* MDCalendarView.m */,
-				0B7EA04E19364EB6009D95CC /* MDCalendarViewLayout.h */,
-				0B7EA04F19364EB6009D95CC /* MDCalendarViewLayout.m */,
+				0B7EA04C19364EB6009D95CC /* MDCalendar.h */,
+				0B7EA04D19364EB6009D95CC /* MDCalendar.m */,
 				0B7EA05019364EB6009D95CC /* NSDate+MDCalendar.h */,
 				0B7EA05119364EB6009D95CC /* NSDate+MDCalendar.m */,
 			);
@@ -277,11 +272,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				0C50FBA3192FBCFC0043D2D5 /* main.m in Sources */,
-				0B7EA05219364EB6009D95CC /* MDCalendarView.m in Sources */,
+				0B7EA05219364EB6009D95CC /* MDCalendar.m in Sources */,
 				0C50FBA7192FBCFC0043D2D5 /* MDAppDelegate.m in Sources */,
 				0B7EA05419364EB6009D95CC /* NSDate+MDCalendar.m in Sources */,
 				0C50FBC9192FBD4A0043D2D5 /* MDCalendarViewController.m in Sources */,
-				0B7EA05319364EB6009D95CC /* MDCalendarViewLayout.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

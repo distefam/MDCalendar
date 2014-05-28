@@ -1,12 +1,12 @@
 //
-//  MDCalendarView.m
+//  MDCalendar.m
 //  
 //
 //  Created by Michael Distefano on 5/23/14.
 //
 //
 
-#import "MDCalendarView.h"
+#import "MDCalendar.h"
 
 @interface MDCalendarViewCell : UICollectionViewCell
 @property (nonatomic, assign) NSDate *date;
@@ -90,7 +90,7 @@ static NSString * const kMDCalendarHeaderViewIdentifier = @"kMDCalendarHeaderVie
 
 @end
 
-@interface MDCalendarView () <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource>
+@interface MDCalendar () <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource>
 @property (nonatomic, strong) UICollectionView *collectionView;
 @end
 
@@ -101,7 +101,7 @@ static CGFloat const kMDCalendarViewItemSpacing    = 2.f;
 static CGFloat const kMDCalendarViewLineSpacing    = 2.f;
 static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 
-@implementation MDCalendarView
+@implementation MDCalendar
 
 @synthesize currentDate = pCurrentDate;
 @synthesize startDate = pStartDate;
