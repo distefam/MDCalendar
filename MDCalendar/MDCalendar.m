@@ -177,9 +177,19 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
         [_collectionView registerClass:[MDCalendarViewCell class] forCellWithReuseIdentifier:kMDCalendarViewCellIdentifier];
         [_collectionView registerClass:[MDCalendarHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kMDCalendarHeaderViewIdentifier];
         
+        
+        
         [self addSubview:_collectionView];
     }
     return self;
+}
+
+- (CGSize)headerViewSize {
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
+    label.font = self.headerFont;
+    label.text = @"December";
+    [label sizeToFit];
+    return label.bounds.size;
 }
 
 
@@ -369,7 +379,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
     CGFloat boundsWidth = collectionView.bounds.size.width;
-    return CGSizeMake(boundsWidth, 20);
+    return CGSizeMake(boundsWidth, [self headerViewSize].height);
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
