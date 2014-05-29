@@ -28,7 +28,6 @@
         calendarView.backgroundColor = [UIColor whiteColor];
         calendarView.textColor = [UIColor blackColor];
         calendarView.highlightColor = [UIColor lightGrayColor];
-        calendarView.font = [UIFont systemFontOfSize:17];
         
         NSDate *startDate = [NSDate date];
         NSDate *endDate = [startDate dateByAddingDays:365];

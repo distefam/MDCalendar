@@ -63,8 +63,11 @@ static NSString * const kMDCalendarViewCellIdentifier = @"kMDCalendarViewCellIde
     [super layoutSubviews];
     
     _label.frame = self.bounds;
-    _highlightView.frame = self.bounds;
-    _highlightView.layer.cornerRadius = CGRectGetHeight(self.bounds) / 2;
+    
+    // bounds of highlight view 10% smaller than cell
+    CGFloat highlightViewInset = CGRectGetHeight(self.bounds) * 0.1f;
+    _highlightView.frame = CGRectInset(self.bounds, highlightViewInset, highlightViewInset);
+    _highlightView.layer.cornerRadius = CGRectGetHeight(_highlightView.bounds) / 2;
 }
 
 - (void)prepareForReuse {
@@ -99,6 +102,8 @@ static NSString * const kMDCalendarHeaderViewIdentifier = @"kMDCalendarHeaderVie
         self.backgroundColor = [UIColor whiteColor];
         
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
+        label.textAlignment = NSTextAlignmentCenter;
+        
         [self addSubview:label];
         self.label = label;
     }
@@ -142,10 +147,11 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 @synthesize selectedDate        = pSelectedDate;
 @synthesize startDate           = pStartDate;
 @synthesize endDate             = pEndDate;
-@synthesize font                = pFont;
+@synthesize dayFont             = pDayFont;
 @synthesize textColor           = pTextColor;
 @synthesize cellBackgroundColor = pCellBackgroundColor;
 @synthesize highlightColor      = pHighlightColor;
+@synthesize headerFont          = pHeaderFont;
 
 - (instancetype)init {
     self = [super init];
@@ -158,6 +164,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
         _collectionView.dataSource = self;
         _collectionView.delegate   = self;
         _collectionView.backgroundColor = [UIColor whiteColor];
+        
         [_collectionView registerClass:[MDCalendarViewCell class] forCellWithReuseIdentifier:kMDCalendarViewCellIdentifier];
         [_collectionView registerClass:[MDCalendarHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kMDCalendarHeaderViewIdentifier];
         
@@ -212,11 +219,18 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     pEndDate = endDate;
 }
 
-- (UIFont *)font {
-    if (!pFont) {
-        pFont = [UIFont systemFontOfSize:[UIFont systemFontSize]];
+- (UIFont *)dayFont {
+    if (!pDayFont) {
+        pDayFont = [UIFont systemFontOfSize:17];
     }
-    return pFont;
+    return pDayFont;
+}
+
+- (UIFont *)headerFont {
+    if (!pHeaderFont) {
+        pHeaderFont = [UIFont systemFontOfSize:20];
+    }
+    return pHeaderFont;
 }
 
 - (UIColor *)textColor {
@@ -299,7 +313,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     
     MDCalendarViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kMDCalendarViewCellIdentifier forIndexPath:indexPath];
     cell.backgroundColor = self.cellBackgroundColor;
-    cell.font = self.font;
+    cell.font = self.dayFont;
     cell.textColor = self.textColor;
     cell.date = date;
     cell.tintColor = self.highlightColor;
@@ -322,7 +336,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     MDCalendarHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kMDCalendarHeaderViewIdentifier forIndexPath:indexPath];
-    headerView.font = self.font;
+    headerView.font = self.headerFont;
     headerView.textColor = self.textColor;
     headerView.backgroundColor = self.backgroundColor;
     headerView.month = [self monthForSection:indexPath.section];
