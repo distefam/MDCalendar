@@ -10,6 +10,7 @@
 
 @interface MDCalendarViewCell : UICollectionViewCell
 @property (nonatomic, assign) NSDate *date;
+@property (nonatomic, assign) UIFont *font;
 @end
 
 @interface MDCalendarViewCell  ()
@@ -24,6 +25,7 @@ static NSString * const kMDCalendarViewCellIdentifier = @"kMDCalendarViewCellIde
     self = [super initWithFrame:frame];
     if (self) {
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
+        label.textAlignment = NSTextAlignmentCenter;
         
         [self.contentView addSubview:label];
         
@@ -34,6 +36,10 @@ static NSString * const kMDCalendarViewCellIdentifier = @"kMDCalendarViewCellIde
 
 - (void)setDate:(NSDate *)date {
     _label.text = MDCalendarDayStringFromDate(date);
+}
+
+- (void)setFont:(UIFont *)font {
+    _label.font = font;
 }
 
 - (void)layoutSubviews {
@@ -56,6 +62,7 @@ NSString * MDCalendarDayStringFromDate(NSDate *date) {
 
 @interface MDCalendarHeaderView : UICollectionReusableView
 @property (nonatomic, assign) NSInteger month;
+@property (nonatomic, assign) UIFont *font;
 @end
 
 @interface MDCalendarHeaderView ()
@@ -88,6 +95,10 @@ static NSString * const kMDCalendarHeaderViewIdentifier = @"kMDCalendarHeaderVie
     _label.text = [NSDate monthNameForMonth:month];
 }
 
+- (void)setFont:(UIFont *)font {
+    _label.font = font;
+}
+
 @end
 
 @interface MDCalendar () <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource>
@@ -104,8 +115,9 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 @implementation MDCalendar
 
 @synthesize currentDate = pCurrentDate;
-@synthesize startDate = pStartDate;
-@synthesize endDate = pEndDate;
+@synthesize startDate   = pStartDate;
+@synthesize endDate     = pEndDate;
+@synthesize font        = pFont;
 
 - (instancetype)init {
     self = [super init];
@@ -173,6 +185,13 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     pEndDate = endDate;
 }
 
+- (UIFont *)font {
+    if (!pFont) {
+        pFont = [UIFont systemFontOfSize:[UIFont systemFontSize]];
+    }
+    return pFont;
+}
+
 #pragma mark - Private Methods & Helper Functions
 
 - (NSInteger)monthForSection:(NSInteger)section {
@@ -229,6 +248,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     MDCalendarViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kMDCalendarViewCellIdentifier forIndexPath:indexPath];
+    cell.font = self.font;
     
     NSDate *date = [self dateForIndexPath:indexPath];
     NSInteger sectionMonth = [self monthForSection:indexPath.section];
@@ -244,6 +264,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     MDCalendarHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kMDCalendarHeaderViewIdentifier forIndexPath:indexPath];
+    headerView.font = self.font;
     headerView.month = [self monthForSection:indexPath.section];
     return headerView;
 }

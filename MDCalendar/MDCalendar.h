@@ -21,6 +21,8 @@
 
 @property (nonatomic, assign) id<MDCalendarDelegate>delegate;
 
+@property (nonatomic, strong) UIFont *font;         // Specify font for cell text and headers. Default is system font.
+
 @end
 
 @protocol MDCalendarDelegate <NSObject>
