@@ -16,6 +16,7 @@
 
 @interface MDCalendarViewCell  ()
 @property (nonatomic, strong) UILabel *label;
+@property (nonatomic, strong) UIView  *highlightView;
 @end
 
 static NSString * const kMDCalendarViewCellIdentifier = @"kMDCalendarViewCellIdentifier";
@@ -28,9 +29,15 @@ static NSString * const kMDCalendarViewCellIdentifier = @"kMDCalendarViewCellIde
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
         label.textAlignment = NSTextAlignmentCenter;
         
+        UIView *highlightView = [[UIView alloc] initWithFrame:CGRectZero];
+        highlightView.backgroundColor = self.tintColor;
+        highlightView.hidden = YES;
+        
+        [self.contentView addSubview:highlightView];
         [self.contentView addSubview:label];
         
         self.label = label;
+        self.highlightView = highlightView;
     }
     return self;
 }
@@ -47,10 +54,17 @@ static NSString * const kMDCalendarViewCellIdentifier = @"kMDCalendarViewCellIde
     _label.textColor = textColor;
 }
 
+- (void)setHighlighted:(BOOL)highlighted {
+    _highlightView.hidden = !highlighted;
+    _label.textColor = highlighted ? [UIColor whiteColor] : _textColor;
+}
+
 - (void)layoutSubviews {
     [super layoutSubviews];
     
     _label.frame = self.bounds;
+    _highlightView.frame = self.bounds;
+    _highlightView.layer.cornerRadius = CGRectGetHeight(self.bounds) / 2;
 }
 
 - (void)prepareForReuse {
@@ -281,23 +295,27 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 #pragma mark - UICollectionViewDelegate
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    MDCalendarViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kMDCalendarViewCellIdentifier forIndexPath:indexPath];
-    cell.font = self.font;
-    cell.backgroundColor = self.backgroundColor;
-    cell.textColor = self.textColor;
-    
     NSDate *date = [self dateForIndexPath:indexPath];
+    
+    MDCalendarViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kMDCalendarViewCellIdentifier forIndexPath:indexPath];
+    cell.backgroundColor = self.cellBackgroundColor;
+    cell.font = self.font;
+    cell.textColor = self.textColor;
+    cell.date = date;
+    
     NSInteger sectionMonth = [self monthForSection:indexPath.section];
+    
     if ([date month] != sectionMonth) {
-        cell.backgroundColor = [self.cellBackgroundColor colorWithAlphaComponent:0.3];
-        cell.textColor = [self.textColor colorWithAlphaComponent:0.3];
+        if (self.showsDaysOutsideCurrentMonth) {
+            cell.backgroundColor = [self.cellBackgroundColor colorWithAlphaComponent:0.3];
+            cell.textColor       = [self.textColor colorWithAlphaComponent:0.3];
+        } else {
+            cell.label.text = @"";
+        }
     } else if ([date isEqualToDate:self.selectedDate]) {
-        cell.backgroundColor = self.highlightColor;
-    } else {
-        cell.backgroundColor = self.cellBackgroundColor;
+        cell.highlighted = YES;
     }
     
-    cell.date = date;
     return cell;
 }
 

@@ -25,10 +25,9 @@
     if (self) {
         MDCalendar *calendarView = [[MDCalendar alloc] init];
         
-        calendarView.backgroundColor = [UIColor lightGrayColor];
-        calendarView.cellBackgroundColor = [UIColor whiteColor];
-        calendarView.textColor = [UIColor darkGrayColor];
-        calendarView.highlightColor = [UIColor yellowColor];
+        calendarView.backgroundColor = [UIColor whiteColor];
+        calendarView.textColor = [UIColor blackColor];
+        calendarView.highlightColor = [UIColor lightGrayColor];
         calendarView.font = [UIFont systemFontOfSize:17];
         
         NSDate *startDate = [NSDate date];
