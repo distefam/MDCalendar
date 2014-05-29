@@ -29,6 +29,7 @@ static NSString * const kMDCalendarViewCellIdentifier = @"kMDCalendarViewCellIde
     if (self) {
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
         label.textAlignment = NSTextAlignmentCenter;
+        label.adjustsFontSizeToFitWidth = YES;
         
         UIView *highlightView = [[UIView alloc] initWithFrame:CGRectZero];
         highlightView.hidden = YES;
