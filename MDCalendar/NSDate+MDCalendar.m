@@ -139,6 +139,15 @@
     return [calendar dateByAddingComponents:components toDate:self options:0];
 }
 
+- (BOOL)isEqualToDate:(NSDate *)otherDate {
+    if (self.day == otherDate.day &&
+        self.month == otherDate.month &&
+        self.year == otherDate.year) {
+        return YES;
+    }
+    return NO;
+}
+
 #pragma mark - Helpers
                   
 NSDateComponents * MDCalendarDateComponentsFromDate(NSDate *date) {

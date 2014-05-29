@@ -28,4 +28,6 @@
 - (NSDate *)dateByAddingDays:(NSInteger)days;
 - (NSDate *)dateByAddingMonths:(NSInteger)months;
 
+- (BOOL)isEqualToDate:(NSDate *)otherDate;
+
 @end

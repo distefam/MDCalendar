@@ -125,7 +125,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 
 @implementation MDCalendar
 
-@synthesize currentDate         = pCurrentDate;
+@synthesize selectedDate        = pSelectedDate;
 @synthesize startDate           = pStartDate;
 @synthesize endDate             = pEndDate;
 @synthesize font                = pFont;
@@ -169,16 +169,16 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     _collectionView.contentInset = contentInset;
 }
 
-- (NSDate *)currentDate {
-    if (!pCurrentDate) {
-        pCurrentDate = [NSDate date];
+- (NSDate *)selectedDate {
+    if (!pSelectedDate) {
+        pSelectedDate = [NSDate date];
     }
-    return pCurrentDate;
+    return pSelectedDate;
 }
 
 - (NSDate *)startDate {
     if (!pStartDate) {
-        pStartDate = self.currentDate;
+        pStartDate = self.selectedDate;
     }
     return pStartDate;
 }
@@ -290,6 +290,8 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     NSInteger sectionMonth = [self monthForSection:indexPath.section];
     if ([date month] != sectionMonth) {
         cell.backgroundColor = [self.cellBackgroundColor colorWithAlphaComponent:0.5];
+    } else if ([date isEqualToDate:self.selectedDate]) {
+        cell.backgroundColor = self.highlightColor;
     } else {
         cell.backgroundColor = self.cellBackgroundColor;
     }
