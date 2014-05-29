@@ -114,10 +114,13 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 
 @implementation MDCalendar
 
-@synthesize currentDate = pCurrentDate;
-@synthesize startDate   = pStartDate;
-@synthesize endDate     = pEndDate;
-@synthesize font        = pFont;
+@synthesize currentDate         = pCurrentDate;
+@synthesize startDate           = pStartDate;
+@synthesize endDate             = pEndDate;
+@synthesize font                = pFont;
+@synthesize textColor           = pTextColor;
+@synthesize cellBackgroundColor = pCellBackgroundColor;
+@synthesize highlightColor      = pHighlightColor;
 
 - (instancetype)init {
     self = [super init];
@@ -190,6 +193,27 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
         pFont = [UIFont systemFontOfSize:[UIFont systemFontSize]];
     }
     return pFont;
+}
+
+- (UIColor *)textColor {
+    if (!pTextColor) {
+        pTextColor = [UIColor blackColor];
+    }
+    return pTextColor;
+}
+
+- (UIColor *)cellBackgroundColor {
+    if (!pCellBackgroundColor) {
+        pCellBackgroundColor = [UIColor whiteColor];
+    }
+    return pCellBackgroundColor;
+}
+
+- (UIColor *)highlightColor {
+    if (!pHighlightColor) {
+        pHighlightColor = self.tintColor;
+    }
+    return pHighlightColor;
 }
 
 #pragma mark - Private Methods & Helper Functions

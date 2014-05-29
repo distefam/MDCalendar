@@ -21,7 +21,10 @@
 
 @property (nonatomic, assign) id<MDCalendarDelegate>delegate;
 
-@property (nonatomic, strong) UIFont *font;         // Specify font for cell text and headers. Default is system font.
+@property (nonatomic, strong) UIFont  *font;                    // Specify font for cell text and headers. Default is system font.
+@property (nonatomic, strong) UIColor *textColor;               // Default is black.
+@property (nonatomic, strong) UIColor *cellBackgroundColor;     // Default is white.
+@property (nonatomic, strong) UIColor *highlightColor;          // Default is tint color
 
 @end
 
