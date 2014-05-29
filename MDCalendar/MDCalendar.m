@@ -30,7 +30,6 @@ static NSString * const kMDCalendarViewCellIdentifier = @"kMDCalendarViewCellIde
         label.textAlignment = NSTextAlignmentCenter;
         
         UIView *highlightView = [[UIView alloc] initWithFrame:CGRectZero];
-        highlightView.backgroundColor = self.tintColor;
         highlightView.hidden = YES;
         
         [self.contentView addSubview:highlightView];
@@ -56,6 +55,7 @@ static NSString * const kMDCalendarViewCellIdentifier = @"kMDCalendarViewCellIde
 
 - (void)setHighlighted:(BOOL)highlighted {
     _highlightView.hidden = !highlighted;
+    _highlightView.backgroundColor = self.tintColor;
     _label.textColor = highlighted ? [UIColor whiteColor] : _textColor;
 }
 
