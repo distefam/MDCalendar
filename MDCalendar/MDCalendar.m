@@ -136,7 +136,6 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 - (instancetype)init {
     self = [super init];
     if (self) {
-        // TODO: make a custom layout
         UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];
         layout.minimumInteritemSpacing  = kMDCalendarViewItemSpacing;
         layout.minimumLineSpacing       = kMDCalendarViewLineSpacing;
@@ -290,9 +289,9 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     NSDate *date = [self dateForIndexPath:indexPath];
     NSInteger sectionMonth = [self monthForSection:indexPath.section];
     if ([date month] != sectionMonth) {
-        cell.backgroundColor = self.highlightColor;
+        cell.backgroundColor = [self.cellBackgroundColor colorWithAlphaComponent:0.5];
     } else {
-        cell.backgroundColor = self.backgroundColor;
+        cell.backgroundColor = self.cellBackgroundColor;
     }
     
     cell.date = date;
