@@ -11,7 +11,8 @@
 @interface MDCalendarViewCell : UICollectionViewCell
 @property (nonatomic, assign) NSDate  *date;
 @property (nonatomic, assign) UIFont  *font;
-@property (nonatomic, assign) UIColor *textColor;
+@property (nonatomic, strong) UIColor *textColor;
+@property (nonatomic, assign) UIColor *highlightColor;
 @end
 
 @interface MDCalendarViewCell  ()
@@ -50,13 +51,19 @@ static NSString * const kMDCalendarViewCellIdentifier = @"kMDCalendarViewCellIde
 }
 
 - (void)setTextColor:(UIColor *)textColor {
+    _textColor = textColor;
     _label.textColor = textColor;
 }
 
-- (void)setHighlighted:(BOOL)highlighted {
-    _highlightView.hidden = !highlighted;
-    _highlightView.backgroundColor = self.tintColor;
-    _label.textColor = highlighted ? [UIColor whiteColor] : _textColor;
+- (void)setHighlightColor:(UIColor *)highlightColor {
+    _highlightView.backgroundColor = highlightColor;
+}
+
+- (void)setSelected:(BOOL)selected {
+    [super setSelected:selected];
+    
+    _highlightView.hidden = !selected;
+    _label.textColor = selected ? [UIColor whiteColor] : _textColor;
 }
 
 - (void)layoutSubviews {
@@ -72,6 +79,7 @@ static NSString * const kMDCalendarViewCellIdentifier = @"kMDCalendarViewCellIde
 
 - (void)prepareForReuse {
     [super prepareForReuse];
+    
     self.contentView.backgroundColor = nil;
     _label.text = @"";
 }
@@ -164,6 +172,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
         _collectionView.dataSource = self;
         _collectionView.delegate   = self;
         _collectionView.backgroundColor = [UIColor whiteColor];
+        _collectionView.allowsMultipleSelection = NO;
         
         [_collectionView registerClass:[MDCalendarViewCell class] forCellWithReuseIdentifier:kMDCalendarViewCellIdentifier];
         [_collectionView registerClass:[MDCalendarHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kMDCalendarHeaderViewIdentifier];
@@ -316,7 +325,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     cell.font = self.dayFont;
     cell.textColor = self.textColor;
     cell.date = date;
-    cell.tintColor = self.highlightColor;
+    cell.highlightColor = self.highlightColor;
     
     NSInteger sectionMonth = [self monthForSection:indexPath.section];
     
@@ -328,7 +337,8 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
             cell.label.text = @"";
         }
     } else if ([date isEqualToDate:self.selectedDate]) {
-        cell.highlighted = YES;
+        cell.selected = YES;
+        [collectionView selectItemAtIndexPath:indexPath animated:YES scrollPosition:UICollectionViewScrollPositionNone];
     }
     
     return cell;
@@ -346,6 +356,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     [_delegate calendarView:self didSelectDate:[self dateForIndexPath:indexPath]];
 }
+
 
 #pragma mark - UICollectionViewFlowLayoutDelegate
 
