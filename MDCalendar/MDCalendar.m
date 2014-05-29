@@ -284,6 +284,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     MDCalendarViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kMDCalendarViewCellIdentifier forIndexPath:indexPath];
     cell.font = self.font;
+    cell.backgroundColor = self.backgroundColor;
     cell.textColor = self.textColor;
     
     NSDate *date = [self dateForIndexPath:indexPath];
@@ -302,6 +303,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     MDCalendarHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kMDCalendarHeaderViewIdentifier forIndexPath:indexPath];
     headerView.font = self.font;
     headerView.textColor = self.textColor;
+    headerView.backgroundColor = self.backgroundColor;
     headerView.month = [self monthForSection:indexPath.section];
     return headerView;
 }
