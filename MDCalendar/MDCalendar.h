@@ -21,8 +21,6 @@
 
 @property (nonatomic, assign) id<MDCalendarDelegate>delegate;
 
-- (instancetype)initWithStartDate:(NSDate *)startDate endDate:(NSDate *)endDate;    // Designated Initializer
-
 @end
 
 @protocol MDCalendarDelegate <NSObject>

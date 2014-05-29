@@ -1,6 +1,6 @@
 //
 //  MDCalendar.m
-//  
+//
 //
 //  Created by Michael Distefano on 5/23/14.
 //
@@ -108,15 +108,8 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 @synthesize endDate = pEndDate;
 
 - (instancetype)init {
-    return [self initWithStartDate:self.startDate endDate:self.endDate];
-}
-
-- (instancetype)initWithStartDate:(NSDate *)startDate endDate:(NSDate *)endDate {
     self = [super init];
     if (self) {
-        self.startDate = startDate;
-        self.endDate = endDate;
-        
         // TODO: make a custom layout
         UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];
         layout.minimumInteritemSpacing  = kMDCalendarViewItemSpacing;
@@ -133,6 +126,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     }
     return self;
 }
+
 
 - (void)layoutSubviews {
     [super layoutSubviews];
