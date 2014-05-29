@@ -302,6 +302,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     cell.font = self.font;
     cell.textColor = self.textColor;
     cell.date = date;
+    cell.tintColor = self.highlightColor;
     
     NSInteger sectionMonth = [self monthForSection:indexPath.section];
     
