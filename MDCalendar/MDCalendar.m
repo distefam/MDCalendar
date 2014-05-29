@@ -214,7 +214,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 
 - (UIColor *)cellBackgroundColor {
     if (!pCellBackgroundColor) {
-        pCellBackgroundColor = [UIColor whiteColor];
+        pCellBackgroundColor = nil;
     }
     return pCellBackgroundColor;
 }
@@ -289,7 +289,8 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     NSDate *date = [self dateForIndexPath:indexPath];
     NSInteger sectionMonth = [self monthForSection:indexPath.section];
     if ([date month] != sectionMonth) {
-        cell.backgroundColor = [self.cellBackgroundColor colorWithAlphaComponent:0.5];
+        cell.backgroundColor = [self.cellBackgroundColor colorWithAlphaComponent:0.3];
+        cell.textColor = [self.textColor colorWithAlphaComponent:0.3];
     } else if ([date isEqualToDate:self.selectedDate]) {
         cell.backgroundColor = self.highlightColor;
     } else {
