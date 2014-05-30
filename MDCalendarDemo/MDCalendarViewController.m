@@ -27,9 +27,12 @@
         
         calendarView.backgroundColor = [UIColor whiteColor];
         
+        calendarView.lineSpacing = 1.f;
+        calendarView.itemSpacing = 0.0f;
+        
         calendarView.textColor = [UIColor blackColor];
         calendarView.headerTextColor = [UIColor blueColor];
-        calendarView.weekdayTextColor = [UIColor yellowColor];
+        calendarView.weekdayTextColor = [UIColor redColor];
         
         calendarView.highlightColor = [UIColor lightGrayColor];
         

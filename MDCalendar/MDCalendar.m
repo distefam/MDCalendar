@@ -174,6 +174,9 @@ NSString * MDCalendarDayStringFromDate(NSDate *date) {
 @end
 
 static NSString * const kMDCalendarHeaderViewIdentifier = @"kMDCalendarHeaderViewIdentifier";
+static CGFloat const kMDCalendarHeaderViewMonthBottomMargin     = 10.f;
+static CGFloat const kMDCalendarHeaderViewWeekdayBottomMoargin  = 5.f;
+
 
 @implementation MDCalendarHeaderView
 
@@ -197,14 +200,18 @@ static NSString * const kMDCalendarHeaderViewIdentifier = @"kMDCalendarHeaderVie
     [super layoutSubviews];
     
     CGSize viewSize = self.bounds.size;
-    _label.frame = CGRectMake(0, 0, viewSize.width, viewSize.height / 3 * 2);
-    _weekdaysView.frame = CGRectMake(0, CGRectGetMaxY(_label.bounds), viewSize.width, viewSize.height - CGRectGetHeight(_label.bounds));
+    _label.frame = CGRectMake(0, 0, viewSize.width, (viewSize.height / 3 * 2) - kMDCalendarHeaderViewMonthBottomMargin);
+    _weekdaysView.frame = CGRectMake(0, CGRectGetMaxY(_label.bounds) + kMDCalendarHeaderViewMonthBottomMargin, viewSize.width, viewSize.height - CGRectGetHeight(_label.bounds) - kMDCalendarHeaderViewWeekdayBottomMoargin);
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
     [super sizeThatFits:size];
     
-    CGFloat height = [_label sizeThatFits:CGSizeZero].height + [[self weekdaysView] sizeThatFits:CGSizeZero].height;
+    CGFloat monthLabelHeight = [_label sizeThatFits:CGSizeZero].height;
+    CGFloat weekdaysViewHeight = [[self weekdaysView] sizeThatFits:CGSizeZero].height;
+    CGFloat marginHeights = kMDCalendarHeaderViewMonthBottomMargin + kMDCalendarHeaderViewWeekdayBottomMoargin;
+    
+    CGFloat height = monthLabelHeight + weekdaysViewHeight + marginHeights;
     return CGSizeMake(self.bounds.size.width, height);
 }
 
@@ -233,13 +240,15 @@ static NSString * const kMDCalendarHeaderViewIdentifier = @"kMDCalendarHeaderVie
 
 @interface MDCalendar () <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource>
 @property (nonatomic, strong) UICollectionView *collectionView;
+@property (nonatomic, strong) UICollectionViewFlowLayout *layout;
 @end
 
 #define DAYS_IN_WEEK 7
 #define MONTHS_IN_YEAR 12
 
-static CGFloat const kMDCalendarViewItemSpacing    = 2.f;
-static CGFloat const kMDCalendarViewLineSpacing    = 2.f;
+// Default spacing
+static CGFloat const kMDCalendarViewItemSpacing    = 0.f;
+static CGFloat const kMDCalendarViewLineSpacing    = 1.f;
 static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 
 @implementation MDCalendar
@@ -265,6 +274,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
         UICollectionViewFlowLayout *layout = [UICollectionViewFlowLayout new];
         layout.minimumInteritemSpacing  = kMDCalendarViewItemSpacing;
         layout.minimumLineSpacing       = kMDCalendarViewLineSpacing;
+        self.layout = layout;
         
         self.collectionView = [[UICollectionView alloc] initWithFrame:CGRectZero collectionViewLayout:layout];
         _collectionView.dataSource = self;
@@ -303,6 +313,14 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 
 - (void)setContentInset:(UIEdgeInsets)contentInset {
     _collectionView.contentInset = contentInset;
+}
+
+- (void)setItemSpacing:(CGFloat)itemSpacing {
+    _layout.minimumInteritemSpacing = itemSpacing;
+}
+
+- (void)setLineSpacing:(CGFloat)lineSpacing {
+    _layout.minimumLineSpacing = lineSpacing;
 }
 
 - (NSDate *)selectedDate {

@@ -36,8 +36,7 @@
              @"WED",
              @"THU",
              @"FRI",
-             @"SAT",
-             @"SUN"];
+             @"SAT"];
 }
 
 + (NSArray *)monthNames {
