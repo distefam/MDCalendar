@@ -145,11 +145,16 @@ NSString * MDCalendarDayStringFromDate(NSDate *date) {
     }
 }
 
-- (UIFont *)font {
-    if (!pFont) {
-        pFont = [UIFont systemFontOfSize:12];
+- (void)setTextColor:(UIColor *)textColor {
+    for (UILabel *label in _dayLabels) {
+        label.textColor = textColor;
     }
-    return pFont;
+}
+
+- (void)setFont:(UIFont *)font {
+    for (UILabel *label in _dayLabels) {
+        label.font = font;
+    }
 }
 
 @end
