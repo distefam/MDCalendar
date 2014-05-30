@@ -105,8 +105,6 @@ NSString * MDCalendarDayStringFromDate(NSDate *date) {
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor whiteColor];
-        
         NSArray *weekdays = [NSDate weekdays];
         NSMutableArray *dayLabels = [NSMutableArray new];
         for (NSString *day in weekdays) {
@@ -174,8 +172,6 @@ static NSString * const kMDCalendarHeaderViewIdentifier = @"kMDCalendarHeaderVie
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        self.backgroundColor = [UIColor whiteColor];
-        
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
         label.textAlignment = NSTextAlignmentCenter;
         
