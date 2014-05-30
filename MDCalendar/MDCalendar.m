@@ -514,8 +514,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 #pragma mark - UICollectionViewFlowLayoutDelegate
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    CGFloat boundsWidth = collectionView.bounds.size.width;
-    CGFloat cellWidth = floor(boundsWidth / DAYS_IN_WEEK) - kMDCalendarViewItemSpacing;
+    CGFloat cellWidth = [self cellWidth];
     CGFloat cellHeight = cellWidth;
     return CGSizeMake(cellWidth, cellHeight);
 }
@@ -527,6 +526,19 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
     return CGSizeMake(CGRectGetWidth(self.bounds), kMDCalendarViewSectionSpacing);
+}
+
+- (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout insetForSectionAtIndex:(NSInteger)section {
+    CGFloat boundsWidth = collectionView.bounds.size.width;
+    CGFloat remainingPoints = boundsWidth - ([self cellWidth] * DAYS_IN_WEEK);
+    return UIEdgeInsetsMake(0, remainingPoints / 2, 0, remainingPoints / 2);
+}
+
+// Helpers
+
+- (CGFloat)cellWidth {
+    CGFloat boundsWidth = _collectionView.bounds.size.width;
+    return floor(boundsWidth / DAYS_IN_WEEK) - kMDCalendarViewItemSpacing;
 }
 
 @end
