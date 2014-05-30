@@ -158,6 +158,9 @@ NSString * MDCalendarDayStringFromDate(NSDate *date) {
 @property (nonatomic, assign) NSInteger month;
 @property (nonatomic, assign) UIFont  *font;
 @property (nonatomic, assign) UIColor *textColor;
+
+@property (nonatomic, assign) UIFont  *weekdayFont;
+@property (nonatomic, assign) UIColor *weekdayTextColor;
 @end
 
 @interface MDCalendarHeaderView ()
@@ -212,6 +215,14 @@ static NSString * const kMDCalendarHeaderViewIdentifier = @"kMDCalendarHeaderVie
     _label.textColor = textColor;
 }
 
+- (void)setWeekdayFont:(UIFont *)weekdayFont {
+    _weekdaysView.font = weekdayFont;
+}
+
+- (void)setWeekdayTextColor:(UIColor *)weekdayTextColor {
+    _weekdaysView.textColor = weekdayTextColor;
+}
+
 
 @end
 
@@ -231,11 +242,17 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 @synthesize selectedDate        = pSelectedDate;
 @synthesize startDate           = pStartDate;
 @synthesize endDate             = pEndDate;
+
 @synthesize dayFont             = pDayFont;
-@synthesize textColor           = pTextColor;
+@synthesize headerFont          = pHeaderFont;
+@synthesize weekdayFont         = pWeekdayFont;
+
 @synthesize cellBackgroundColor = pCellBackgroundColor;
 @synthesize highlightColor      = pHighlightColor;
-@synthesize headerFont          = pHeaderFont;
+
+@synthesize textColor           = pTextColor;
+@synthesize headerTextColor     = pHeaderTextColor;
+@synthesize weekdayTextColor    = pWeekdayTextColor;
 
 - (instancetype)init {
     self = [super init];
@@ -264,13 +281,6 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     MDCalendarHeaderView *headerView = [[MDCalendarHeaderView alloc] initWithFrame:CGRectZero];
     headerView.month = 12;
     return [headerView sizeThatFits:CGSizeZero];
-    
-    
-//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
-//    label.font = self.headerFont;
-//    label.text = @"December";
-//    [label sizeToFit];
-//    return label.bounds.size;
 }
 
 
@@ -333,11 +343,32 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     return pHeaderFont;
 }
 
+- (UIFont *)weekdayFont {
+    if (!pWeekdayFont) {
+        pWeekdayFont = [UIFont systemFontOfSize:12];
+    }
+    return pWeekdayFont;
+}
+
 - (UIColor *)textColor {
     if (!pTextColor) {
         pTextColor = [UIColor blackColor];
     }
     return pTextColor;
+}
+
+- (UIColor *)headerTextColor {
+    if (!pHeaderTextColor) {
+        pHeaderTextColor = [self textColor];
+    }
+    return pHeaderTextColor;
+}
+
+- (UIColor *)weekdayTextColor {
+    if (!pWeekdayTextColor) {
+        pWeekdayTextColor = [self textColor];
+    }
+    return pHeaderTextColor;
 }
 
 - (UIColor *)cellBackgroundColor {
@@ -437,10 +468,14 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     MDCalendarHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kMDCalendarHeaderViewIdentifier forIndexPath:indexPath];
-    headerView.font = self.headerFont;
-    headerView.textColor = self.textColor;
+
     headerView.backgroundColor = self.backgroundColor;
+    headerView.font = self.headerFont;
+    headerView.weekdayFont = self.weekdayFont;
+    headerView.textColor = self.headerTextColor;
+    headerView.weekdayTextColor = self.weekdayTextColor;
     headerView.month = [self monthForSection:indexPath.section];
+    
     return headerView;
 }
 
