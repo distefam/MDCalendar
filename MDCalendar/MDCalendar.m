@@ -91,6 +91,73 @@ NSString * MDCalendarDayStringFromDate(NSDate *date) {
 
 @end
 
+@interface MDCalendarWeekdaysView : UIView
+@property (nonatomic, strong) NSArray *dayLabels;
+
+@property (nonatomic, assign) UIColor *textColor;
+@property (nonatomic, assign) UIFont  *font;
+@end
+
+@implementation MDCalendarWeekdaysView
+
+@synthesize font = pFont;
+
+- (id)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        self.backgroundColor = [UIColor whiteColor];
+        
+        NSArray *weekdays = [NSDate weekdays];
+        NSMutableArray *dayLabels = [NSMutableArray new];
+        for (NSString *day in weekdays) {
+            UILabel *dayLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+            dayLabel.text = day;
+            dayLabel.font = self.font;
+            dayLabel.textAlignment = NSTextAlignmentCenter;
+            dayLabel.adjustsFontSizeToFitWidth = YES;
+            [dayLabels addObject:dayLabel];
+            
+            [self addSubview:dayLabel];
+        }
+        
+        self.dayLabels = dayLabels;
+    }
+    return self;
+}
+
+- (CGSize)dayLabelSize {
+    UILabel *label = (UILabel *)[_dayLabels firstObject];
+    [label sizeToFit];
+    return label.bounds.size;
+}
+
+- (CGSize)sizeThatFits:(CGSize)size {
+    [super sizeThatFits:size];
+    
+    return CGSizeMake(self.bounds.size.width, [self dayLabelSize].height);
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    CGFloat labelWidth = CGRectGetWidth(self.bounds) / [_dayLabels count];
+    CGRect labelFrame = CGRectMake(0, 0, labelWidth, [self dayLabelSize].height);
+    for (UILabel *label in _dayLabels) {
+        [label sizeToFit];
+        label.frame = labelFrame;
+        labelFrame = CGRectOffset(labelFrame, labelWidth, 0);
+    }
+}
+
+- (UIFont *)font {
+    if (!pFont) {
+        pFont = [UIFont systemFontOfSize:12];
+    }
+    return pFont;
+}
+
+@end
+
 @interface MDCalendarHeaderView : UICollectionReusableView
 @property (nonatomic, assign) NSInteger month;
 @property (nonatomic, assign) UIFont  *font;
@@ -99,6 +166,7 @@ NSString * MDCalendarDayStringFromDate(NSDate *date) {
 
 @interface MDCalendarHeaderView ()
 @property (nonatomic, strong) UILabel *label;
+@property (nonatomic, strong) MDCalendarWeekdaysView *weekdaysView;
 @end
 
 static NSString * const kMDCalendarHeaderViewIdentifier = @"kMDCalendarHeaderViewIdentifier";
@@ -113,6 +181,10 @@ static NSString * const kMDCalendarHeaderViewIdentifier = @"kMDCalendarHeaderVie
         UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
         label.textAlignment = NSTextAlignmentCenter;
         
+        MDCalendarWeekdaysView *weekdaysView = [[MDCalendarWeekdaysView alloc] initWithFrame:CGRectZero];
+        [self addSubview:weekdaysView];
+        self.weekdaysView = weekdaysView;
+        
         [self addSubview:label];
         self.label = label;
     }
@@ -122,7 +194,17 @@ static NSString * const kMDCalendarHeaderViewIdentifier = @"kMDCalendarHeaderVie
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    _label.frame = self.bounds;
+    CGSize viewSize = self.bounds.size;
+    _label.frame = CGRectMake(0, 0, viewSize.width, viewSize.height / 3 * 2);
+    _weekdaysView.frame = CGRectMake(0, CGRectGetMaxY(_label.bounds), viewSize.width, viewSize.height - CGRectGetHeight(_label.bounds));
+}
+
+- (CGSize)sizeThatFits:(CGSize)size {
+    [super sizeThatFits:size];
+    
+    
+    CGFloat height = [_label sizeThatFits:CGSizeZero].height + [[self weekdaysView] sizeThatFits:CGSizeZero].height;
+    return CGSizeMake(self.bounds.size.width, height);
 }
 
 - (void)setMonth:(NSInteger)month {
@@ -186,11 +268,16 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 }
 
 - (CGSize)headerViewSize {
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
-    label.font = self.headerFont;
-    label.text = @"December";
-    [label sizeToFit];
-    return label.bounds.size;
+    MDCalendarHeaderView *headerView = [[MDCalendarHeaderView alloc] initWithFrame:CGRectZero];
+    headerView.month = 12;
+    return [headerView sizeThatFits:CGSizeZero];
+    
+    
+//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectZero];
+//    label.font = self.headerFont;
+//    label.text = @"December";
+//    [label sizeToFit];
+//    return label.bounds.size;
 }
 
 

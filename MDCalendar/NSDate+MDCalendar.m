@@ -29,6 +29,17 @@
     return [NSDate monthNames][month];
 }
 
++ (NSArray *)weekdays {
+    return @[@"SUN",
+             @"MON",
+             @"TUE",
+             @"WED",
+             @"THU",
+             @"FRI",
+             @"SAT",
+             @"SUN"];
+}
+
 + (NSArray *)monthNames {
     return @[@"Zero",
              @"January",

@@ -13,6 +13,7 @@
 + (NSInteger)numberOfDaysInMonth:(NSInteger)month;
 + (NSDate *)dateFromComponents:(NSDateComponents *)components;
 + (NSString *)monthNameForMonth:(NSInteger)month;
++ (NSArray *)weekdays;
 
 - (NSDate *)firstDayOfMonth;
 - (NSDate *)lastDayOfMonth;
