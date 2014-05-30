@@ -127,8 +127,7 @@ NSString * MDCalendarDayStringFromDate(NSDate *date) {
 
 - (CGSize)dayLabelSize {
     UILabel *label = (UILabel *)[_dayLabels firstObject];
-    [label sizeToFit];
-    return label.bounds.size;
+    return [label sizeThatFits:CGSizeZero];
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
@@ -143,7 +142,6 @@ NSString * MDCalendarDayStringFromDate(NSDate *date) {
     CGFloat labelWidth = CGRectGetWidth(self.bounds) / [_dayLabels count];
     CGRect labelFrame = CGRectMake(0, 0, labelWidth, [self dayLabelSize].height);
     for (UILabel *label in _dayLabels) {
-        [label sizeToFit];
         label.frame = labelFrame;
         labelFrame = CGRectOffset(labelFrame, labelWidth, 0);
     }
@@ -201,7 +199,6 @@ static NSString * const kMDCalendarHeaderViewIdentifier = @"kMDCalendarHeaderVie
 
 - (CGSize)sizeThatFits:(CGSize)size {
     [super sizeThatFits:size];
-    
     
     CGFloat height = [_label sizeThatFits:CGSizeZero].height + [[self weekdaysView] sizeThatFits:CGSizeZero].height;
     return CGSizeMake(self.bounds.size.width, height);
