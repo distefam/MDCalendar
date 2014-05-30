@@ -515,7 +515,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
     CGFloat boundsWidth = collectionView.bounds.size.width;
-    CGFloat cellWidth = (boundsWidth / DAYS_IN_WEEK) - kMDCalendarViewItemSpacing;
+    CGFloat cellWidth = floor(boundsWidth / DAYS_IN_WEEK) - kMDCalendarViewItemSpacing;
     CGFloat cellHeight = cellWidth;
     return CGSizeMake(cellWidth, cellHeight);
 }
