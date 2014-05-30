@@ -373,7 +373,11 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     if (!pWeekdayTextColor) {
         pWeekdayTextColor = [self textColor];
     }
-    return pHeaderTextColor;
+    return pWeekdayTextColor;
+}
+
+- (void)setWeekdayTextColor:(UIColor *)weekdayTextColor {
+    pWeekdayTextColor = weekdayTextColor;
 }
 
 - (UIColor *)cellBackgroundColor {

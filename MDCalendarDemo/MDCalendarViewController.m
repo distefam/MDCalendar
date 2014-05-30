@@ -26,7 +26,11 @@
         MDCalendar *calendarView = [[MDCalendar alloc] init];
         
         calendarView.backgroundColor = [UIColor whiteColor];
+        
         calendarView.textColor = [UIColor blackColor];
+        calendarView.headerTextColor = [UIColor blueColor];
+        calendarView.weekdayTextColor = [UIColor yellowColor];
+        
         calendarView.highlightColor = [UIColor lightGrayColor];
         
         NSDate *startDate = [NSDate date];
