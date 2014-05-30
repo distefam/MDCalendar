@@ -241,6 +241,8 @@ static CGFloat const kMDCalendarHeaderViewWeekdayBottomMoargin  = 5.f;
 @interface MDCalendar () <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource>
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) UICollectionViewFlowLayout *layout;
+
+@property (nonatomic, assign) NSDate *currentDate;
 @end
 
 #define DAYS_IN_WEEK 7
@@ -321,6 +323,10 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 
 - (void)setLineSpacing:(CGFloat)lineSpacing {
     _layout.minimumLineSpacing = lineSpacing;
+}
+
+- (NSDate *)currentDate {
+    return [NSDate date];
 }
 
 - (NSDate *)selectedDate {
@@ -472,7 +478,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     MDCalendarViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kMDCalendarViewCellIdentifier forIndexPath:indexPath];
     cell.backgroundColor = self.cellBackgroundColor;
     cell.font = self.dayFont;
-    cell.textColor = self.textColor;
+    cell.textColor = [date isEqualToDate:[self currentDate]] ? self.highlightColor : self.textColor;
     cell.date = date;
     cell.highlightColor = self.highlightColor;
     
