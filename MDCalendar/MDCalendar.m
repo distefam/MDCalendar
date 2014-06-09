@@ -489,7 +489,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     
     // Disable non-selectable cells
     if (![self collectionView:collectionView shouldSelectItemAtIndexPath:indexPath]) {
-        cell.textColor = [cell.date isEqualToDateSansTime:self.currentDate] ? cell.textColor : [cell.textColor colorWithAlphaComponent:0.2];
+        cell.textColor = [date isEqualToDateSansTime:[self currentDate]] ? cell.textColor : [cell.textColor colorWithAlphaComponent:0.2];
         cell.userInteractionEnabled = NO;
     }
     
