@@ -489,14 +489,17 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     
     // Disable non-selectable cells
     if (![self collectionView:collectionView shouldSelectItemAtIndexPath:indexPath]) {
-        [self disableCell:cell];
+        cell.textColor = [cell.textColor colorWithAlphaComponent:0.2];
+        cell.userInteractionEnabled = NO;
     }
     
     // Handle showing cells outside of current month
     if ([date month] != sectionMonth) {
-        [self disableCell:cell];
-        if (!self.showsDaysOutsideCurrentMonth) {
+        if (self.showsDaysOutsideCurrentMonth) {
+            cell.backgroundColor = [cell.backgroundColor colorWithAlphaComponent:0.2];
+        } else {
             cell.label.text = @"";
+            cell.userInteractionEnabled = NO;
         }
     }
     
@@ -540,14 +543,6 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     }
     
     return YES;
-}
-
-// Helpers
-
-- (void)disableCell:(MDCalendarViewCell *)cell {
-    cell.userInteractionEnabled = NO;
-    cell.backgroundColor = [cell.backgroundColor colorWithAlphaComponent:0.2];
-    cell.textColor = [cell.date isEqualToDateSansTime:self.selectedDate] ? cell.textColor : [cell.textColor colorWithAlphaComponent:0.2];
 }
 
 #pragma mark - UICollectionViewFlowLayoutDelegate
