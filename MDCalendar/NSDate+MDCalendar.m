@@ -162,6 +162,14 @@
     return NO;
 }
 
+- (BOOL)isBeforeDate:(NSDate *)otherDate {
+    return [self compare:otherDate] == NSOrderedAscending;
+}
+
+- (BOOL)isAfterDate:(NSDate *)otherDate {
+    return [self compare:otherDate] == NSOrderedDescending;
+}
+
 #pragma mark - Helpers
                   
 NSDateComponents * MDCalendarDateComponentsFromDate(NSDate *date) {

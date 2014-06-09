@@ -517,9 +517,19 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     NSDate *date = [self dateForIndexPath:indexPath];
-    NSInteger sectionMonth = [self monthForSection:indexPath.section];
+//    NSInteger sectionMonth = [self monthForSection:indexPath.section];
     
-    return [date month] == sectionMonth;
+    BOOL isBeforeStartDate = [date isBeforeDate:self.startDate];
+    
+    if ([_delegate respondsToSelector:@selector(calendarView:shouldSelectDate:)]) {
+        return [_delegate calendarView:self shouldSelectDate:date];
+    } else if (!self.canSelectDaysBeforeStartDate && isBeforeStartDate) {
+        return NO;
+    } else {
+        return YES;
+    }
+    
+//    return [date month] == sectionMonth;
 }
 
 
