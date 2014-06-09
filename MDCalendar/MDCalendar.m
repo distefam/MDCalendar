@@ -479,7 +479,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     MDCalendarViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:kMDCalendarViewCellIdentifier forIndexPath:indexPath];
     cell.backgroundColor = self.cellBackgroundColor;
     cell.font = self.dayFont;
-    cell.textColor = [date isEqualToDate:[self currentDate]] ? self.highlightColor : self.textColor;
+    cell.textColor = [date isEqualToDateSansTime:[self currentDate]] ? self.highlightColor : self.textColor;
     cell.date = date;
     cell.highlightColor = self.highlightColor;
     
@@ -493,7 +493,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
             cell.label.text = @"";
             [cell setUserInteractionEnabled:NO];
         }
-    } else if ([date isEqualToDate:self.selectedDate]) {
+    } else if ([date isEqualToDateSansTime:self.selectedDate]) {
         cell.selected = YES;
         [collectionView selectItemAtIndexPath:indexPath animated:YES scrollPosition:UICollectionViewScrollPositionNone];
     }

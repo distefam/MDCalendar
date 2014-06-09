@@ -153,7 +153,7 @@
     return [calendar dateByAddingComponents:components toDate:self options:0];
 }
 
-- (BOOL)isEqualToDate:(NSDate *)otherDate {
+- (BOOL)isEqualToDateSansTime:(NSDate *)otherDate {
     if (self.day == otherDate.day &&
         self.month == otherDate.month &&
         self.year == otherDate.year) {

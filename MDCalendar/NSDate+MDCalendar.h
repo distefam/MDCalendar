@@ -29,7 +29,7 @@
 - (NSDate *)dateByAddingDays:(NSInteger)days;
 - (NSDate *)dateByAddingMonths:(NSInteger)months;
 
-- (BOOL)isEqualToDate:(NSDate *)otherDate;
+- (BOOL)isEqualToDateSansTime:(NSDate *)otherDate;
 - (BOOL)isBeforeDate:(NSDate *)otherDate;
 - (BOOL)isAfterDate:(NSDate *)otherDate;
 
