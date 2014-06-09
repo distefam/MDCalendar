@@ -547,8 +547,8 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 
 - (void)disableCell:(MDCalendarViewCell *)cell {
     cell.userInteractionEnabled = NO;
-    cell.backgroundColor = [cell.backgroundColor colorWithAlphaComponent:0.3];
-    cell.textColor = [cell.textColor colorWithAlphaComponent:0.3];
+    cell.backgroundColor = [cell.backgroundColor colorWithAlphaComponent:0.2];
+    cell.textColor = [cell.date isEqualToDateSansTime:self.selectedDate] ? cell.textColor : [cell.textColor colorWithAlphaComponent:0.2];
 }
 
 #pragma mark - UICollectionViewFlowLayoutDelegate
