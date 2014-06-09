@@ -287,8 +287,6 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
         [_collectionView registerClass:[MDCalendarViewCell class] forCellWithReuseIdentifier:kMDCalendarViewCellIdentifier];
         [_collectionView registerClass:[MDCalendarHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kMDCalendarHeaderViewIdentifier];
         
-        
-        
         [self addSubview:_collectionView];
     }
     return self;
@@ -331,7 +329,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 
 - (NSDate *)selectedDate {
     if (!pSelectedDate) {
-        pSelectedDate = [NSDate date];
+        pSelectedDate = self.startDate;
     }
     return pSelectedDate;
 }
