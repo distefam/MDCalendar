@@ -485,15 +485,24 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     
     NSInteger sectionMonth = [self monthForSection:indexPath.section];
     
+    cell.userInteractionEnabled = [self collectionView:collectionView shouldSelectItemAtIndexPath:indexPath] ? YES : NO;
+    
+    // Disable non-selectable cells
+    if (![self collectionView:collectionView shouldSelectItemAtIndexPath:indexPath]) {
+        [self disableCell:cell];
+    }
+    
+    // Handle showing cells outside of current month
     if ([date month] != sectionMonth) {
         if (self.showsDaysOutsideCurrentMonth) {
-            cell.backgroundColor = [self.cellBackgroundColor colorWithAlphaComponent:0.3];
-            cell.textColor       = [self.textColor colorWithAlphaComponent:0.3];
+            [self disableCell:cell];
         } else {
             cell.label.text = @"";
-            [cell setUserInteractionEnabled:NO];
         }
-    } else if ([date isEqualToDateSansTime:self.selectedDate]) {
+    }
+    
+    // Handle cell highlighting
+    if ([date isEqualToDateSansTime:self.selectedDate]) {
         cell.selected = YES;
         [collectionView selectItemAtIndexPath:indexPath animated:YES scrollPosition:UICollectionViewScrollPositionNone];
     }
@@ -514,7 +523,6 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     headerView.shouldShowYear = [date year] != [self.startDate year];
     headerView.firstDayOfMonth = date;
 
-    
     return headerView;
 }
 
@@ -524,21 +532,24 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     NSDate *date = [self dateForIndexPath:indexPath];
-//    NSInteger sectionMonth = [self monthForSection:indexPath.section];
-    
     BOOL isBeforeStartDate = [date isBeforeDate:self.startDate];
     
     if ([_delegate respondsToSelector:@selector(calendarView:shouldSelectDate:)]) {
         return [_delegate calendarView:self shouldSelectDate:date];
     } else if (!self.canSelectDaysBeforeStartDate && isBeforeStartDate) {
         return NO;
-    } else {
-        return YES;
     }
     
-//    return [date month] == sectionMonth;
+    return YES;
 }
 
+// Helpers
+
+- (void)disableCell:(MDCalendarViewCell *)cell {
+    cell.userInteractionEnabled = NO;
+    cell.backgroundColor = [cell.backgroundColor colorWithAlphaComponent:0.3];
+    cell.textColor = [cell.textColor colorWithAlphaComponent:0.3];
+}
 
 #pragma mark - UICollectionViewFlowLayoutDelegate
 
