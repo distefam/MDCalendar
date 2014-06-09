@@ -488,6 +488,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
             cell.textColor       = [self.textColor colorWithAlphaComponent:0.3];
         } else {
             cell.label.text = @"";
+            [cell setUserInteractionEnabled:NO];
         }
     } else if ([date isEqualToDate:self.selectedDate]) {
         cell.selected = YES;
