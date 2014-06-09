@@ -499,8 +499,8 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
             cell.backgroundColor = [cell.backgroundColor colorWithAlphaComponent:0.2];
         } else {
             cell.label.text = @"";
-            cell.userInteractionEnabled = NO;
         }
+        cell.userInteractionEnabled = NO;
     }
     
     // Handle cell highlighting
