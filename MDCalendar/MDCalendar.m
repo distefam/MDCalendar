@@ -494,9 +494,8 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     
     // Handle showing cells outside of current month
     if ([date month] != sectionMonth) {
-        if (self.showsDaysOutsideCurrentMonth) {
-            [self disableCell:cell];
-        } else {
+        [self disableCell:cell];
+        if (!self.showsDaysOutsideCurrentMonth) {
             cell.label.text = @"";
         }
     }
