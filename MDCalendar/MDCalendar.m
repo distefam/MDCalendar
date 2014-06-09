@@ -514,6 +514,18 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     [_delegate calendarView:self didSelectDate:[self dateForIndexPath:indexPath]];
 }
 
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    NSDate *date = [self dateForIndexPath:indexPath];
+    NSInteger sectionMonth = [self monthForSection:indexPath.section];
+    
+    if ([date month] != sectionMonth) {
+        return NO;
+    } else {
+        return YES;
+    }
+    
+}
+
 
 #pragma mark - UICollectionViewFlowLayoutDelegate
 
