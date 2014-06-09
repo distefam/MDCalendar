@@ -518,12 +518,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     NSDate *date = [self dateForIndexPath:indexPath];
     NSInteger sectionMonth = [self monthForSection:indexPath.section];
     
-    if ([date month] != sectionMonth) {
-        return NO;
-    } else {
-        return YES;
-    }
-    
+    return [date month] == sectionMonth;
 }
 
 
