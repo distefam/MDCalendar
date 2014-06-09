@@ -160,7 +160,9 @@ NSString * MDCalendarDayStringFromDate(NSDate *date) {
 @end
 
 @interface MDCalendarHeaderView : UICollectionReusableView
-@property (nonatomic, assign) NSInteger month;
+@property (nonatomic, assign) NSDate  *firstDayOfMonth;
+@property (nonatomic, assign) BOOL     shouldShowYear;
+
 @property (nonatomic, assign) UIFont  *font;
 @property (nonatomic, assign) UIColor *textColor;
 
@@ -205,18 +207,19 @@ static CGFloat const kMDCalendarHeaderViewWeekdayBottomMoargin  = 5.f;
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
-    [super sizeThatFits:size];
-    
     CGFloat monthLabelHeight = [_label sizeThatFits:CGSizeZero].height;
     CGFloat weekdaysViewHeight = [[self weekdaysView] sizeThatFits:CGSizeZero].height;
     CGFloat marginHeights = kMDCalendarHeaderViewMonthBottomMargin + kMDCalendarHeaderViewWeekdayBottomMoargin;
     
     CGFloat height = monthLabelHeight + weekdaysViewHeight + marginHeights;
-    return CGSizeMake(self.bounds.size.width, height);
+    return CGSizeMake([super sizeThatFits:size].width, height);
 }
 
-- (void)setMonth:(NSInteger)month {
-    _label.text = [NSDate monthNameForMonth:month];
+- (void)setFirstDayOfMonth:(NSDate *)firstDayOfMonth {
+    _firstDayOfMonth = firstDayOfMonth;
+    NSString *monthString = [NSDate monthNameForMonth:[firstDayOfMonth month]];
+    NSString *yearString = [NSString stringWithFormat:@" %d", (int)[firstDayOfMonth year]];
+    _label.text = self.shouldShowYear ? [monthString stringByAppendingString:yearString] : monthString;
 }
 
 - (void)setFont:(UIFont *)font {
@@ -294,7 +297,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 
 - (CGSize)headerViewSize {
     MDCalendarHeaderView *headerView = [[MDCalendarHeaderView alloc] initWithFrame:CGRectZero];
-    headerView.month = 12;
+    headerView.firstDayOfMonth = [self startDate];
     return [headerView sizeThatFits:CGSizeZero];
 }
 
@@ -506,7 +509,11 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     headerView.weekdayFont = self.weekdayFont;
     headerView.textColor = self.headerTextColor;
     headerView.weekdayTextColor = self.weekdayTextColor;
-    headerView.month = [self monthForSection:indexPath.section];
+
+    NSDate *date = [self dateForFirstDayOfSection:indexPath.section];
+    headerView.shouldShowYear = [date year] != [self.startDate year];
+    headerView.firstDayOfMonth = date;
+
     
     return headerView;
 }
