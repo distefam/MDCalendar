@@ -19,6 +19,7 @@
 @property (nonatomic, assign) CGFloat itemSpacing;    // default is 0pt
 @property (nonatomic, assign) CGFloat lineSpacing;    // default is 1pt
 @property (nonatomic, strong) UIColor *borderColor;   // default is nil, line spacing reveals backgroundColor; if set, overrides this behavior
+@property (nonatomic, assign) CGFloat borderHeight;
 
 @property (nonatomic, strong) NSDate  *selectedDate;  // default is current date when calendar created
 @property (nonatomic, strong) NSDate  *startDate;     // Specify date to start calendar. Default is currentDate.
