@@ -296,6 +296,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 
         // Default Configuration
         self.startDate      = self.currentDate;
+        self.selectedDate   = self.startDate;
         self.endDate        = [[_startDate dateByAddingMonths:3] lastDayOfMonth];
         
         self.dayFont        = [UIFont systemFontOfSize:17];
@@ -449,7 +450,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     }
     
     // Handle cell highlighting
-    if ([date isEqualToDateSansTime:self.startDate]) {
+    if ([date isEqualToDateSansTime:self.selectedDate]) {
         cell.selected = YES;
         [collectionView selectItemAtIndexPath:indexPath animated:YES scrollPosition:UICollectionViewScrollPositionNone];
     }
