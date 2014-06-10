@@ -273,21 +273,6 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 
 @implementation MDCalendar
 
-@synthesize selectedDate        = pSelectedDate;
-@synthesize startDate           = pStartDate;
-@synthesize endDate             = pEndDate;
-
-@synthesize dayFont             = pDayFont;
-@synthesize headerFont          = pHeaderFont;
-@synthesize weekdayFont         = pWeekdayFont;
-
-@synthesize cellBackgroundColor = pCellBackgroundColor;
-@synthesize highlightColor      = pHighlightColor;
-
-@synthesize textColor           = pTextColor;
-@synthesize headerTextColor     = pHeaderTextColor;
-@synthesize weekdayTextColor    = pWeekdayTextColor;
-
 - (instancetype)init {
     self = [super init];
     if (self) {
@@ -304,6 +289,25 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
         
         [_collectionView registerClass:[MDCalendarViewCell class] forCellWithReuseIdentifier:kMDCalendarViewCellIdentifier];
         [_collectionView registerClass:[MDCalendarHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kMDCalendarHeaderViewIdentifier];
+        
+
+        // Default Configuration
+        self.startDate      = [NSDate date];
+        self.selectedDate   = _startDate;
+        self.endDate        = [[_startDate dateByAddingMonths:3] lastDayOfMonth];
+        
+        self.dayFont        = [UIFont systemFontOfSize:17];
+        self.weekdayFont    = [UIFont systemFontOfSize:12];
+        
+        self.cellBackgroundColor    = nil;
+        self.highlightColor         = self.tintColor;
+        
+        self.headerBackgroundColor  = nil;
+        self.headerFont             = [UIFont systemFontOfSize:20];
+        
+        self.textColor          = [UIColor darkGrayColor];
+        self.headerTextColor    = _textColor;
+        self.weekdayTextColor   = _textColor;
         
         [self addSubview:_collectionView];
     }
@@ -343,99 +347,6 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 
 - (CGFloat)lineSpacing {
     return _layout.minimumLineSpacing;
-}
-
-- (NSDate *)currentDate {
-    return [NSDate date];
-}
-
-- (NSDate *)selectedDate {
-    if (!pSelectedDate) {
-        pSelectedDate = self.startDate;
-    }
-    return pSelectedDate;
-}
-
-- (NSDate *)startDate {
-    if (!pStartDate) {
-        pStartDate = self.selectedDate;
-    }
-    return pStartDate;
-}
-
-- (void)setStartDate:(NSDate *)startDate {
-    pStartDate = startDate;
-}
-
-- (NSDate *)endDate {
-    if (!pEndDate) {
-        pEndDate = [self.startDate lastDayOfMonth];
-    }
-    return pEndDate;
-}
-
-- (void)setEndDate:(NSDate *)endDate {
-    pEndDate = endDate;
-}
-
-- (UIFont *)dayFont {
-    if (!pDayFont) {
-        pDayFont = [UIFont systemFontOfSize:17];
-    }
-    return pDayFont;
-}
-
-- (UIFont *)headerFont {
-    if (!pHeaderFont) {
-        pHeaderFont = [UIFont systemFontOfSize:20];
-    }
-    return pHeaderFont;
-}
-
-- (UIFont *)weekdayFont {
-    if (!pWeekdayFont) {
-        pWeekdayFont = [UIFont systemFontOfSize:12];
-    }
-    return pWeekdayFont;
-}
-
-- (UIColor *)textColor {
-    if (!pTextColor) {
-        pTextColor = [UIColor blackColor];
-    }
-    return pTextColor;
-}
-
-- (UIColor *)headerTextColor {
-    if (!pHeaderTextColor) {
-        pHeaderTextColor = [self textColor];
-    }
-    return pHeaderTextColor;
-}
-
-- (UIColor *)weekdayTextColor {
-    if (!pWeekdayTextColor) {
-        pWeekdayTextColor = [self textColor];
-    }
-    return pWeekdayTextColor;
-}
-
-- (void)setWeekdayTextColor:(UIColor *)weekdayTextColor {
-    pWeekdayTextColor = weekdayTextColor;
-}
-
-- (UIColor *)cellBackgroundColor {
-    if (!pCellBackgroundColor) {
-        pCellBackgroundColor = nil;
-    }
-    return pCellBackgroundColor;
-}
-
-- (UIColor *)highlightColor {
-    if (!pHighlightColor) {
-        pHighlightColor = self.tintColor;
-    }
-    return pHighlightColor;
 }
 
 #pragma mark - Private Methods & Helper Functions
@@ -534,7 +445,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
     MDCalendarHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kMDCalendarHeaderViewIdentifier forIndexPath:indexPath];
 
-    headerView.backgroundColor = self.backgroundColor;
+    headerView.backgroundColor = self.headerBackgroundColor;
     headerView.font = self.headerFont;
     headerView.weekdayFont = self.weekdayFont;
     headerView.textColor = self.headerTextColor;

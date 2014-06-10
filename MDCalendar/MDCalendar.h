@@ -28,7 +28,8 @@
 @property (nonatomic, strong) UIFont  *headerFont;              // Default is system font, size 20
 @property (nonatomic, strong) UIFont  *weekdayFont;             // Default is system font, size 12
 
-@property (nonatomic, strong) UIColor *textColor;               // Default is black
+@property (nonatomic, strong) UIColor *textColor;               // Default is dark gray
+@property (nonatomic, strong) UIColor *headerBackgroundColor;   // Default is no background color (clear)
 @property (nonatomic, strong) UIColor *headerTextColor;         // Default is textColor
 @property (nonatomic, strong) UIColor *weekdayTextColor;        // Default is textColor
 
