@@ -352,6 +352,13 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     return _layout.minimumLineSpacing;
 }
 
+- (void)setBorderHeight:(CGFloat)borderHeight {
+    _borderHeight = borderHeight;
+    if (borderHeight) {
+        self.lineSpacing = 0.f;
+    }
+}
+
 #pragma mark - Private Methods & Helper Functions
 
 - (NSInteger)monthForSection:(NSInteger)section {
