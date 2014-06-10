@@ -160,24 +160,28 @@ NSString * MDCalendarDayStringFromDate(NSDate *date) {
 @end
 
 @interface MDCalendarHeaderView : UICollectionReusableView
-@property (nonatomic, assign) NSDate  *firstDayOfMonth;
-@property (nonatomic, assign) BOOL     shouldShowYear;
+@property (nonatomic, assign) NSDate *firstDayOfMonth;
+@property (nonatomic, assign) BOOL    shouldShowYear;
 
 @property (nonatomic, assign) UIFont  *font;
 @property (nonatomic, assign) UIColor *textColor;
 
 @property (nonatomic, assign) UIFont  *weekdayFont;
 @property (nonatomic, assign) UIColor *weekdayTextColor;
+
+@property (nonatomic, assign) UIColor *borderColor;
+@property (nonatomic, assign) CGFloat  borderHeight;
 @end
 
 @interface MDCalendarHeaderView ()
 @property (nonatomic, strong) UILabel *label;
 @property (nonatomic, strong) MDCalendarWeekdaysView *weekdaysView;
+@property (nonatomic, strong) UIView *bottomBorder;
 @end
 
 static NSString * const kMDCalendarHeaderViewIdentifier = @"kMDCalendarHeaderViewIdentifier";
 static CGFloat const kMDCalendarHeaderViewMonthBottomMargin     = 10.f;
-static CGFloat const kMDCalendarHeaderViewWeekdayBottomMoargin  = 5.f;
+static CGFloat const kMDCalendarHeaderViewWeekdayBottomMargin  = 5.f;
 
 
 @implementation MDCalendarHeaderView
@@ -192,6 +196,11 @@ static CGFloat const kMDCalendarHeaderViewWeekdayBottomMoargin  = 5.f;
         [self addSubview:weekdaysView];
         self.weekdaysView = weekdaysView;
         
+        UIView *bottomBorder = [[UIView alloc] initWithFrame:CGRectZero];
+        bottomBorder.hidden = YES;
+        [self addSubview:bottomBorder];
+        self.bottomBorder = bottomBorder;
+        
         [self addSubview:label];
         self.label = label;
     }
@@ -203,15 +212,16 @@ static CGFloat const kMDCalendarHeaderViewWeekdayBottomMoargin  = 5.f;
     
     CGSize viewSize = self.bounds.size;
     _label.frame = CGRectMake(0, 0, viewSize.width, (viewSize.height / 3 * 2) - kMDCalendarHeaderViewMonthBottomMargin);
-    _weekdaysView.frame = CGRectMake(0, CGRectGetMaxY(_label.bounds) + kMDCalendarHeaderViewMonthBottomMargin, viewSize.width, viewSize.height - CGRectGetHeight(_label.bounds) - kMDCalendarHeaderViewWeekdayBottomMoargin);
+    _weekdaysView.frame = CGRectMake(0, CGRectGetMaxY(_label.frame) + kMDCalendarHeaderViewMonthBottomMargin, viewSize.width, viewSize.height - CGRectGetHeight(_label.bounds) - kMDCalendarHeaderViewWeekdayBottomMargin - self.borderHeight);
+    _bottomBorder.frame = CGRectMake(0, CGRectGetMaxY(_weekdaysView.frame), viewSize.width, self.borderHeight);
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
     CGFloat monthLabelHeight = [_label sizeThatFits:CGSizeZero].height;
     CGFloat weekdaysViewHeight = [[self weekdaysView] sizeThatFits:CGSizeZero].height;
-    CGFloat marginHeights = kMDCalendarHeaderViewMonthBottomMargin + kMDCalendarHeaderViewWeekdayBottomMoargin;
+    CGFloat marginHeights = kMDCalendarHeaderViewMonthBottomMargin + kMDCalendarHeaderViewWeekdayBottomMargin;
     
-    CGFloat height = monthLabelHeight + weekdaysViewHeight + marginHeights;
+    CGFloat height = monthLabelHeight + weekdaysViewHeight + marginHeights + self.borderHeight;
     return CGSizeMake([super sizeThatFits:size].width, height);
 }
 
@@ -236,6 +246,11 @@ static CGFloat const kMDCalendarHeaderViewWeekdayBottomMoargin  = 5.f;
 
 - (void)setWeekdayTextColor:(UIColor *)weekdayTextColor {
     _weekdaysView.textColor = weekdayTextColor;
+}
+
+- (void)setBorderColor:(UIColor *)borderColor {
+    _bottomBorder.hidden = NO;
+    _bottomBorder.backgroundColor = borderColor;
 }
 
 
@@ -324,6 +339,10 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 
 - (void)setLineSpacing:(CGFloat)lineSpacing {
     _layout.minimumLineSpacing = lineSpacing;
+}
+
+- (CGFloat)lineSpacing {
+    return _layout.minimumLineSpacing;
 }
 
 - (NSDate *)currentDate {
@@ -520,6 +539,8 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     headerView.weekdayFont = self.weekdayFont;
     headerView.textColor = self.headerTextColor;
     headerView.weekdayTextColor = self.weekdayTextColor;
+    headerView.borderHeight = self.lineSpacing;
+    headerView.borderColor = self.borderColor;
 
     NSDate *date = [self dateForFirstDayOfSection:indexPath.section];
     headerView.shouldShowYear = [date year] != [self.startDate year];

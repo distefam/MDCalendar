@@ -29,6 +29,7 @@
         
         calendarView.lineSpacing = 1.f;
         calendarView.itemSpacing = 0.0f;
+        calendarView.borderColor = [UIColor darkGrayColor];
         
         calendarView.textColor = [UIColor blackColor];
         calendarView.headerTextColor = [UIColor blueColor];
