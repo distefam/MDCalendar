@@ -39,7 +39,7 @@
         
         calendarView.highlightColor = [UIColor lightGrayColor];
         
-        NSDate *startDate = [NSDate date];
+        NSDate *startDate = [[NSDate date] dateByAddingDays:4];
         NSDate *endDate = [startDate dateByAddingDays:365];
         
         calendarView.startDate = startDate;

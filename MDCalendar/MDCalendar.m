@@ -295,8 +295,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
         
 
         // Default Configuration
-        self.startDate      = [NSDate date];
-        self.selectedDate   = _startDate;
+        self.startDate      = self.currentDate;
         self.endDate        = [[_startDate dateByAddingMonths:3] lastDayOfMonth];
         
         self.dayFont        = [UIFont systemFontOfSize:17];
@@ -357,6 +356,10 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     if (borderHeight) {
         self.lineSpacing = 0.f;
     }
+}
+
+- (NSDate *)currentDate {
+    return [NSDate date];
 }
 
 #pragma mark - Private Methods & Helper Functions
@@ -446,7 +449,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     }
     
     // Handle cell highlighting
-    if ([date isEqualToDateSansTime:self.selectedDate]) {
+    if ([date isEqualToDateSansTime:self.startDate]) {
         cell.selected = YES;
         [collectionView selectItemAtIndexPath:indexPath animated:YES scrollPosition:UICollectionViewScrollPositionNone];
     }
@@ -476,12 +479,9 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     NSDate *date = [self dateForIndexPath:indexPath];
-    BOOL isBeforeStartDate = [date isBeforeDate:self.startDate];
     
     if ([_delegate respondsToSelector:@selector(calendarView:shouldSelectDate:)]) {
         return [_delegate calendarView:self shouldSelectDate:date];
-    } else if (!self.canSelectDaysBeforeStartDate && isBeforeStartDate) {
-        return NO;
     }
     
     return YES;
