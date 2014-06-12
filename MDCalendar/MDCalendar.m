@@ -157,16 +157,15 @@ NSString * MDCalendarDayStringFromDate(NSDate *date) {
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
-    // TODO: replace height with class-level implementation
     CGFloat viewWidth = CGRectGetWidth(self.bounds);
-    return CGSizeMake(viewWidth, [self dayLabelSize].height);
+    return CGSizeMake(viewWidth, [MDCalendarWeekdaysView preferredHeightWithFont:self.font]);
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
     
     CGFloat labelWidth = CGRectGetWidth(self.bounds) / [_dayLabels count];
-    CGRect labelFrame = CGRectMake(0, 0, labelWidth, [self dayLabelSize].height);
+    CGRect labelFrame = CGRectMake(0, 0, labelWidth, [MDCalendarWeekdaysView preferredHeightWithFont:self.font]);
     for (UILabel *label in _dayLabels) {
         label.frame = labelFrame;
         labelFrame = CGRectOffset(labelFrame, labelWidth, 0);
@@ -183,23 +182,6 @@ NSString * MDCalendarDayStringFromDate(NSDate *date) {
     for (UILabel *label in _dayLabels) {
         label.font = font;
     }
-}
-
-#pragma mark - Helper Functions & Methods
-
-- (CGSize)dayLabelSize {
-    static CGSize dayLabelSize;
-    static dispatch_once_t onceTokenForDayLabelSize;
-    dispatch_once(&onceTokenForDayLabelSize, ^{
-        UILabel *label = (UILabel *)[_dayLabels firstObject];
-        dayLabelSize = [label sizeThatFits:CGSizeZero];
-
-    });
-    return dayLabelSize;
-}
-
-CGFloat MDCalendarWeekdayLabelWidthForViewBounds(CGRect bounds) {
-    return CGRectGetWidth(bounds) / [[NSDate weekdays] count];
 }
 
 @end
