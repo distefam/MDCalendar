@@ -342,9 +342,14 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 }
 
 - (CGSize)headerViewSize {
-    MDCalendarHeaderView *headerView = [[MDCalendarHeaderView alloc] initWithFrame:CGRectZero];
-    headerView.firstDayOfMonth = [self startDate];
-    return [headerView sizeThatFits:CGSizeZero];
+    static MDCalendarHeaderView *headerView = nil;
+    static CGSize headerViewSize;
+    if (!headerView) {
+        headerView = [[MDCalendarHeaderView alloc] initWithFrame:CGRectZero];
+        headerView.firstDayOfMonth = [self startDate];
+        headerViewSize = [headerView sizeThatFits:CGSizeZero];
+    }
+    return headerViewSize;
 }
 
 
