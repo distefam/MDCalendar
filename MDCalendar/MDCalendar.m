@@ -373,12 +373,13 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 }
 
 - (CGSize)headerViewSize {
-    static MDCalendarHeaderView *headerView = nil;
     static CGSize headerViewSize;
-    if (!headerView) {
+    static dispatch_once_t onceTokenForHeaderViewSize;
+    dispatch_once(&onceTokenForHeaderViewSize, ^{
         CGFloat headerViewHeight = [MDCalendarHeaderView preferredHeightWithMonthLabelFont:self.headerFont andWeekdayFont:self.weekdayFont];
         headerViewSize = CGSizeMake(self.bounds.size.width, headerViewHeight);
-    }
+    });
+    
     return headerViewSize;
 }
 
