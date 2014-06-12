@@ -120,6 +120,21 @@ NSString * MDCalendarDayStringFromDate(NSDate *date) {
 
 @synthesize font = pFont;
 
++ (CGFloat)preferredHeightWithFont:(UIFont *)font {
+    static CGFloat height;
+    static dispatch_once_t onceTokenForWeekdayViewHeight;
+    dispatch_once(&onceTokenForWeekdayViewHeight, ^{
+        NSString *day = [[NSDate weekdays] firstObject];
+        UILabel *dayLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        dayLabel.text = day;
+        dayLabel.font = font;
+        dayLabel.textAlignment = NSTextAlignmentCenter;
+        dayLabel.adjustsFontSizeToFitWidth = YES;
+        height = [dayLabel sizeThatFits:CGSizeZero].height;
+    });
+    return height;
+}
+
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
@@ -142,6 +157,7 @@ NSString * MDCalendarDayStringFromDate(NSDate *date) {
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
+    // TODO: replace height with class-level implementation
     CGFloat viewWidth = CGRectGetWidth(self.bounds);
     return CGSizeMake(viewWidth, [self dayLabelSize].height);
 }
@@ -173,12 +189,12 @@ NSString * MDCalendarDayStringFromDate(NSDate *date) {
 
 - (CGSize)dayLabelSize {
     static CGSize dayLabelSize;
-    static BOOL firstTime = YES;
-    if (firstTime) {
+    static dispatch_once_t onceTokenForDayLabelSize;
+    dispatch_once(&onceTokenForDayLabelSize, ^{
         UILabel *label = (UILabel *)[_dayLabels firstObject];
         dayLabelSize = [label sizeThatFits:CGSizeZero];
-        firstTime = NO;
-    }
+
+    });
     return dayLabelSize;
 }
 
@@ -211,14 +227,33 @@ static CGFloat const kMDCalendarHeaderViewWeekdayBottomMargin  = 5.f;
 
 @implementation MDCalendarHeaderView
 
-//+ (CGSize)preferredSize {
-//    // TODO;
-//    CGFloat monthLabelHeight = CGFLOAT_MAX;
-//    CGFloat weekdaysViewHeight = [[self weekdaysView] sizeThatFits:CGSizeZero].height;
-//    CGFloat marginHeights = kMDCalendarHeaderViewMonthBottomMargin + kMDCalendarHeaderViewWeekdayBottomMargin;
-//    CGFloat height = monthLabelHeight + weekdaysViewHeight + marginHeights;
-//    return CGSizeZero;
-//}
++ (CGFloat)preferredHeightWithMonthLabelFont:(UIFont *)monthFont
+                              andWeekdayFont:(UIFont *)weekdayFont{
+    static CGFloat headerHeight;
+    static dispatch_once_t onceTokenForHeaderViewHeight;
+    dispatch_once(&onceTokenForHeaderViewHeight, ^{
+        CGFloat monthLabelHeight = [self heightForMonthLabelWithFont:monthFont];
+        CGFloat weekdaysViewHeight = [MDCalendarWeekdaysView preferredHeightWithFont:weekdayFont];
+        CGFloat marginHeights = kMDCalendarHeaderViewMonthBottomMargin + kMDCalendarHeaderViewWeekdayBottomMargin;
+        headerHeight = monthLabelHeight + weekdaysViewHeight + marginHeights;
+    });
+    return headerHeight;
+}
+
++ (CGFloat)heightForMonthLabelWithFont:(UIFont *)font {
+    static CGFloat monthLabelHeight;
+    static dispatch_once_t onceTokenForMonthLabelHeight;
+    
+    dispatch_once(&onceTokenForMonthLabelHeight, ^{
+        UILabel *monthLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+        monthLabel.textAlignment = NSTextAlignmentCenter;
+        monthLabel.font = font;
+        monthLabel.text = [NSDate monthNameForMonth:12];    // Using December as an example month
+        monthLabelHeight = [monthLabel sizeThatFits:CGSizeZero].height;
+    });
+    
+    return monthLabelHeight;
+}
 
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -248,11 +283,7 @@ static CGFloat const kMDCalendarHeaderViewWeekdayBottomMargin  = 5.f;
     static BOOL firstTime = YES;
     static CGSize calendarHeaderViewSize;
     if (firstTime) {
-        CGFloat monthLabelHeight = [_label sizeThatFits:CGSizeZero].height;
-        CGFloat weekdaysViewHeight = [[self weekdaysView] sizeThatFits:CGSizeZero].height;
-        CGFloat marginHeights = kMDCalendarHeaderViewMonthBottomMargin + kMDCalendarHeaderViewWeekdayBottomMargin;
-        CGFloat height = monthLabelHeight + weekdaysViewHeight + marginHeights;
-        calendarHeaderViewSize = CGSizeMake([super sizeThatFits:size].width, height);
+        calendarHeaderViewSize = CGSizeMake([super sizeThatFits:size].width, [MDCalendarHeaderView preferredHeightWithMonthLabelFont:self.font andWeekdayFont:self.weekdayFont]);
     }
     return calendarHeaderViewSize;
 }
@@ -345,9 +376,8 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     static MDCalendarHeaderView *headerView = nil;
     static CGSize headerViewSize;
     if (!headerView) {
-        headerView = [[MDCalendarHeaderView alloc] initWithFrame:CGRectZero];
-        headerView.firstDayOfMonth = [self startDate];
-        headerViewSize = [headerView sizeThatFits:CGSizeZero];
+        CGFloat headerViewHeight = [MDCalendarHeaderView preferredHeightWithMonthLabelFont:self.headerFont andWeekdayFont:self.weekdayFont];
+        headerViewSize = CGSizeMake(self.bounds.size.width, headerViewHeight);
     }
     return headerViewSize;
 }
