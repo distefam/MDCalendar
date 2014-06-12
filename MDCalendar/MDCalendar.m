@@ -354,18 +354,6 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     return self;
 }
 
-- (CGSize)headerViewSize {
-    static CGSize headerViewSize;
-    static dispatch_once_t onceTokenForHeaderViewSize;
-    dispatch_once(&onceTokenForHeaderViewSize, ^{
-        CGFloat headerViewHeight = [MDCalendarHeaderView preferredHeightWithMonthLabelFont:self.headerFont andWeekdayFont:self.weekdayFont];
-        headerViewSize = CGSizeMake(self.bounds.size.width, headerViewHeight);
-    });
-    
-    return headerViewSize;
-}
-
-
 - (void)layoutSubviews {
     [super layoutSubviews];
     _collectionView.frame = self.bounds;
@@ -540,7 +528,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section {
     CGFloat boundsWidth = collectionView.bounds.size.width;
-    return CGSizeMake(boundsWidth, [self headerViewSize].height);
+    return CGSizeMake(boundsWidth, [MDCalendarHeaderView preferredHeightWithMonthLabelFont:self.headerFont andWeekdayFont:self.weekdayFont]);
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section {
