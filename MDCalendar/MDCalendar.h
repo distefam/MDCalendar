@@ -38,6 +38,7 @@
 @property (nonatomic, strong) UIColor *highlightColor;          // Default is tint color
 
 @property (nonatomic, assign) BOOL showsDaysOutsideCurrentMonth;    // Default is NO
+@property (nonatomic, assign) BOOL canSelectDaysBeforeStartDate;    // Default is YES
 
 @end
 

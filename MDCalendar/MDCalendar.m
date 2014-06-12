@@ -349,6 +349,8 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
         self.headerTextColor    = _textColor;
         self.weekdayTextColor   = _textColor;
         
+        self.canSelectDaysBeforeStartDate = YES;
+        
         [self addSubview:_collectionView];
     }
     return self;
@@ -512,6 +514,10 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     NSDate *date = [self dateForIndexPath:indexPath];
+    
+    if ([date isBeforeDate:self.startDate] && !self.canSelectDaysBeforeStartDate) {
+        return NO;
+    }
     
     if ([_delegate respondsToSelector:@selector(calendarView:shouldSelectDate:)]) {
         return [_delegate calendarView:self shouldSelectDate:date];
