@@ -141,15 +141,9 @@ NSString * MDCalendarDayStringFromDate(NSDate *date) {
     return self;
 }
 
-- (CGSize)dayLabelSize {
-    UILabel *label = (UILabel *)[_dayLabels firstObject];
-    return [label sizeThatFits:CGSizeZero];
-}
-
 - (CGSize)sizeThatFits:(CGSize)size {
-    [super sizeThatFits:size];
-    
-    return CGSizeMake(self.bounds.size.width, [self dayLabelSize].height);
+    CGFloat viewWidth = CGRectGetWidth(self.bounds);
+    return CGSizeMake(viewWidth, [self dayLabelSize].height);
 }
 
 - (void)layoutSubviews {
@@ -173,6 +167,23 @@ NSString * MDCalendarDayStringFromDate(NSDate *date) {
     for (UILabel *label in _dayLabels) {
         label.font = font;
     }
+}
+
+#pragma mark - Helper Functions & Methods
+
+- (CGSize)dayLabelSize {
+    static CGSize dayLabelSize;
+    static BOOL firstTime = YES;
+    if (firstTime) {
+        UILabel *label = (UILabel *)[_dayLabels firstObject];
+        dayLabelSize = [label sizeThatFits:CGSizeZero];
+        firstTime = NO;
+    }
+    return dayLabelSize;
+}
+
+CGFloat MDCalendarWeekdayLabelWidthForViewBounds(CGRect bounds) {
+    return CGRectGetWidth(bounds) / [[NSDate weekdays] count];
 }
 
 @end
@@ -200,6 +211,15 @@ static CGFloat const kMDCalendarHeaderViewWeekdayBottomMargin  = 5.f;
 
 @implementation MDCalendarHeaderView
 
+//+ (CGSize)preferredSize {
+//    // TODO;
+//    CGFloat monthLabelHeight = CGFLOAT_MAX;
+//    CGFloat weekdaysViewHeight = [[self weekdaysView] sizeThatFits:CGSizeZero].height;
+//    CGFloat marginHeights = kMDCalendarHeaderViewMonthBottomMargin + kMDCalendarHeaderViewWeekdayBottomMargin;
+//    CGFloat height = monthLabelHeight + weekdaysViewHeight + marginHeights;
+//    return CGSizeZero;
+//}
+
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
@@ -225,12 +245,16 @@ static CGFloat const kMDCalendarHeaderViewWeekdayBottomMargin  = 5.f;
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
-    CGFloat monthLabelHeight = [_label sizeThatFits:CGSizeZero].height;
-    CGFloat weekdaysViewHeight = [[self weekdaysView] sizeThatFits:CGSizeZero].height;
-    CGFloat marginHeights = kMDCalendarHeaderViewMonthBottomMargin + kMDCalendarHeaderViewWeekdayBottomMargin;
-    
-    CGFloat height = monthLabelHeight + weekdaysViewHeight + marginHeights;
-    return CGSizeMake([super sizeThatFits:size].width, height);
+    static BOOL firstTime = YES;
+    static CGSize calendarHeaderViewSize;
+    if (firstTime) {
+        CGFloat monthLabelHeight = [_label sizeThatFits:CGSizeZero].height;
+        CGFloat weekdaysViewHeight = [[self weekdaysView] sizeThatFits:CGSizeZero].height;
+        CGFloat marginHeights = kMDCalendarHeaderViewMonthBottomMargin + kMDCalendarHeaderViewWeekdayBottomMargin;
+        CGFloat height = monthLabelHeight + weekdaysViewHeight + marginHeights;
+        calendarHeaderViewSize = CGSizeMake([super sizeThatFits:size].width, height);
+    }
+    return calendarHeaderViewSize;
 }
 
 - (void)setFirstDayOfMonth:(NSDate *)firstDayOfMonth {
