@@ -76,10 +76,24 @@ static NSString * const kMDCalendarViewCellIdentifier = @"kMDCalendarViewCellIde
 }
 
 - (void)setSelected:(BOOL)selected {
-    [super setSelected:selected];
+    [super setSelected:YES];
     
-    _highlightView.hidden = !selected;
+    UIView *highlightView = _highlightView;
+    highlightView.hidden = !selected;
     _label.textColor = selected ? [UIColor whiteColor] : _textColor;
+
+    highlightView.transform = CGAffineTransformMakeScale(.1f, .1f);
+    
+    [UIView animateWithDuration:0.4
+                          delay:0.0
+         usingSpringWithDamping:0.5
+          initialSpringVelocity:1.0
+                        options:UIViewAnimationOptionCurveEaseInOut
+                     animations:^{
+                         highlightView.transform = CGAffineTransformIdentity;
+                     } completion:^(BOOL finished) {
+                         nil;
+                     }];
 }
 
 - (void)layoutSubviews {
@@ -503,7 +517,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
         }
         cell.userInteractionEnabled = NO;
     } else if ([date isEqualToDateSansTime:self.selectedDate]) {
-        // Handle cell highlighting
+        // Handle cell selection
         cell.selected = YES;
         [collectionView selectItemAtIndexPath:indexPath animated:YES scrollPosition:UICollectionViewScrollPositionNone];
     }
