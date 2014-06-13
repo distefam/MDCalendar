@@ -410,15 +410,6 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     }
 }
 
-//- (void)scrollCalendarToSelectedDate {
-//    UICollectionView *collectionView = _collectionView;
-//    NSSet *visibleIndexPaths = [NSSet setWithArray:[collectionView indexPathsForVisibleItems]];
-//    NSIndexPath *indexPath = [[collectionView indexPathsForSelectedItems] firstObject];
-//    if (indexPath && ![visibleIndexPaths containsObject:indexPath]) {
-//        [collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:YES];
-//    }
-//}
-
 #pragma mark - Private Methods & Helper Functions
 
 - (NSInteger)monthForSection:(NSInteger)section {
@@ -511,10 +502,8 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
             cell.label.text = @"";
         }
         cell.userInteractionEnabled = NO;
-    }
-    
-    // Handle cell highlighting
-    if ([date isEqualToDateSansTime:self.selectedDate]) {
+    } else if ([date isEqualToDateSansTime:self.selectedDate]) {
+        // Handle cell highlighting
         cell.selected = YES;
         [collectionView selectItemAtIndexPath:indexPath animated:YES scrollPosition:UICollectionViewScrollPositionNone];
     }
