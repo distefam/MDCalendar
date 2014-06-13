@@ -40,9 +40,6 @@
 @property (nonatomic, assign) BOOL showsDaysOutsideCurrentMonth;    // Default is NO
 @property (nonatomic, assign) BOOL canSelectDaysBeforeStartDate;    // Default is YES
 
-// force scrolling to specific date; note: calendar will automatically scroll to selected date if date is not on-screen
-- (void)scrollCalendarToDate:(NSDate *)date;
-
 @end
 
 @protocol MDCalendarDelegate <NSObject>

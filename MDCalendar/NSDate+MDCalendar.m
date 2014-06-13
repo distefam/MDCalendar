@@ -129,9 +129,6 @@
     NSCalendar *calendar = [NSCalendar currentCalendar];
     
     NSDateComponents *components = [calendar components:NSCalendarUnitMonth fromDate:self toDate:endDate options:0];
-    NSInteger month = [components month];
-
-    NSAssert(month >= 0, @"Please enter an end date that is after the specified start date.");
 
     return [components month];
 }
