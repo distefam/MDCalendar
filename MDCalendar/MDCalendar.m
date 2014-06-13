@@ -359,7 +359,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 - (void)layoutSubviews {
     [super layoutSubviews];
     _collectionView.frame = self.bounds;
-    [self scrollCalendarToDate:_selectedDate];
+    [self scrollCalendarToDate:_selectedDate animated:NO];
 }
 
 #pragma mark - Custom Accessors
@@ -401,12 +401,12 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 
 #pragma mark - Public Methods
 
-- (void)scrollCalendarToDate:(NSDate *)date {
+- (void)scrollCalendarToDate:(NSDate *)date animated:(BOOL)animated {
     UICollectionView *collectionView = _collectionView;
     NSIndexPath *indexPath = [self indexPathForDate:date];
     NSSet *visibleIndexPaths = [NSSet setWithArray:[collectionView indexPathsForVisibleItems]];
     if (indexPath && ![visibleIndexPaths containsObject:indexPath]) {
-        [collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:YES];
+        [collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:animated];
     }
 }
 
@@ -541,8 +541,6 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     NSDate *date = [self dateForIndexPath:indexPath];
     self.selectedDate = date;
-    
-    [self scrollCalendarToDate:date];
     
     [_delegate calendarView:self didSelectDate:date];
 }

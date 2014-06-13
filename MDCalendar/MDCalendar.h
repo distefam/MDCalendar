@@ -41,7 +41,7 @@
 @property (nonatomic, assign) BOOL canSelectDaysBeforeStartDate;    // Default is YES
 
 // force scrolling to specific date; note: calendar will automatically scroll to selected date if date is not on-screen
-- (void)scrollCalendarToDate:(NSDate *)date;
+- (void)scrollCalendarToDate:(NSDate *)date animated:(BOOL)animated;
 
 @end
 
