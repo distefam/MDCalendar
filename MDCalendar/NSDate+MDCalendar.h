@@ -25,6 +25,7 @@
 - (NSInteger)year;
 - (NSDateComponents *)components;
 
+- (NSInteger)numberOfDaysUntilEndDate:(NSDate *)endDate;
 - (NSInteger)numberOfMonthsUntilEndDate:(NSDate *)endDate;
 - (NSDate *)dateByAddingDays:(NSInteger)days;
 - (NSDate *)dateByAddingMonths:(NSInteger)months;

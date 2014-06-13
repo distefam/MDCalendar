@@ -359,8 +359,8 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 - (void)layoutSubviews {
     [super layoutSubviews];
     _collectionView.frame = self.bounds;
+    [self scrollCalendarToDate:_selectedDate];
 }
-
 
 #pragma mark - Custom Accessors
 
@@ -397,19 +397,27 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 
 - (void)setSelectedDate:(NSDate *)selectedDate {
     _selectedDate = selectedDate;
-    [self scrollCalendarToSelectedDate];
 }
 
 #pragma mark - Public Methods
 
-- (void)scrollCalendarToSelectedDate {
+- (void)scrollCalendarToDate:(NSDate *)date {
     UICollectionView *collectionView = _collectionView;
+    NSIndexPath *indexPath = [self indexPathForDate:date];
     NSSet *visibleIndexPaths = [NSSet setWithArray:[collectionView indexPathsForVisibleItems]];
-    NSIndexPath *indexPath = [[collectionView indexPathsForSelectedItems] firstObject];
     if (indexPath && ![visibleIndexPaths containsObject:indexPath]) {
         [collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:YES];
     }
 }
+
+//- (void)scrollCalendarToSelectedDate {
+//    UICollectionView *collectionView = _collectionView;
+//    NSSet *visibleIndexPaths = [NSSet setWithArray:[collectionView indexPathsForVisibleItems]];
+//    NSIndexPath *indexPath = [[collectionView indexPathsForSelectedItems] firstObject];
+//    if (indexPath && ![visibleIndexPaths containsObject:indexPath]) {
+//        [collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:YES];
+//    }
+//}
 
 #pragma mark - Private Methods & Helper Functions
 
@@ -450,6 +458,14 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     }
     
     return date;
+}
+
+- (NSIndexPath *)indexPathForDate:(NSDate *)date {
+    NSDate *firstDayOfCalendar = [_startDate firstDayOfMonth];
+    NSInteger section = [firstDayOfCalendar numberOfMonthsUntilEndDate:date];
+    NSInteger dayOffset = [self offsetForSection:section];
+    NSInteger dayIndex = [date day] + dayOffset;
+    return [NSIndexPath indexPathForItem:dayIndex inSection:section];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -526,7 +542,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     NSDate *date = [self dateForIndexPath:indexPath];
     self.selectedDate = date;
     
-    [self scrollCalendarToSelectedDate];
+    [self scrollCalendarToDate:date];
     
     [_delegate calendarView:self didSelectDate:date];
 }
