@@ -395,6 +395,11 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     return [NSDate date];
 }
 
+- (void)setSelectedDate:(NSDate *)selectedDate {
+    _selectedDate = selectedDate;
+    [self scrollCalendarToDate:selectedDate];
+}
+
 #pragma mark - Public Methods
 
 - (void)scrollCalendarToDate:(NSDate *)date {

@@ -133,16 +133,7 @@
 
     NSAssert(month >= 0, @"Please enter an end date that is after the specified start date.");
 
-    return month;
-}
-
-- (NSInteger)numberOfDaysUntilEndDate:(NSDate *)endDate {
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    
-    NSDateComponents *components = [calendar components:NSCalendarUnitDay fromDate:self toDate:endDate options:0];
-    NSInteger days = [components day];
-    
-    return days;
+    return [components month];
 }
 
 - (NSDate *)dateByAddingDays:(NSInteger)days {
