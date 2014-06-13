@@ -395,6 +395,13 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     return [NSDate date];
 }
 
+#pragma mark - Public Methods
+
+- (void)scrollCalendarToDate:(NSDate *)date {
+    NSIndexPath *selectedDateIndexPath = [[_collectionView indexPathsForSelectedItems] firstObject];
+    [_collectionView scrollToItemAtIndexPath:selectedDateIndexPath atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
+}
+
 #pragma mark - Private Methods & Helper Functions
 
 - (NSInteger)monthForSection:(NSInteger)section {
@@ -509,6 +516,13 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     NSDate *date = [self dateForIndexPath:indexPath];
     self.selectedDate = date;
+    
+    // Scroll calendar to selected date if the date is not currently on-screen
+    NSSet *visibleIndexPaths = [NSSet setWithArray:[collectionView indexPathsForVisibleItems]];
+    if (![visibleIndexPaths containsObject:indexPath]) {
+        [collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:YES];
+    }
+    
     [_delegate calendarView:self didSelectDate:date];
 }
 
