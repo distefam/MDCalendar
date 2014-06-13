@@ -399,7 +399,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 
 - (void)scrollCalendarToDate:(NSDate *)date {
     NSIndexPath *selectedDateIndexPath = [[_collectionView indexPathsForSelectedItems] firstObject];
-    [_collectionView scrollToItemAtIndexPath:selectedDateIndexPath atScrollPosition:UICollectionViewScrollPositionTop animated:YES];
+    [_collectionView scrollToItemAtIndexPath:selectedDateIndexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:YES];
 }
 
 #pragma mark - Private Methods & Helper Functions
