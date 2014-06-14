@@ -46,7 +46,7 @@
 @end
 
 @protocol MDCalendarDelegate <NSObject>
-- (void)calendarView:(MDCalendar *)calendarView didSelectDate:(NSDate *)date;
 @optional
+- (void)calendarView:(MDCalendar *)calendarView didSelectDate:(NSDate *)date;
 - (BOOL)calendarView:(MDCalendar *)calendarView shouldSelectDate:(NSDate *)date;
 @end
