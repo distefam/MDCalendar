@@ -57,12 +57,13 @@
         
         calendarView.highlightColor = [UIColor pacifica];
         
-        NSDate *startDate = [[NSDate date] dateByAddingDays:4];
+        NSDate *startDate = [NSDate date];
         NSDate *endDate = [startDate dateByAddingMonths:6];
         
         calendarView.startDate = startDate;
         calendarView.endDate = endDate;
         calendarView.delegate = self;
+        calendarView.canSelectDaysBeforeStartDate = NO;
         
         [self.view addSubview:calendarView];
         self.calendarView = calendarView;

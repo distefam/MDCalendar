@@ -3,6 +3,8 @@ MDCalendar
 
 `MDCalendar` is a calendar-style date picker for iOS 7 (and above) that uses `UICollectionView` to layout a calendar in the popular "month view" format.
 
+![example_calendar](https://dl.dropboxusercontent.com/u/2362090/MDCalendar_demo.png)
+
 ## Implementation Notes
 
 `MDCalendar` was developed with flexibility in mind and is consequently implemented as a subclass of `UIView`. This means that a calendar may be instantiated as a subview in an existing view hierarchy or pushed onto a navigation stack as the sole view of a `UIViewController`. The latter behavior is demonstrated in the `MDCalendarDemo` project.
