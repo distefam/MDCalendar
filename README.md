@@ -15,4 +15,8 @@ Suppose a view controller called `EventDetailsViewController` wants to allow use
 
 The advised implementation of this is to create a sparse view controller to display an `MDCalendar` (see the demo project for an example of how to do that). This view controller, let's call it `MDEventCalendarViewController` (creative, I know), will be pushed onto the navigation stack.
 
-See MDCalendarDelegate class below for information on how to pass events back to the parent view controller.
+## Events & Delegation
+
+In the above example, we will need to communicate calendar events back to its parent view controller. In order to do this elegantly, subclass `MDCalendarDelegate` in `MDEventCalendarViewController` and expose this protocol, `MDEventCalendarDelegate`, in the view controller's header. Now, the parent view controller, `EventDetailsViewController`, can set its delegate: `id<MDEventCalendarDelegate>delegate`
+ 
+This delegate will essentially pass messages from `MDCalendarDelegate` onto the parent view controller. Advantages of subclassing `MDCalendarDelegate` is that if you were to re-use your sparse view controller it could contain some logic of how to interperet `MDCalendarDelegate` events.
