@@ -22,6 +22,7 @@
 		0C50FBBA192FBCFC0043D2D5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 0C50FBB8192FBCFC0043D2D5 /* InfoPlist.strings */; };
 		0C50FBBC192FBCFC0043D2D5 /* MDCalendarDemoTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C50FBBB192FBCFC0043D2D5 /* MDCalendarDemoTests.m */; };
 		0C50FBC9192FBD4A0043D2D5 /* MDCalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0C50FBC8192FBD4A0043D2D5 /* MDCalendarViewController.m */; };
+		0CB9451B194CFFE800BE3BB1 /* UIColor+MDCalendarDemo.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CB9451A194CFFE800BE3BB1 /* UIColor+MDCalendarDemo.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,8 @@
 		0C50FBBB192FBCFC0043D2D5 /* MDCalendarDemoTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MDCalendarDemoTests.m; sourceTree = "<group>"; };
 		0C50FBC7192FBD4A0043D2D5 /* MDCalendarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MDCalendarViewController.h; sourceTree = "<group>"; };
 		0C50FBC8192FBD4A0043D2D5 /* MDCalendarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MDCalendarViewController.m; sourceTree = "<group>"; };
+		0CB94519194CFFE800BE3BB1 /* UIColor+MDCalendarDemo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+MDCalendarDemo.h"; sourceTree = "<group>"; };
+		0CB9451A194CFFE800BE3BB1 /* UIColor+MDCalendarDemo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+MDCalendarDemo.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,6 +143,8 @@
 		0C50FB9D192FBCFC0043D2D5 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				0CB94519194CFFE800BE3BB1 /* UIColor+MDCalendarDemo.h */,
+				0CB9451A194CFFE800BE3BB1 /* UIColor+MDCalendarDemo.m */,
 				0C50FB9E192FBCFC0043D2D5 /* MDCalendarDemo-Info.plist */,
 				0C50FB9F192FBCFC0043D2D5 /* InfoPlist.strings */,
 				0C50FBA2192FBCFC0043D2D5 /* main.m */,
@@ -276,6 +281,7 @@
 				0C50FBA7192FBCFC0043D2D5 /* MDAppDelegate.m in Sources */,
 				0B7EA05419364EB6009D95CC /* NSDate+MDCalendar.m in Sources */,
 				0C50FBC9192FBD4A0043D2D5 /* MDCalendarViewController.m in Sources */,
+				0CB9451B194CFFE800BE3BB1 /* UIColor+MDCalendarDemo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

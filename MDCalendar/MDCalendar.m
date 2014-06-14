@@ -96,7 +96,7 @@ static NSString * const kMDCalendarViewCellIdentifier = @"kMDCalendarViewCellIde
     
     UIView *highlightView = _highlightView;
     highlightView.hidden = !selected;
-    _label.textColor = selected ? [UIColor whiteColor] : _textColor;
+    _label.textColor = selected ? self.backgroundColor : _textColor;
 
     highlightView.transform = CGAffineTransformMakeScale(.1f, .1f);
     

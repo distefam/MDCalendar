@@ -26,6 +26,7 @@
 #import "MDCalendarViewController.h"
 #import "MDCalendar.h"
 #import "NSDate+MDCalendar.h"
+#import "UIColor+MDCalendarDemo.h"
 
 @interface MDCalendarViewController () <MDCalendarDelegate>
 @property (nonatomic, strong) NSDate *startDate;
@@ -46,15 +47,15 @@
         
         calendarView.lineSpacing = 0.f;
         calendarView.itemSpacing = 0.0f;
-        calendarView.borderColor = [UIColor darkGrayColor];
+        calendarView.borderColor = [UIColor mightySlate];
         calendarView.borderHeight = 1.f;
         
-        calendarView.textColor = [UIColor blackColor];
-        calendarView.headerTextColor = [UIColor blueColor];
-        calendarView.weekdayTextColor = [UIColor redColor];
+        calendarView.textColor = [UIColor mightySlate];
+        calendarView.headerTextColor = [UIColor mightySlate];
+        calendarView.weekdayTextColor = [UIColor grandmasPillow];
         calendarView.cellBackgroundColor = [UIColor whiteColor];
         
-        calendarView.highlightColor = [UIColor lightGrayColor];
+        calendarView.highlightColor = [UIColor pacifica];
         
         NSDate *startDate = [[NSDate date] dateByAddingDays:4];
         NSDate *endDate = [startDate dateByAddingMonths:6];
