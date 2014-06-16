@@ -561,7 +561,9 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     NSDate *date = [self dateForIndexPath:indexPath];
     self.selectedDate = date;
     
-    [_delegate calendarView:self didSelectDate:date];
+    if ([_delegate respondsToSelector:@selector(calendarView:didSelectDate:)]) {
+        [_delegate calendarView:self didSelectDate:date];
+    }
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
