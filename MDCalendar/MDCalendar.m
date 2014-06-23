@@ -435,7 +435,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     UICollectionView *collectionView = _collectionView;
     NSIndexPath *indexPath = [self indexPathForDate:date];
     NSSet *visibleIndexPaths = [NSSet setWithArray:[collectionView indexPathsForVisibleItems]];
-    if (indexPath && ![visibleIndexPaths containsObject:indexPath]) {
+    if (indexPath && [visibleIndexPaths count] && ![visibleIndexPaths containsObject:indexPath]) {
         [collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:animated];
     }
 }
