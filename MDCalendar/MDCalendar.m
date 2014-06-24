@@ -154,7 +154,7 @@ NSString * MDCalendarDayStringFromDate(NSDate *date) {
     static CGFloat height;
     static dispatch_once_t onceTokenForWeekdayViewHeight;
     dispatch_once(&onceTokenForWeekdayViewHeight, ^{
-        NSString *day = [[NSDate weekdays] firstObject];
+        NSString *day = [[NSDate weekdayAbbreviations] firstObject];
         UILabel *dayLabel = [[UILabel alloc] initWithFrame:CGRectZero];
         dayLabel.text = day;
         dayLabel.font = font;
@@ -168,7 +168,7 @@ NSString * MDCalendarDayStringFromDate(NSDate *date) {
 - (id)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        NSArray *weekdays = [NSDate weekdays];
+        NSArray *weekdays = [NSDate weekdayAbbreviations];
         NSMutableArray *dayLabels = [NSMutableArray new];
         for (NSString *day in weekdays) {
             UILabel *dayLabel = [[UILabel alloc] initWithFrame:CGRectZero];

@@ -47,6 +47,16 @@
 }
 
 + (NSArray *)weekdays {
+    return @[@"Sunday",
+             @"Monday",
+             @"Tuesday",
+             @"Wednesday",
+             @"Thursday",
+             @"Friday",
+             @"Saturday"];
+}
+
++ (NSArray *)weekdayAbbreviations {
     return @[@"SUN",
              @"MON",
              @"TUE",
