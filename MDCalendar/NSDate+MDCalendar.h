@@ -30,10 +30,10 @@
 + (NSInteger)numberOfDaysInMonth:(NSInteger)month;
 + (NSDate *)dateFromComponents:(NSDateComponents *)components;
 + (NSString *)monthNameForMonth:(NSInteger)month;
-+ (NSArray *)weekdays;
-+ (NSArray *)weekdayAbbreviations;
-+ (NSArray *)monthNames;
-+ (NSArray *)shortMonthNames;
++ (NSArray *)weekdays;                                          // returns all weekdays as strings, starts with Sunday
++ (NSArray *)weekdayAbbreviations;                              // returns all weekday abbreviations as strings, starts with Sun
++ (NSArray *)monthNames;                                        // returns all months as strings, starts with zero and proceeds to January
++ (NSArray *)shortMonthNames;                                   // returns all month abbreviations as strings, starts with zero and proceeds to Jan
 
 - (NSDate *)firstDayOfMonth;
 - (NSDate *)lastDayOfMonth;
