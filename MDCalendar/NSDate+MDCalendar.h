@@ -32,6 +32,8 @@
 + (NSString *)monthNameForMonth:(NSInteger)month;
 + (NSArray *)weekdays;
 + (NSArray *)weekdayAbbreviations;
++ (NSArray *)monthNames;
++ (NSArray *)shortMonthNames;
 
 - (NSDate *)firstDayOfMonth;
 - (NSDate *)lastDayOfMonth;
