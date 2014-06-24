@@ -200,12 +200,6 @@
     return [self compare:otherDate] == NSOrderedDescending;
 }
 
-- (BOOL)isInSameWeekForDate:(NSDate *)otherDate {
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSUInteger ordinalityForDate      = [calendar ordinalityOfUnit:NSCalendarUnitWeekOfYear inUnit:NSCalendarUnitYear forDate:self];
-    NSUInteger ordinalityForOtherDate = [calendar ordinalityOfUnit:NSCalendarUnitWeekOfYear inUnit:NSCalendarUnitYear forDate:otherDate];
-    return ordinalityForDate == ordinalityForOtherDate;
-}
 
 #pragma mark - Helpers
                   

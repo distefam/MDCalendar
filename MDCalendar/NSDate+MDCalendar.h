@@ -53,6 +53,5 @@
 - (BOOL)isEqualToDateSansTime:(NSDate *)otherDate;
 - (BOOL)isBeforeDate:(NSDate *)otherDate;
 - (BOOL)isAfterDate:(NSDate *)otherDate;
-- (BOOL)isInSameWeekForDate:(NSDate *)otherDate;
 
 @end
