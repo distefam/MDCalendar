@@ -483,7 +483,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
         NSDate *firstDayOfCalendar = [_startDate firstDayOfMonth];
         NSInteger section = [firstDayOfCalendar numberOfMonthsUntilEndDate:date];
         NSInteger dayOffset = [self offsetForSection:section];
-        NSInteger dayIndex = [date day] + dayOffset;
+        NSInteger dayIndex = [date day] + dayOffset - 1;
         indexPath = [NSIndexPath indexPathForItem:dayIndex inSection:section];
     }
     return indexPath;
