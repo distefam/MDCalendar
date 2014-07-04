@@ -81,7 +81,7 @@
 #pragma mark - MDCalendarViewDelegate
 
 - (void)calendarView:(MDCalendar *)calendarView didSelectDate:(NSDate *)date {
-    NSLog(@"Selected Date: %@", date);
+    NSLog(@"Selected Date: %@", [date descriptionWithLocale:[NSLocale currentLocale]]);
 }
 
 @end
