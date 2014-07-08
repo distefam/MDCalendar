@@ -73,6 +73,7 @@
 @property (nonatomic, assign) CGFloat lineSpacing;    /**< default is 1pt; line spacing reveals backgroundColor between lines */
 @property (nonatomic, assign) CGFloat borderHeight;   /**< default is 0pt; lineSpacing and borderHeight are mutually exclusive. If set, overrides lineSpacing behavior */
 @property (nonatomic, strong) UIColor *borderColor;   /**< default is textColor */
+@property (nonatomic, assign) BOOL showsBottomSectionBorder; /** default is NO */
 
 
 ///--------------------------------

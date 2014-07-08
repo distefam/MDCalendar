@@ -49,6 +49,7 @@
         calendarView.itemSpacing = 0.0f;
         calendarView.borderColor = [UIColor mightySlate];
         calendarView.borderHeight = 1.f;
+        calendarView.showsBottomSectionBorder = YES;
         
         calendarView.textColor = [UIColor mightySlate];
         calendarView.headerTextColor = [UIColor mightySlate];

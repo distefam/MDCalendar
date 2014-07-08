@@ -595,7 +595,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
         view = headerView;
     } else if (kind == UICollectionElementKindSectionFooter) {
         MDCalendarFooterView *footerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:kMDCalendarFooterViewIdentifier forIndexPath:indexPath];
-        footerView.borderHeight = self.borderHeight;
+        footerView.borderHeight = self.showsBottomSectionBorder ? self.borderHeight : 0.f;
         footerView.borderColor  = self.borderColor;
         view = footerView;
     }
