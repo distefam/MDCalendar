@@ -233,6 +233,7 @@ NSString * MDCalendarDayStringFromDate(NSDate *date) {
 @end
 
 static NSString * const kMDCalendarHeaderViewIdentifier = @"kMDCalendarHeaderViewIdentifier";
+static NSString * const kMDCalendarFooterViewIdentifier = @"kMDCalendarFooterViewIdentifier";
 static CGFloat const kMDCalendarHeaderViewMonthBottomMargin     = 10.f;
 static CGFloat const kMDCalendarHeaderViewWeekdayBottomMargin  = 5.f;
 
@@ -326,6 +327,38 @@ static CGFloat const kMDCalendarHeaderViewWeekdayBottomMargin  = 5.f;
 
 @end
 
+@interface MDCalendarFooterView : UICollectionReusableView
+@property (nonatomic, assign) CGFloat  borderHeight;
+@property (nonatomic, assign) UIColor *borderColor;
+@end
+
+@interface MDCalendarFooterView ()
+@property (nonatomic, strong) UIView *bottomBorder;
+@end
+
+@implementation MDCalendarFooterView
+
+- (instancetype)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        UIView *bottomBorderView = [[UIView alloc] initWithFrame:CGRectZero];
+        [self addSubview:bottomBorderView];
+        self.bottomBorder = bottomBorderView;
+    }
+    return self;
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    _bottomBorder.frame = CGRectMake(0, 0, CGRectGetWidth(self.bounds), self.borderHeight);
+}
+
+- (void)setBorderColor:(UIColor *)borderColor {
+    _bottomBorder.backgroundColor = borderColor;
+}
+
+@end
+
 @interface MDCalendar () <UICollectionViewDelegateFlowLayout, UICollectionViewDataSource>
 @property (nonatomic, strong) UICollectionView *collectionView;
 @property (nonatomic, strong) UICollectionViewFlowLayout *layout;
@@ -359,6 +392,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
         
         [_collectionView registerClass:[MDCalendarViewCell class] forCellWithReuseIdentifier:kMDCalendarViewCellIdentifier];
         [_collectionView registerClass:[MDCalendarHeaderView class] forSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kMDCalendarHeaderViewIdentifier];
+        [_collectionView registerClass:[MDCalendarFooterView class] forSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:kMDCalendarFooterViewIdentifier];
         
 
         // Default Configuration
@@ -542,19 +576,31 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 }
 
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView viewForSupplementaryElementOfKind:(NSString *)kind atIndexPath:(NSIndexPath *)indexPath {
-    MDCalendarHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kMDCalendarHeaderViewIdentifier forIndexPath:indexPath];
-
-    headerView.backgroundColor = self.headerBackgroundColor;
-    headerView.font = self.headerFont;
-    headerView.weekdayFont = self.weekdayFont;
-    headerView.textColor = self.headerTextColor;
-    headerView.weekdayTextColor = self.weekdayTextColor;
-
-    NSDate *date = [self dateForFirstDayOfSection:indexPath.section];
-    headerView.shouldShowYear = [date year] != [self.startDate year];
-    headerView.firstDayOfMonth = date;
-
-    return headerView;
+    
+    UICollectionReusableView *view;
+    
+    if (kind == UICollectionElementKindSectionHeader) {
+        MDCalendarHeaderView *headerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader withReuseIdentifier:kMDCalendarHeaderViewIdentifier forIndexPath:indexPath];
+        
+        headerView.backgroundColor = self.headerBackgroundColor;
+        headerView.font = self.headerFont;
+        headerView.weekdayFont = self.weekdayFont;
+        headerView.textColor = self.headerTextColor;
+        headerView.weekdayTextColor = self.weekdayTextColor;
+        
+        NSDate *date = [self dateForFirstDayOfSection:indexPath.section];
+        headerView.shouldShowYear = [date year] != [self.startDate year];
+        headerView.firstDayOfMonth = date;
+        
+        view = headerView;
+    } else if (kind == UICollectionElementKindSectionFooter) {
+        MDCalendarFooterView *footerView = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionFooter withReuseIdentifier:kMDCalendarFooterViewIdentifier forIndexPath:indexPath];
+        footerView.borderHeight = self.borderHeight;
+        footerView.borderColor  = self.borderColor;
+        view = footerView;
+    }
+    
+    return view;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
