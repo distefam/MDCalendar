@@ -466,7 +466,8 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     NSIndexPath *indexPath = [self indexPathForDate:date];
     NSSet *visibleIndexPaths = [NSSet setWithArray:[collectionView indexPathsForVisibleItems]];
     if (indexPath && [visibleIndexPaths count] && ![visibleIndexPaths containsObject:indexPath]) {
-        [collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:animated];
+        [collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
+        [self scrollCalendarToTopOfSection:indexPath.section animated:animated];
     }
 }
 
@@ -521,6 +522,20 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
         indexPath = [NSIndexPath indexPathForItem:dayIndex inSection:section];
     }
     return indexPath;
+}
+
+- (CGRect)frameForHeaderForSection:(NSInteger)section {
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:1 inSection:section];
+    UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:indexPath];
+    CGRect frameForFirstCell = attributes.frame;
+    CGFloat headerHeight = [self collectionView:_collectionView layout:_layout referenceSizeForHeaderInSection:section].height;
+    return CGRectOffset(frameForFirstCell, 0, -headerHeight);
+}
+
+- (void)scrollCalendarToTopOfSection:(NSInteger)section animated:(BOOL)animated {
+    CGRect headerRect = [self frameForHeaderForSection:section];
+    CGPoint topOfHeader = CGPointMake(0, headerRect.origin.y);
+    [_collectionView setContentOffset:topOfHeader animated:YES];
 }
 
 #pragma mark - UICollectionViewDataSource
