@@ -466,7 +466,6 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     NSIndexPath *indexPath = [self indexPathForDate:date];
     NSSet *visibleIndexPaths = [NSSet setWithArray:[collectionView indexPathsForVisibleItems]];
     if (indexPath && [visibleIndexPaths count] && ![visibleIndexPaths containsObject:indexPath]) {
-        [collectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredVertically animated:NO];
         [self scrollCalendarToTopOfSection:indexPath.section animated:animated];
     }
 }
@@ -535,7 +534,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 - (void)scrollCalendarToTopOfSection:(NSInteger)section animated:(BOOL)animated {
     CGRect headerRect = [self frameForHeaderForSection:section];
     CGPoint topOfHeader = CGPointMake(0, headerRect.origin.y - _collectionView.contentInset.top);
-    [_collectionView setContentOffset:topOfHeader animated:YES];
+    [_collectionView setContentOffset:topOfHeader animated:animated];
 }
 
 #pragma mark - UICollectionViewDataSource
