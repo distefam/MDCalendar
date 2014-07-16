@@ -534,7 +534,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 
 - (void)scrollCalendarToTopOfSection:(NSInteger)section animated:(BOOL)animated {
     CGRect headerRect = [self frameForHeaderForSection:section];
-    CGPoint topOfHeader = CGPointMake(0, headerRect.origin.y);
+    CGPoint topOfHeader = CGPointMake(0, headerRect.origin.y - _collectionView.contentInset.top);
     [_collectionView setContentOffset:topOfHeader animated:YES];
 }
 
