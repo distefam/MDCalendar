@@ -115,12 +115,12 @@ static NSString * const kMDCalendarViewCellIdentifier = @"kMDCalendarViewCellIde
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    CGSize viewSize = self.bounds.size;
+    CGSize viewSize = self.contentView.bounds.size;
     _label.frame = CGRectMake(0, self.borderHeight, viewSize.width, viewSize.height - self.borderHeight);
     
     // bounds of highlight view 10% smaller than cell
-    CGFloat highlightViewInset = CGRectGetHeight(_label.frame) * 0.1f;
-    _highlightView.frame = CGRectInset(_label.frame, highlightViewInset, highlightViewInset);
+    CGFloat highlightViewInset = viewSize.height * 0.1f;
+    _highlightView.frame = CGRectInset(self.contentView.frame, highlightViewInset, highlightViewInset);
     _highlightView.layer.cornerRadius = CGRectGetHeight(_highlightView.bounds) / 2;
     
     _borderView.frame = CGRectMake(0, 0, viewSize.width, self.borderHeight);
