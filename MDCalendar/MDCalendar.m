@@ -540,7 +540,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return [self.startDate numberOfMonthsUntilEndDate:self.endDate];
+    return [self.startDate numberOfMonthsUntilEndDate:self.endDate] + 1;    // Adding 1 necessary to show month of end date
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
