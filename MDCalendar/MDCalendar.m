@@ -544,8 +544,10 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    NSInteger month = [self monthForSection:section];
-    return [NSDate numberOfDaysInMonth:month] + [self offsetForSection:section] + [self remainderForSection:section];
+    NSDate *firstDayOfMonth = [self dateForFirstDayOfSection:section];
+    NSInteger month = [firstDayOfMonth month];
+    NSInteger year  = [firstDayOfMonth year];
+    return [NSDate numberOfDaysInMonth:month forYear:year] + [self offsetForSection:section] + [self remainderForSection:section];
 }
 
 #pragma mark - UICollectionViewDelegate

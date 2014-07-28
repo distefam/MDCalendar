@@ -27,7 +27,7 @@
 
 @interface NSDate (MDCalendar)
 
-+ (NSInteger)numberOfDaysInMonth:(NSInteger)month;
++ (NSInteger)numberOfDaysInMonth:(NSInteger)month forYear:(NSInteger)year;
 + (NSDate *)dateFromComponents:(NSDateComponents *)components;
 + (NSString *)monthNameForMonth:(NSInteger)month;
 + (NSArray *)weekdays;                                          // returns all weekdays as strings, starts with Sunday

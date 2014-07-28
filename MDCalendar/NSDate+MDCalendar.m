@@ -27,14 +27,15 @@
 
 @implementation NSDate (MDCalendar)
 
-+ (NSInteger)numberOfDaysInMonth:(NSInteger)month {
++ (NSInteger)numberOfDaysInMonth:(NSInteger)month forYear:(NSInteger)year {
     NSCalendar *calendar = [NSCalendar currentCalendar];
     
     NSDateComponents *components = [NSDateComponents new];
     [components setMonth:month];
-    NSDate *monthDate = [calendar dateFromComponents:components];
+    [components setYear:year];
+    NSDate *date = [calendar dateFromComponents:components];
     
-    NSRange range = [calendar rangeOfUnit:NSDayCalendarUnit inUnit:NSMonthCalendarUnit forDate:monthDate];
+    NSRange range = [calendar rangeOfUnit:NSDayCalendarUnit inUnit:NSMonthCalendarUnit forDate:date];
     return range.length;
 }
 
