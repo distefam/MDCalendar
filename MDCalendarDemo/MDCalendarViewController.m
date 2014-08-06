@@ -57,6 +57,7 @@
         calendarView.cellBackgroundColor = [UIColor whiteColor];
         
         calendarView.highlightColor = [UIColor pacifica];
+        calendarView.indicatorColor = [UIColor colorWithWhite:0.85 alpha:1.0];
         
         NSDate *startDate = [NSDate date];
         NSDate *endDate = [startDate dateByAddingMonths:12*25];
@@ -83,6 +84,12 @@
 
 - (void)calendarView:(MDCalendar *)calendarView didSelectDate:(NSDate *)date {
     NSLog(@"Selected Date: %@", [date descriptionWithLocale:[NSLocale currentLocale]]);
+}
+
+- (BOOL) calendarView:(MDCalendar *)calendarView shouldShowIndicatorForDate:(NSDate *)date
+{
+    // show indicator for every 4th day
+    return [date day] % 4 == 1;
 }
 
 @end

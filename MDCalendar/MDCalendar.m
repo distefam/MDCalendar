@@ -33,12 +33,14 @@
 
 @property (nonatomic, assign) CGFloat  borderHeight;
 @property (nonatomic, assign) UIColor *borderColor;
+@property (nonatomic, assign) UIColor *indicatorColor;
 @end
 
 @interface MDCalendarViewCell  ()
 @property (nonatomic, strong) UILabel *label;
 @property (nonatomic, strong) UIView  *highlightView;
 @property (nonatomic, strong) UIView  *borderView;
+@property (nonatomic, strong) UIView  *indicatorView;
 @end
 
 static NSString * const kMDCalendarViewCellIdentifier = @"kMDCalendarViewCellIdentifier";
@@ -60,10 +62,15 @@ static NSString * const kMDCalendarViewCellIdentifier = @"kMDCalendarViewCellIde
         UIView *bottomBorderView = [[UIView alloc] initWithFrame:CGRectZero];
         bottomBorderView.hidden = YES;
         self.borderView = bottomBorderView;
+
+        UIView *indicatorView = [[UIView alloc] initWithFrame:CGRectZero];
+        indicatorView.hidden = YES;
+        self.indicatorView = indicatorView;
         
         [self.contentView addSubview:highlightView];
         [self.contentView addSubview:label];
         [self.contentView addSubview:bottomBorderView];
+        [self.contentView addSubview:indicatorView];
 
     }
     return self;
@@ -89,6 +96,11 @@ static NSString * const kMDCalendarViewCellIdentifier = @"kMDCalendarViewCellIde
 - (void)setBorderColor:(UIColor *)borderColor {
     _borderView.backgroundColor = borderColor;
     _borderView.hidden = NO;
+}
+
+- (void)setIndicatorColor:(UIColor *)indicatorColor {
+    _indicatorView.backgroundColor = indicatorColor;
+    _indicatorView.hidden = NO;
 }
 
 - (void)setSelected:(BOOL)selected {
@@ -124,6 +136,13 @@ static NSString * const kMDCalendarViewCellIdentifier = @"kMDCalendarViewCellIde
     _highlightView.layer.cornerRadius = CGRectGetHeight(_highlightView.bounds) / 2;
     
     _borderView.frame = CGRectMake(0, 0, viewSize.width, self.borderHeight);
+
+    CGFloat dotInset = viewSize.height * 0.45f;
+    CGRect indicatorFrame = CGRectInset(self.contentView.frame, dotInset, dotInset);
+    indicatorFrame.origin.y = _highlightView.frame.origin.y + _highlightView.frame.size.height - indicatorFrame.size.height * 1.5;
+    _indicatorView.frame = indicatorFrame;
+    _indicatorView.layer.cornerRadius = CGRectGetHeight(_indicatorView.bounds) / 2;
+
 }
 
 - (void)prepareForReuse {
@@ -405,6 +424,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
         
         self.cellBackgroundColor    = nil;
         self.highlightColor         = self.tintColor;
+        self.indicatorColor         = [UIColor lightGrayColor];
         
         self.headerBackgroundColor  = nil;
         self.headerFont             = [UIFont systemFontOfSize:20];
@@ -564,6 +584,11 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     cell.borderHeight = self.borderHeight;
     cell.borderColor = self.borderColor;
     
+    BOOL showIndicator = NO;
+    if ([_delegate respondsToSelector:@selector(calendarView:shouldShowIndicatorForDate:)]) {
+        showIndicator = [_delegate calendarView:self shouldShowIndicatorForDate:date];
+    }
+    
     NSInteger sectionMonth = [self monthForSection:indexPath.section];
     
     cell.userInteractionEnabled = [self collectionView:collectionView shouldSelectItemAtIndexPath:indexPath] ? YES : NO;
@@ -580,6 +605,7 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
             cell.backgroundColor = [cell.backgroundColor colorWithAlphaComponent:0.2];
         } else {
             cell.label.text = @"";
+            showIndicator = NO;
         }
         cell.userInteractionEnabled = NO;
     } else if ([date isEqualToDateSansTime:self.selectedDate]) {
@@ -587,6 +613,8 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
         cell.selected = YES;
         [collectionView selectItemAtIndexPath:indexPath animated:YES scrollPosition:UICollectionViewScrollPositionNone];
     }
+    
+    cell.indicatorColor = showIndicator ? self.indicatorColor : [UIColor clearColor];
     
     return cell;
 }

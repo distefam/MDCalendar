@@ -97,6 +97,7 @@
 @property (nonatomic, strong) UIColor *weekdayTextColor;        /**< Default is textColor */
 
 @property (nonatomic, strong) UIColor *cellBackgroundColor;     /**< Default is no background color for individual cells */
+@property (nonatomic, strong) UIColor *indicatorColor;          /**< Default is light gray */
 @property (nonatomic, strong) UIColor *highlightColor;          /**< Default is tint color */
 
 
@@ -149,4 +150,5 @@
 @optional
 - (void)calendarView:(MDCalendar *)calendarView didSelectDate:(NSDate *)date;
 - (BOOL)calendarView:(MDCalendar *)calendarView shouldSelectDate:(NSDate *)date;
+- (BOOL)calendarView:(MDCalendar *)calendarView shouldShowIndicatorForDate:(NSDate *)date;
 @end
