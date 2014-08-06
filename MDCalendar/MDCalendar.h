@@ -68,47 +68,182 @@
 ///--------------------------------
 /// @name Layout
 ///--------------------------------
+
+/**
+ * Sets the `contentInset` on the underlying collection view
+ *
+ * Default is `UIEdgeInsetsNone`
+ */
 @property (nonatomic, assign) UIEdgeInsets contentInset;
-@property (nonatomic, assign) CGFloat itemSpacing;    /**< default is 0pt */
-@property (nonatomic, assign) CGFloat lineSpacing;    /**< default is 1pt; line spacing reveals backgroundColor between lines */
-@property (nonatomic, assign) CGFloat borderHeight;   /**< default is 0pt; lineSpacing and borderHeight are mutually exclusive. If set, overrides lineSpacing behavior */
-@property (nonatomic, strong) UIColor *borderColor;   /**< default is textColor */
-@property (nonatomic, assign) BOOL showsBottomSectionBorder; /** default is NO */
+
+/**
+ * Horizontal spacing between days of the week. Will reveal the background
+ * color of your view.
+ *
+ * Default is 0pt.
+ */
+@property (nonatomic, assign) CGFloat itemSpacing;
+
+/**
+ * Vertical spacing between weeks. Will reveal the background color
+ * of your view.
+ *
+ * Default is 1pt. 
+ */
+@property (nonatomic, assign) CGFloat lineSpacing;
+
+/**
+ * Set `borderHeight` to manually provide a border color. 
+ *
+ * Default is 0pt.
+ *
+ * @warning `borderHeight` and `lineSpacing` are mutually exclusive. 
+ * If `borderHeight` is set it will override lineSpacing.
+ */
+@property (nonatomic, assign) CGFloat borderHeight;
+
+/**
+ * Border color of vertical border.
+ *
+ * Default is @see textColor
+ *
+ * @warning this will only apply if @see borderHeight is set
+ */
+@property (nonatomic, strong) UIColor *borderColor;
+
+/**
+ * Set to `YES` to display a border at the bottom of each month.
+ *
+ * Default is `NO`
+ */
+@property (nonatomic, assign) BOOL showsBottomSectionBorder;
 
 
 ///--------------------------------
 /// @name Date Range and Selection
 ///--------------------------------
-@property (nonatomic, strong) NSDate  *startDate;     /**< Specify date to start calendar. Default is date when calendar created. */
-@property (nonatomic, strong) NSDate  *endDate;       /**< Specify date to end calendar. Defaults to end of month for startDate. */
+
+/**
+ * Specify a date on which to start your calendar.
+ * If no date is specified it will default to the current system date.
+ */
+@property (nonatomic, strong) NSDate  *startDate;
+
+/**
+ * Specify a date to end the calendar. 
+ * If no value is set it will default to three months out from the @see startDate
+ */
+@property (nonatomic, strong) NSDate  *endDate;
+
+/**
+ * Allows you to manually specify a date to be selected when the calendar is set-up.
+ * Defaults to @see startDate
+ */
 @property (nonatomic, strong) NSDate  *selectedDate;  /**< default is startDate */
 
 
 ///--------------------------------
-/// @name Appearance
+/// @name Appearance : Fonts
 ///--------------------------------
-@property (nonatomic, strong) UIFont  *dayFont;                 /**< Default is system font, size 17 */
-@property (nonatomic, strong) UIFont  *headerFont;              /**< Default is system font, size 20 */
-@property (nonatomic, strong) UIFont  *weekdayFont;             /**< Default is system font, size 12 */
 
-@property (nonatomic, strong) UIColor *textColor;               /**< Default is dark gray */
-@property (nonatomic, strong) UIColor *headerBackgroundColor;   /**< Default is no background color (clear) */
-@property (nonatomic, strong) UIColor *headerTextColor;         /**< Default is textColor */
-@property (nonatomic, strong) UIColor *weekdayTextColor;        /**< Default is textColor */
+/**
+ * Font for numbers on day cells.
+ * Default is system font, size 17
+ */
+@property (nonatomic, strong) UIFont  *dayFont;
 
-@property (nonatomic, strong) UIColor *cellBackgroundColor;     /**< Default is no background color for individual cells */
-@property (nonatomic, strong) UIColor *indicatorColor;          /**< Default is light gray */
-@property (nonatomic, strong) UIColor *highlightColor;          /**< Default is tint color */
+/**
+ * Font for month name headers.
+ * Default is system font, size 20
+ */
+@property (nonatomic, strong) UIFont  *headerFont;
+
+/**
+ * Font for weekday abbreviations.
+ * Default is system font, size 12
+ *
+ * @warning this will be displayed in all caps
+ */
+@property (nonatomic, strong) UIFont  *weekdayFont;
+
+///--------------------------------
+/// @name Appearance : Text Colors
+///--------------------------------
+
+/**
+ * Text color for @see dayFont
+ * Default is dark gray
+ */
+@property (nonatomic, strong) UIColor *textColor;
+
+/**
+ * Text color for @see headerFont
+ * Default is @see textColor
+ */
+@property (nonatomic, strong) UIColor *headerTextColor;
+
+/**
+ * Text color for @see weekdayFont
+ * Default is @see textColor
+ */
+@property (nonatomic, strong) UIColor *weekdayTextColor;
+
+///------------------------------------------------
+/// @name Appearance : Background & Element Colors
+///------------------------------------------------
+
+/**
+ * Background color for month name headers.
+ * Default is `[UIColor clearColor]`
+ */
+@property (nonatomic, strong) UIColor *headerBackgroundColor;
+
+/**
+ * Background color for day cells.
+ * Deafault is `nil`
+ */
+@property (nonatomic, strong) UIColor *cellBackgroundColor;
+
+/**
+ * Color for day indicator (dots)
+ * Default is light gray
+ */
+@property (nonatomic, strong) UIColor *indicatorColor;
+
+/**
+ * Color for highlight view (circle that displays when cell is selected).
+ * Default is @see tintColor
+ */
+@property (nonatomic, strong) UIColor *highlightColor;
 
 
 ///--------------------------------
 /// @name Selection behavior
 ///--------------------------------
-@property (nonatomic, assign) BOOL showsDaysOutsideCurrentMonth;    /**< Default is NO */
+
+/**
+ * By default, each month is displayed in a rectangle. If a given month starts on a Thursday
+ * the first number in that rectangle, 1, will be under TH. If the last day is on a Wednesday
+ * the last number, 31, will be on Wednesday. Only the numbers 1-31 will be displayed.
+ *
+ * Setting this to `YES` will show days not in the current month in that month's rectangle.
+ * Using the example above, before Thursday the 1st you would see Su 28, Mo 29, Tu 30, We 31.
+ * If set to `YES` these cells will show with a 20% opacity of the @see cellBackgroundColor
+ */
+@property (nonatomic, assign) BOOL showsDaysOutsideCurrentMonth;
+
+/**
+ * Setting the start date to a date in the middle of the month still shows every day before it
+ * for that month. By default, it is possible to select these days. Set to `NO` to disallow
+ * this behavior.
+ */
 @property (nonatomic, assign) BOOL canSelectDaysBeforeStartDate;    /**< Default is YES */
 
 /**
- *  force scrolling to specific date; note: calendar will automatically scroll to selected date if date is not on-screen
+ * Scroll calendar to a specific date.
+ *
+ * @warning The calendar will automatically scroll to @see selectedDate upon selection
+ * if that date is not on-screen
  */
 - (void)scrollCalendarToDate:(NSDate *)date animated:(BOOL)animated;
 
@@ -148,7 +283,22 @@
 
 @protocol MDCalendarDelegate <NSObject>
 @optional
+
+/**
+ * Reports the selected date.
+ */
 - (void)calendarView:(MDCalendar *)calendarView didSelectDate:(NSDate *)date;
+
+/**
+ * Implement this delegate method to specify which dates should be selectable.
+ * Non-selectable dates' cells are shown with 20% background opacity.
+ * @see canSelectDaysBeforeStartDate
+ */
 - (BOOL)calendarView:(MDCalendar *)calendarView shouldSelectDate:(NSDate *)date;
+
+/**
+ * Shows an indicator view (dot) for a given date.
+ * @see indicatorColor
+ */
 - (BOOL)calendarView:(MDCalendar *)calendarView shouldShowIndicatorForDate:(NSDate *)date;
 @end
