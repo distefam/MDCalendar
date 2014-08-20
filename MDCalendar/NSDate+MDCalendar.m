@@ -27,7 +27,7 @@
 
 @implementation NSDate (MDCalendar)
 
-+ (NSInteger)numberOfDaysInMonth:(NSInteger)month forYear:(NSInteger)year {
++ (NSInteger)MD_numberOfDaysInMonth:(NSInteger)month forYear:(NSInteger)year {
     NSCalendar *calendar = [NSCalendar currentCalendar];
     
     NSDateComponents *components = [NSDateComponents new];
@@ -39,15 +39,15 @@
     return range.length;
 }
 
-+ (NSDate *)dateFromComponents:(NSDateComponents *)components {
++ (NSDate *)MD_dateFromComponents:(NSDateComponents *)components {
     return MDCalendarDateFromComponents(components);
 }
 
-+ (NSString *)monthNameForMonth:(NSInteger)month {
-    return [NSDate monthNames][month];
++ (NSString *)MD_monthNameForMonth:(NSInteger)month {
+    return [NSDate MD_monthNames][month];
 }
 
-+ (NSArray *)weekdays {
++ (NSArray *)MD_weekdays {
     return @[@"Sunday",
              @"Monday",
              @"Tuesday",
@@ -57,7 +57,7 @@
              @"Saturday"];
 }
 
-+ (NSArray *)weekdayAbbreviations {
++ (NSArray *)MD_weekdayAbbreviations {
     return @[@"SUN",
              @"MON",
              @"TUE",
@@ -67,7 +67,7 @@
              @"SAT"];
 }
 
-+ (NSArray *)monthNames {
++ (NSArray *)MD_monthNames {
     return @[@"Zero",
              @"January",
              @"February",
@@ -83,7 +83,7 @@
              @"December"];
 }
 
-+ (NSArray *)shortMonthNames {
++ (NSArray *)MD_shortMonthNames {
     return @[@"Zero",
              @"Jan",
              @"Feb",
@@ -99,13 +99,13 @@
              @"Dec"];
 }
 
-- (NSDate *)firstDayOfMonth {
+- (NSDate *)MD_firstDayOfMonth {
     NSDateComponents *components = MDCalendarDateComponentsFromDate(self);
     [components setDay:1];
     return MDCalendarDateFromComponents(components);
 }
 
-- (NSDate *)lastDayOfMonth {
+- (NSDate *)MD_lastDayOfMonth {
     NSDateComponents *components = MDCalendarDateComponentsFromDate(self);
     
     NSInteger month = [components month];
@@ -115,45 +115,45 @@
     return MDCalendarDateFromComponents(components);
 }
 
-- (NSInteger)day {
+- (NSInteger)MD_day {
     NSDateComponents *components = MDCalendarDateComponentsFromDate(self);
     return [components day];
 }
 
-- (NSInteger)weekday {
+- (NSInteger)MD_weekday {
     NSDateComponents *components = MDCalendarDateComponentsFromDate(self);
     return [components weekday];
 }
 
-- (NSInteger)month {
+- (NSInteger)MD_month {
     NSDateComponents *components = MDCalendarDateComponentsFromDate(self);
     return [components month];
 }
 
-- (NSString *)shortMonthString {
-    return [NSDate shortMonthNames][[self month]];
+- (NSString *)MD_shortMonthString {
+    return [NSDate MD_shortMonthNames][[self MD_month]];
 }
 
-- (NSInteger)year {
+- (NSInteger)MD_year {
     NSDateComponents *components = MDCalendarDateComponentsFromDate(self);
     return [components year];
 }
 
-- (NSDateComponents *)components {
+- (NSDateComponents *)MD_components {
     return MDCalendarDateComponentsFromDate(self);
 }
 
 - (NSInteger)numberOfDaysInMonth {
     NSCalendar *calendar = [NSCalendar currentCalendar];
     
-    NSDate *firstDayOfMonth = [self firstDayOfMonth];
-    NSDate *lastDayOfMonth  = [self lastDayOfMonth];
+    NSDate *firstDayOfMonth = [self MD_firstDayOfMonth];
+    NSDate *lastDayOfMonth  = [self MD_lastDayOfMonth];
     
     NSDateComponents *components = [calendar components:NSDayCalendarUnit fromDate:firstDayOfMonth toDate:lastDayOfMonth options:0];
     return [components day];
 }
 
-- (NSInteger)numberOfMonthsUntilEndDate:(NSDate *)endDate {
+- (NSInteger)MD_numberOfMonthsUntilEndDate:(NSDate *)endDate {
     NSCalendar *calendar = [NSCalendar currentCalendar];
     
     NSDateComponents *components = [calendar components:NSCalendarUnitMonth fromDate:self toDate:endDate options:0];
@@ -161,13 +161,13 @@
     return [components month];
 }
 
-- (NSInteger)numberOfDaysUntilEndDate:(NSDate *)endDate {
+- (NSInteger)MD_numberOfDaysUntilEndDate:(NSDate *)endDate {
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSDateComponents *components = [calendar components:NSCalendarUnitDay fromDate:self toDate:endDate options:0];
     return [components day];
 }
 
-- (NSDate *)dateByAddingDays:(NSInteger)days {
+- (NSDate *)MD_dateByAddingDays:(NSInteger)days {
     
     NSDateComponents *components = [NSDateComponents new];
     components.day = days;
@@ -176,7 +176,7 @@
     return [calendar dateByAddingComponents:components toDate:self options:0];
 }
 
-- (NSDate *)dateByAddingMonths:(NSInteger)months {
+- (NSDate *)MD_dateByAddingMonths:(NSInteger)months {
     NSDateComponents *components = [NSDateComponents new];
     components.month = months;
     
@@ -184,20 +184,20 @@
     return [calendar dateByAddingComponents:components toDate:self options:0];
 }
 
-- (BOOL)isEqualToDateSansTime:(NSDate *)otherDate {
-    if (self.day == otherDate.day &&
-        self.month == otherDate.month &&
-        self.year == otherDate.year) {
+- (BOOL)MD_isEqualToDateSansTime:(NSDate *)otherDate {
+    if (self.MD_day == otherDate.MD_day &&
+        self.MD_month == otherDate.MD_month &&
+        self.MD_year == otherDate.MD_year) {
         return YES;
     }
     return NO;
 }
 
-- (BOOL)isBeforeDate:(NSDate *)otherDate {
+- (BOOL)MD_isBeforeDate:(NSDate *)otherDate {
     return [self compare:otherDate] == NSOrderedAscending;
 }
 
-- (BOOL)isAfterDate:(NSDate *)otherDate {
+- (BOOL)MD_isAfterDate:(NSDate *)otherDate {
     return [self compare:otherDate] == NSOrderedDescending;
 }
 
