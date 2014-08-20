@@ -71,13 +71,16 @@ static NSString * const kMDCalendarViewCellIdentifier = @"kMDCalendarViewCellIde
         [self.contentView addSubview:label];
         [self.contentView addSubview:bottomBorderView];
         [self.contentView addSubview:indicatorView];
-
+        
+        self.isAccessibilityElement = YES;
     }
     return self;
 }
 
 - (void)setDate:(NSDate *)date {
     _label.text = MDCalendarDayStringFromDate(date);
+    
+    self.accessibilityLabel = [NSString stringWithFormat:@"%@, %@ of %@ %d", [date MD_weekdayString], [NSDate MD_ordinalStringForDay:date.MD_day], [date MD_monthString], [date MD_year]];
 }
 
 - (void)setFont:(UIFont *)font {
@@ -198,6 +201,8 @@ NSString * MDCalendarDayStringFromDate(NSDate *date) {
             [dayLabels addObject:dayLabel];
             
             [self addSubview:dayLabel];
+            
+            self.isAccessibilityElement = YES;
         }
         
         self.dayLabels = dayLabels;
@@ -231,6 +236,12 @@ NSString * MDCalendarDayStringFromDate(NSDate *date) {
     for (UILabel *label in _dayLabels) {
         label.font = font;
     }
+}
+
+#pragma mark - UIAccessibility
+
+- (NSString *)accessibilityLabel {
+    return [NSString stringWithFormat:@"Weekdays, %@ through %@", [NSDate MD_weekdays].firstObject, [NSDate MD_weekdays].lastObject];
 }
 
 @end
@@ -597,15 +608,21 @@ static CGFloat const kMDCalendarViewSectionSpacing = 10.f;
     if (![self collectionView:collectionView shouldSelectItemAtIndexPath:indexPath]) {
         cell.textColor = [date MD_isEqualToDateSansTime:[self currentDate]] ? cell.textColor : [cell.textColor colorWithAlphaComponent:0.2];
         cell.userInteractionEnabled = NO;
+        // (noahemmet): If the cell is outside the selectable range, and it is not today, tell the user it's an invalid date ("dimmed" is what Apple uses for disabled buttons).
+        if (![date MD_isEqualToDateSansTime:self.selectedDate]) {
+            cell.accessibilityLabel = [cell.accessibilityLabel stringByAppendingString:@", dimmed"];
+        }
     }
     
     // Handle showing cells outside of current month
+    cell.accessibilityElementsHidden = NO;
     if ([date MD_month] != sectionMonth) {
         if (self.showsDaysOutsideCurrentMonth) {
             cell.backgroundColor = [cell.backgroundColor colorWithAlphaComponent:0.2];
         } else {
             cell.label.text = @"";
             showIndicator = NO;
+            cell.accessibilityElementsHidden = YES;
         }
         cell.userInteractionEnabled = NO;
     } else if ([date MD_isEqualToDateSansTime:self.selectedDate]) {

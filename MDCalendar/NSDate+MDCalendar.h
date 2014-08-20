@@ -32,6 +32,9 @@
 + (NSString *)MD_monthNameForMonth:(NSInteger)month;
 + (NSArray *)MD_weekdays;                                          // returns all weekdays as strings, starts with Sunday
 + (NSArray *)MD_weekdayAbbreviations;                              // returns all weekday abbreviations as strings, starts with Sun
+// returns the ordinal for a day, I.e., 1 -> 1st
++ (NSString *)MD_ordinalStringForDay:(NSInteger)day;
+
 + (NSArray *)MD_monthNames;                                        // returns all months as strings, starts with zero and proceeds to January
 + (NSArray *)MD_shortMonthNames;                                   // returns all month abbreviations as strings, starts with zero and proceeds to Jan
 
@@ -39,9 +42,11 @@
 - (NSDate *)MD_lastDayOfMonth;
 
 - (NSInteger)MD_day;
+- (NSString *)MD_weekdayString;
 - (NSInteger)MD_weekday;
 - (NSInteger)MD_month;
 - (NSString *)MD_shortMonthString;
+- (NSString *)MD_monthString;
 - (NSInteger)MD_year;
 - (NSDateComponents *)MD_components;
 
