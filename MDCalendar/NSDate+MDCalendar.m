@@ -67,6 +67,25 @@
              @"SAT"];
 }
 
++ (NSString *)ordinalStringForDay:(NSInteger)day {
+    NSString *suffix;
+    int ones = day % 10;
+    int tens = (int) floor(day / 10.0) % 10;
+    
+    if (tens == 1) {
+        suffix = @"th";
+    } else if (ones == 1) {
+        suffix = @"st";
+    } else if (ones == 2) {
+        suffix = @"nd";
+    } else if (ones == 3) {
+        suffix = @"rd";
+    } else {
+        suffix = @"th";
+    }
+    return [NSString stringWithFormat:@"%li%@", (long)day, suffix];
+}
+
 + (NSArray *)monthNames {
     return @[@"Zero",
              @"January",
@@ -120,6 +139,10 @@
     return [components day];
 }
 
+- (NSString *)weekdayString {
+    return [NSDate weekdays][self.weekday - 1];
+}
+
 - (NSInteger)weekday {
     NSDateComponents *components = MDCalendarDateComponentsFromDate(self);
     return [components weekday];
@@ -132,6 +155,10 @@
 
 - (NSString *)shortMonthString {
     return [NSDate shortMonthNames][[self month]];
+}
+
+- (NSString *)monthString {
+    return [NSDate monthNameForMonth:self.month];
 }
 
 - (NSInteger)year {
