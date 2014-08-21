@@ -60,7 +60,7 @@
         calendarView.indicatorColor = [UIColor colorWithWhite:0.85 alpha:1.0];
         
         NSDate *startDate = [NSDate date];
-        NSDate *endDate = [startDate MD_dateByAddingMonths:12*25];
+        NSDate *endDate = [startDate dateByAddingMonths:12*25];
         
         calendarView.startDate = startDate;
         calendarView.endDate = endDate;
@@ -89,7 +89,7 @@
 - (BOOL) calendarView:(MDCalendar *)calendarView shouldShowIndicatorForDate:(NSDate *)date
 {
     // show indicator for every 4th day
-    return [date MD_day] % 4 == 1;
+    return [date day] % 4 == 1;
 }
 
 @end

@@ -27,36 +27,36 @@
 
 @interface NSDate (MDCalendar)
 
-+ (NSInteger)MD_numberOfDaysInMonth:(NSInteger)month forYear:(NSInteger)year;
-+ (NSDate *)MD_dateFromComponents:(NSDateComponents *)components;
-+ (NSString *)MD_monthNameForMonth:(NSInteger)month;
-+ (NSArray *)MD_weekdays;                                          // returns all weekdays as strings, starts with Sunday
-+ (NSArray *)MD_weekdayAbbreviations;                              // returns all weekday abbreviations as strings, starts with Sun
++ (NSInteger)numberOfDaysInMonth:(NSInteger)month forYear:(NSInteger)year;
++ (NSDate *)dateFromComponents:(NSDateComponents *)components;
++ (NSString *)monthNameForMonth:(NSInteger)month;
++ (NSArray *)weekdays;                                          // returns all weekdays as strings, starts with Sunday
++ (NSArray *)weekdayAbbreviations;                              // returns all weekday abbreviations as strings, starts with Sun
 // returns the ordinal for a day, I.e., 1 -> 1st
-+ (NSString *)MD_ordinalStringForDay:(NSInteger)day;
++ (NSString *)ordinalStringForDay:(NSInteger)day;
 
-+ (NSArray *)MD_monthNames;                                        // returns all months as strings, starts with zero and proceeds to January
-+ (NSArray *)MD_shortMonthNames;                                   // returns all month abbreviations as strings, starts with zero and proceeds to Jan
++ (NSArray *)monthNames;                                        // returns all months as strings, starts with zero and proceeds to January
++ (NSArray *)shortMonthNames;                                   // returns all month abbreviations as strings, starts with zero and proceeds to Jan
 
-- (NSDate *)MD_firstDayOfMonth;
-- (NSDate *)MD_lastDayOfMonth;
+- (NSDate *)firstDayOfMonth;
+- (NSDate *)lastDayOfMonth;
 
-- (NSInteger)MD_day;
-- (NSString *)MD_weekdayString;
-- (NSInteger)MD_weekday;
-- (NSInteger)MD_month;
-- (NSString *)MD_shortMonthString;
-- (NSString *)MD_monthString;
-- (NSInteger)MD_year;
-- (NSDateComponents *)MD_components;
+- (NSInteger)day;
+- (NSString *)weekdayString;
+- (NSInteger)weekday;
+- (NSInteger)month;
+- (NSString *)shortMonthString;
+- (NSString *)monthString;
+- (NSInteger)year;
+- (NSDateComponents *)components;
 
-- (NSInteger)MD_numberOfDaysUntilEndDate:(NSDate *)endDate;
-- (NSInteger)MD_numberOfMonthsUntilEndDate:(NSDate *)endDate;
-- (NSDate *)MD_dateByAddingDays:(NSInteger)days;
-- (NSDate *)MD_dateByAddingMonths:(NSInteger)months;
+- (NSInteger)numberOfDaysUntilEndDate:(NSDate *)endDate;
+- (NSInteger)numberOfMonthsUntilEndDate:(NSDate *)endDate;
+- (NSDate *)dateByAddingDays:(NSInteger)days;
+- (NSDate *)dateByAddingMonths:(NSInteger)months;
 
-- (BOOL)MD_isEqualToDateSansTime:(NSDate *)otherDate;
-- (BOOL)MD_isBeforeDate:(NSDate *)otherDate;
-- (BOOL)MD_isAfterDate:(NSDate *)otherDate;
+- (BOOL)isEqualToDateSansTime:(NSDate *)otherDate;
+- (BOOL)isBeforeDate:(NSDate *)otherDate;
+- (BOOL)isAfterDate:(NSDate *)otherDate;
 
 @end
