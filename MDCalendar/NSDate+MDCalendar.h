@@ -27,34 +27,51 @@
 
 @interface NSDate (MDCalendar)
 
+///-------------------------------------------
+/// @name Constants (calculated and otherwise)
+///-------------------------------------------
 + (NSInteger)numberOfDaysInMonth:(NSInteger)month forYear:(NSInteger)year;
 + (NSDate *)dateFromComponents:(NSDateComponents *)components;
-+ (NSString *)monthNameForMonth:(NSInteger)month;
+
 + (NSArray *)weekdays;                                          // returns all weekdays as strings, starts with Sunday
 + (NSArray *)weekdayAbbreviations;                              // returns all weekday abbreviations as strings, starts with Sun
-// returns the ordinal for a day, I.e., 1 -> 1st
-+ (NSString *)ordinalStringForDay:(NSInteger)day;
 
 + (NSArray *)monthNames;                                        // returns all months as strings, starts with zero and proceeds to January
 + (NSArray *)shortMonthNames;                                   // returns all month abbreviations as strings, starts with zero and proceeds to Jan
 
+///--------------------------------
+/// @name Date Calculations
+///--------------------------------
+
 - (NSDate *)firstDayOfMonth;
 - (NSDate *)lastDayOfMonth;
 
+///-----------------------------------------------
+/// @name Date Elements & String Representations
+///-----------------------------------------------
+
 - (NSInteger)day;
+- (NSString *)dayOrdinalityString;
 - (NSString *)weekdayString;
 - (NSInteger)weekday;
 - (NSInteger)month;
-- (NSString *)shortMonthString;
 - (NSString *)monthString;
+- (NSString *)shortMonthString;
 - (NSInteger)year;
 - (NSDateComponents *)components;
+
+///--------------------------------
+/// @name Date Calculations
+///--------------------------------
 
 - (NSInteger)numberOfDaysUntilEndDate:(NSDate *)endDate;
 - (NSInteger)numberOfMonthsUntilEndDate:(NSDate *)endDate;
 - (NSDate *)dateByAddingDays:(NSInteger)days;
 - (NSDate *)dateByAddingMonths:(NSInteger)months;
 
+///--------------------------------
+/// @name Equality and Order
+///--------------------------------
 - (BOOL)isEqualToDateSansTime:(NSDate *)otherDate;
 - (BOOL)isBeforeDate:(NSDate *)otherDate;
 - (BOOL)isAfterDate:(NSDate *)otherDate;
