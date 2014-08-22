@@ -22,3 +22,7 @@ The advised implementation of this is to create a sparse view controller to disp
 In the above example, we will need to communicate calendar events back to its parent view controller. In order to do this elegantly, subclass `MDCalendarDelegate` in `MDEventCalendarViewController` and expose this protocol, `MDEventCalendarDelegate`, in the view controller's header. Now, the parent view controller, `EventDetailsViewController`, can set its delegate: `id<MDEventCalendarDelegate>delegate`
  
 This delegate will essentially pass messages from `MDCalendarDelegate` onto the parent view controller. Advantages of subclassing `MDCalendarDelegate` is that if you were to re-use your sparse view controller it could contain some logic of how to interperet `MDCalendarDelegate` events.
+
+## Accessibility
+
+Version 1.0.0 of MDCalendar features VoiceOver support with proper accessibility labels for each date.
